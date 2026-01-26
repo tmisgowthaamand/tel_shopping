@@ -6,7 +6,7 @@ const logger = require('../utils/logger');
  */
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: process.env.NODE_ENV === 'production' ? 100 : 1000, // Relaxed for development
+    max: process.env.NODE_ENV === 'production' ? 500 : 1000, // Increased for dashboard
     message: { error: 'Too many requests, please try again later' },
     standardHeaders: true,
     legacyHeaders: false,
@@ -21,7 +21,7 @@ const apiLimiter = rateLimit({
  */
 const authLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour
-    max: process.env.NODE_ENV === 'production' ? 10 : 100, // Relaxed for development
+    max: process.env.NODE_ENV === 'production' ? 50 : 100, // Increased to avoid login lockout
     message: { error: 'Too many login attempts, please try again later' },
     skipSuccessfulRequests: true,
 });
