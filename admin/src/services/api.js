@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: '/api',
+    baseURL: import.meta.env.VITE_API_URL || '/api',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -40,6 +40,11 @@ export const productApi = {
     updateProduct: (id, data) => api.put(`/products/${id}`, data),
     deleteProduct: (id) => api.delete(`/products/${id}`),
     getStats: () => api.get('/products/stats'),
+    generateAIDescription: (data) => api.post('/products/ai-description', data),
+    uploadImage: (formData) => api.post('/products/upload-image', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    }),
+    bulkCreate: (data) => api.post('/products/bulk', data),
 };
 
 export const categoryApi = {

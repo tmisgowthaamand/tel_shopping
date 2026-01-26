@@ -92,20 +92,66 @@ class ProductService {
     }
 
     /**
-     * Search products
+     * Search products with regex fallback for better fuzzy matching
      */
     async searchProducts(query, limit = 10) {
         try {
-            return Product.find({
+            // Try standard text search first (using MongoDB text index)
+            let products = await Product.find({
                 isActive: true,
                 $text: { $search: query },
             })
                 .sort({ score: { $meta: 'textScore' } })
                 .limit(limit)
                 .populate('category');
+
+            // If no results or very few, try regex matching for better "fuzzy" feel
+            if (products.length < 3) {
+                const searchTerms = query.split(/\s+/).filter(t => t.length > 2);
+
+                // Create a regex that matches any of the terms or the whole string
+                const regexPatterns = searchTerms.map(t => new RegExp(t, 'i'));
+
+                const regexProducts = await Product.find({
+                    _id: { $nin: products.map(p => p._id) }, // Don't duplicate
+                    isActive: true,
+                    $or: [
+                        { name: { $regex: query, $options: 'i' } },
+                        { name: { $in: regexPatterns } },
+                        { tags: { $in: regexPatterns } }
+                    ]
+                })
+                    .limit(limit - products.length)
+                    .populate('category');
+
+                products = [...products, ...regexProducts];
+            }
+
+            return products;
         } catch (error) {
             logger.error('Error searching products:', error);
             throw error;
+        }
+    }
+
+    /**
+     * Get related products based on category
+     */
+    async getRelatedProducts(productId, limit = 5) {
+        try {
+            const product = await Product.findById(productId);
+            if (!product) return [];
+
+            return Product.find({
+                _id: { $ne: productId },
+                category: product.category,
+                isActive: true
+            })
+                .limit(limit)
+                .populate('category');
+        } catch (error) {
+            logger.error('Error getting related products:', error);
+            return [];
         }
     }
 
@@ -128,14 +174,18 @@ class ProductService {
      */
     async updateProduct(productId, updateData) {
         try {
-            const product = await Product.findByIdAndUpdate(productId, updateData, {
-                new: true,
-                runValidators: true,
-            });
+            const product = await Product.findById(productId);
 
             if (!product) {
                 throw new Error('Product not found');
             }
+
+            // Update product fields
+            Object.keys(updateData).forEach((key) => {
+                product[key] = updateData[key];
+            });
+
+            await product.save();
 
             logger.info(`Product updated: ${product.name}`);
             return product;
@@ -270,21 +320,27 @@ class ProductService {
      */
     async getProductStats() {
         try {
-            const [totalProducts, activeProducts, outOfStock, lowStock, categories] =
-                await Promise.all([
-                    Product.countDocuments(),
-                    Product.countDocuments({ isActive: true }),
-                    Product.countDocuments({ isActive: true, stock: 0 }),
-                    Product.countDocuments({ isActive: true, stock: { $lte: 10, $gt: 0 } }),
-                    Category.countDocuments({ isActive: true }),
-                ]);
+            const stats = await Product.aggregate([
+                { $match: { isActive: true } },
+                {
+                    $group: {
+                        _id: null,
+                        totalProducts: { $sum: 1 },
+                        totalStock: { $sum: "$stock" },
+                        totalValue: { $sum: { $multiply: ["$price", "$stock"] } },
+                        outOfStock: { $sum: { $cond: [{ $eq: ["$stock", 0] }, 1, 0] } },
+                        lowStock: { $sum: { $cond: [{ $and: [{ $lte: ["$stock", 10] }, { $gt: ["$stock", 0] }] }, 1, 0] } }
+                    }
+                }
+            ]);
+
+            const categoryCount = await Category.countDocuments({ isActive: true });
+
+            const result = stats[0] || { totalProducts: 0, totalStock: 0, totalValue: 0, outOfStock: 0, lowStock: 0 };
 
             return {
-                totalProducts,
-                activeProducts,
-                outOfStock,
-                lowStock,
-                categories,
+                ...result,
+                categories: categoryCount
             };
         } catch (error) {
             logger.error('Error getting product stats:', error);

@@ -247,9 +247,21 @@ class BotService {
             await this.addToCart(ctx, productId);
         });
 
+        this.bot.action(/^select_size_(.+)_(.+)$/, async (ctx) => {
+            const productId = ctx.match[1];
+            const size = ctx.match[2];
+            await this.addToCart(ctx, productId, size);
+        });
+
         this.bot.action(/^buy_now_(.+)$/, async (ctx) => {
             const productId = ctx.match[1];
             await this.buyNow(ctx, productId);
+        });
+
+        this.bot.action(/^buy_now_size_(.+)_(.+)$/, async (ctx) => {
+            const productId = ctx.match[1];
+            const size = ctx.match[2];
+            await this.buyNow(ctx, productId, size);
         });
 
         // Quantity selection
@@ -360,27 +372,38 @@ class BotService {
      * Optimize and Clean image URL for Telegram
      * Uses Cloudinary magic to resize and compress for fast loading
      */
-    optimizeImageUrl(url, options = { width: 800, quality: 'auto' }) {
+    optimizeImageUrl(url, options = { width: 500, quality: 'eco' }) {
         if (!url) return null;
         try {
-            // 1. Basic cleaning
-            let optimizedUrl = url.split('?')[0];
-
-            // 2. Cloudinary Optimization (If URL is from Cloudinary)
-            if (optimizedUrl.includes('cloudinary.com')) {
-                // Insert transformation parameters: f_auto (auto format), q_auto (auto quality), w_XXX (width)
-                const parts = optimizedUrl.split('/upload/');
+            // 1. Cloudinary Optimization
+            if (url.includes('cloudinary.com')) {
+                const parts = url.split('/upload/');
                 if (parts.length === 2) {
-                    optimizedUrl = `${parts[0]}/upload/f_auto,q_auto,w_${options.width}/${parts[1]}`;
+                    return `${parts[0]}/upload/f_auto,q_auto:${options.quality},w_${options.width}/${parts[1]}`;
                 }
             }
 
-            // 3. Shopify Optimization
-            if (optimizedUrl.includes('cdn.shopify.com')) {
-                optimizedUrl = optimizedUrl.replace(/(_\d+x\d+)?\.(jpg|png|webp)/, `_${options.width}x.$2`);
+            // 2. Unsplash Optimization (Very common in our catalog)
+            if (url.includes('images.unsplash.com')) {
+                const baseUrl = url.split('?')[0];
+                return `${baseUrl}?w=${options.width}&q=70&auto=format&fit=crop`;
             }
 
-            return optimizedUrl;
+            // 3. Shopify Optimization
+            if (url.includes('cdn.shopify.com')) {
+                return url.split('?')[0].replace(/(_\d+x\d+)?\.(jpg|png|webp)/, `_${options.width}x.$2`);
+            }
+
+            // 4. Generic URL Optimization (append parameters if it's a known service or just clean it)
+            if (url.includes('?')) {
+                const [base, query] = url.split('?');
+                // If it already has sizing params, try to override them
+                if (query.includes('width=') || query.includes('w=')) {
+                    return `${base}?w=${options.width}&q=60`;
+                }
+            }
+
+            return url;
         } catch (e) {
             return url;
         }
@@ -564,10 +587,36 @@ What would you like to do?
     }
 
     /**
+     * Delete previous messages stored in session
+     */
+    async clearPreviousMessages(ctx) {
+        try {
+            const user = ctx.user;
+            if (user.sessionData && user.sessionData.lastMessageIds && user.sessionData.lastMessageIds.length > 0) {
+                for (const messageId of user.sessionData.lastMessageIds) {
+                    try {
+                        await ctx.deleteMessage(messageId).catch(() => { });
+                    } catch (e) {
+                        // Ignore
+                    }
+                }
+                user.sessionData.lastMessageIds = [];
+                user.markModified('sessionData');
+                await user.save();
+            }
+        } catch (error) {
+            logger.error('Error clearing previous messages:', error);
+        }
+    }
+
+    /**
      * Show category products
      */
     async showCategoryProducts(ctx, categoryId, page = 1) {
         if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
+
+        // Clear previous pagination messages to keep chat clean and avoid duplicates
+        await this.clearPreviousMessages(ctx);
 
         const category = await productService.getCategory(categoryId);
         const { products, total, pages } = await productService.getProductsByCategory(
@@ -580,37 +629,20 @@ What would you like to do?
             return ctx.reply(`No products in ${category?.name || 'this category'}.`);
         }
 
-        const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        await ctx.replyWithMarkdown(`*${category.icon || '📦'} ${category.name}* (as of ${timestamp})`);
+        const user = ctx.user;
+        if (!user.sessionData) user.sessionData = {};
+        user.sessionData.lastMessageIds = [];
 
-        // Batch products into media groups for faster loading (Telegram allows up to 10 per group)
-        const mediaGroup = products.map(product => {
-            let imageUrl = product.getPrimaryImage();
-            imageUrl = this.optimizeImageUrl(imageUrl, { width: 800 });
+        const headerMsg = await ctx.replyWithMarkdown(`*${category.icon || '📦'} ${category.name}* — Page ${page}/${pages}`);
+        user.sessionData.lastMessageIds.push(headerMsg.message_id);
 
-            const hasDiscount = product.discount > 0;
-            const priceText = hasDiscount
-                ? `₹${product.finalPrice.toFixed(0)} (${product.discount}% OFF)`
-                : `₹${product.price}`;
-
-            return {
-                type: 'photo',
-                media: { url: imageUrl },
-                caption: `<b>${product.name}</b>\n💰 ${priceText}\n${product.shortDescription || product.description.slice(0, 50) + '...'}\n/view_${product._id}`,
-                parse_mode: 'HTML'
-            };
-        });
-
-        if (mediaGroup.length > 0) {
-            try {
-                await ctx.replyWithMediaGroup(mediaGroup);
-            } catch (error) {
-                logger.warn('Media group failed, falling back to individual cards:', error.message);
-                for (const product of products) {
-                    await this.sendProductCard(ctx, product);
-                }
-            }
+        // Show products immediately with images and action buttons
+        for (const product of products) {
+            const msg = await this.sendProductCard(ctx, product);
+            if (msg) user.sessionData.lastMessageIds.push(msg.message_id);
         }
+
+        // Message for category info is already in the header
 
         // Pagination and Navigation
         const navButtons = [];
@@ -621,10 +653,14 @@ What would you like to do?
         if (navButtons.length) keyboard.push(navButtons);
         keyboard.push([Markup.button.callback('🛒 Categories', 'show_categories'), Markup.button.callback('🏠 Menu', 'back_to_menu')]);
 
-        await ctx.reply(
-            `Found ${total} products. Selecting Page ${page}/${pages}:`,
+        const footerMsg = await ctx.reply(
+            `Showing ${products.length} of ${total} products:`,
             Markup.inlineKeyboard(keyboard)
         );
+        user.sessionData.lastMessageIds.push(footerMsg.message_id);
+
+        user.markModified('sessionData');
+        await user.save();
     }
 
     /**
@@ -632,11 +668,11 @@ What would you like to do?
      */
     async sendProductCard(ctx, product) {
         let imageUrl = product.getPrimaryImage();
-        imageUrl = this.optimizeImageUrl(imageUrl, { width: 800 });
+        imageUrl = this.optimizeImageUrl(imageUrl, { width: 500 });
         const hasDiscount = product.discount > 0;
 
         const priceText = hasDiscount
-            ? `<strike>₹${product.price}</strike> <b>₹${product.finalPrice.toFixed(0)}</b> (${product.discount}% OFF)`
+            ? `<strike>₹${product.price}</strike> <b>₹${(product.finalPrice || 0).toFixed(0)}</b> (${product.discount}% OFF)`
             : `<b>₹${product.price}</b>`;
 
         const caption = `
@@ -659,17 +695,17 @@ ${product.availableStock > 0 ? '✅ In Stock' : '❌ Out of Stock'}
         if (imageUrl) {
             try {
                 // Use { url: imageUrl } for more reliable sending
-                await ctx.replyWithPhoto({ url: imageUrl }, {
+                return await ctx.replyWithPhoto({ url: imageUrl }, {
                     caption,
                     parse_mode: 'HTML',
                     ...keyboard,
                 });
             } catch (photoError) {
                 logger.warn(`Failed to send photo for product ${product.name}, falling back to text:`, photoError.message);
-                await ctx.replyWithHTML(caption, keyboard);
+                return await ctx.replyWithHTML(caption, keyboard);
             }
         } else {
-            await ctx.replyWithHTML(caption, keyboard);
+            return await ctx.replyWithHTML(caption, keyboard);
         }
     }
 
@@ -686,24 +722,33 @@ ${product.availableStock > 0 ? '✅ In Stock' : '❌ Out of Stock'}
         }
 
         let imageUrl = product.getPrimaryImage();
-        imageUrl = this.optimizeImageUrl(imageUrl, { width: 1000 });
+        imageUrl = this.optimizeImageUrl(imageUrl, { width: 800, quality: 'good' });
         const hasDiscount = product.discount > 0;
         const priceText = hasDiscount
             ? `<strike>₹${product.price}</strike> <b>₹${product.finalPrice.toFixed(0)}</b> (${product.discount}% OFF)`
             : `<b>₹${product.price}</b>`;
+
+        const related = await productService.getRelatedProducts(productId, 3);
+        let relatedText = '';
+        if (related.length > 0) {
+            relatedText = '\n\n✨ *Customers also viewed:*';
+            related.forEach(p => {
+                relatedText += `\n• ${p.name} - /view_${p._id}`;
+            });
+        }
 
         const message = `
 <b>${product.name}</b>
 
 📦 <b>Category:</b> ${product.category?.name || 'N/A'}
 💰 <b>Price:</b> ${priceText}
-⭐ <b>Rating:</b> ${product.ratings.average.toFixed(1)}/5 (${product.ratings.count} reviews)
+⭐ <b>Rating:</b> ${(product.ratings?.average || 0).toFixed(1)}/5 (${product.ratings?.count || 0} reviews)
 📊 <b>Stock:</b> ${product.availableStock > 0 ? `${product.availableStock} available` : 'Out of Stock'}
 
 📝 <b>Description:</b>
 ${product.description}
 
-${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
+${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}${relatedText}
     `.trim();
 
         const keyboard = product.availableStock > 0
@@ -737,9 +782,10 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
     /**
      * Add to cart
      */
-    async addToCart(ctx, productId) {
+    async addToCart(ctx, productId, size = null) {
         try {
-            if (ctx.callbackQuery) await ctx.answerCbQuery('Adding to cart...').catch(() => { });
+            // Provide instant haptic feedback to remove the "please wait" feel
+            if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
 
             const user = ctx.user;
             const product = await productService.getProduct(productId);
@@ -748,53 +794,70 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
                 return ctx.reply('This product is not available.');
             }
 
-            await cartService.addToCart(user._id, productId, 1);
-
-            const cartSummary = await cartService.getCartSummary(user._id);
-
-            let imageUrl = product.getPrimaryImage();
-            imageUrl = this.optimizeImageUrl(imageUrl, { width: 400 });
-
-            const message = `✅ *${product.name}* added to cart!\n\n🛍️ Cart: ${cartSummary.itemCount} items | ₹${cartSummary.total.toFixed(0)}`;
-            const keyboard = Markup.inlineKeyboard([
-                [Markup.button.callback('🛍️ View Cart', 'show_cart')],
-                [Markup.button.callback('🛒 Continue Shopping', 'show_categories')],
-            ]);
-
-            if (imageUrl) {
-                await ctx.replyWithPhoto({ url: imageUrl }, {
-                    caption: message,
-                    parse_mode: 'Markdown',
-                    ...keyboard,
-                });
-            } else {
-                await ctx.replyWithMarkdown(message, keyboard);
+            // If product has sizes and no size is selected yet
+            if (product.sizes && product.sizes.length > 0 && !size) {
+                return this.showSizeSelection(ctx, product, 'cart');
             }
+
+            await cartService.addToCart(user._id, productId, 1, size);
+
+            // Automatically show the cart items as requested
+            await this.showCart(ctx);
         } catch (error) {
             logger.error('Error adding to cart:', error);
-            ctx.reply(`❌ ${error.message}`);
+            ctx.reply(`❌ Sorry, I couldn't add that to your cart: ${error.message}`);
         }
+    }
+
+    /**
+     * Show size selection
+     */
+    async showSizeSelection(ctx, product, flow = 'cart') {
+        if (ctx.callbackQuery) await ctx.answerCbQuery('Select size').catch(() => { });
+
+        const rows = [];
+        for (let i = 0; i < product.sizes.length; i += 3) {
+            rows.push(
+                product.sizes.slice(i, i + 3).map(size =>
+                    Markup.button.callback(size, `${flow === 'buy' ? 'buy_now_size' : 'select_size'}_${product._id}_${size}`)
+                )
+            );
+        }
+        rows.push([Markup.button.callback('❌ Cancel', `product_${product._id}`)]);
+
+        const keyboard = Markup.inlineKeyboard(rows);
+        await ctx.reply(`Please select a size for *${product.name}*:`, {
+            parse_mode: 'Markdown',
+            ...keyboard
+        });
     }
 
     /**
      * Buy now (add and go to checkout)
      */
-    async buyNow(ctx, productId) {
+    async buyNow(ctx, productId, size = null) {
         try {
-            if (ctx.callbackQuery) await ctx.answerCbQuery('Processing...').catch(() => { });
-
             const user = ctx.user;
             const product = await productService.getProduct(productId);
 
             if (!product || !product.isActive) {
+                if (ctx.callbackQuery) await ctx.answerCbQuery('Product unavailable').catch(() => { });
                 return ctx.reply('This product is not available.');
             }
+
+            // If product has sizes and no size is selected yet
+            if (product.sizes && product.sizes.length > 0 && !size) {
+                return this.showSizeSelection(ctx, product, 'buy');
+            }
+
+            if (ctx.callbackQuery) await ctx.answerCbQuery('Processing...').catch(() => { });
 
             // Ask for quantity
             user.currentState = 'selecting_quantity';
             user.sessionData = {
                 ...user.sessionData,
                 pendingProductId: productId,
+                pendingSize: size,
                 buyNow: true,
             };
             await user.save();
@@ -819,7 +882,7 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
             );
         } catch (error) {
             logger.error('Error in buy now:', error);
-            ctx.reply(`❌ ${error.message}`);
+            ctx.reply(`❌ Sorry, I couldn't process your request: ${error.message}`);
         }
     }
 
@@ -828,26 +891,28 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
      */
     async handleQuantitySelection(ctx, productId, quantity) {
         try {
+            // Instant feedback
             if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
 
             const user = ctx.user;
+            const size = user.sessionData?.pendingSize || null;
 
-            await cartService.addToCart(user._id, productId, quantity);
+            await cartService.addToCart(user._id, productId, quantity, size);
 
             if (user.sessionData?.buyNow) {
-                // Go directly to checkout
-                await this.startCheckout(ctx);
-            } else {
-                await this.showCart(ctx);
+                // Clear the buyNow flag and proceed to checkout
+                user.sessionData.buyNow = false;
+                user.sessionData.pendingSize = null;
+                user.markModified('sessionData');
+                await user.save();
+                return this.startCheckout(ctx);
             }
 
-            // Reset state
-            user.currentState = 'idle';
-            user.sessionData = {};
-            await user.save();
+            // After selecting quantity, show the cart
+            await this.showCart(ctx);
         } catch (error) {
-            logger.error('Error selecting quantity:', error);
-            ctx.reply(`❌ ${error.message}`);
+            logger.error('Error handling quantity selection:', error);
+            ctx.reply(`❌ Error: ${error.message}`);
         }
     }
 
@@ -868,22 +933,29 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
             if (!cartSummary.isEmpty && validItems.length === 0) {
                 await cartService.clearCart(user._id);
             }
-            return ctx.replyWithMarkdown(
-                '🛒 *Your cart is empty*\n\nStart shopping to add items!',
-                Markup.inlineKeyboard([
-                    [Markup.button.callback('🛒 Browse Categories', 'show_categories')],
-                ])
-            );
+
+            const emptyMsg = '🛒 *Your cart is empty*\n\nStart shopping to add items!';
+            const emptyKb = Markup.inlineKeyboard([
+                [Markup.button.callback('🛒 Browse Categories', 'show_categories')],
+            ]);
+
+            if (ctx.callbackQuery) {
+                return await ctx.editMessageText(emptyMsg, { parse_mode: 'Markdown', ...emptyKb }).catch(() => {
+                    ctx.replyWithMarkdown(emptyMsg, emptyKb);
+                });
+            }
+            return ctx.replyWithMarkdown(emptyMsg, emptyKb);
         }
 
         let cartText = '*🛍️ Your Cart*\n\n';
 
         for (const item of validItems) {
             const priceText = item.discount > 0
-                ? `~₹${item.price}~ ₹${item.finalPrice.toFixed(0)}`
+                ? `~₹${item.price}~ ₹${(item.finalPrice || 0).toFixed(0)}`
                 : `₹${item.price}`;
 
-            cartText += `*${item.name}*\n`;
+            const sizeText = item.size ? ` [${item.size}]` : '';
+            cartText += `*${item.name}${sizeText}*\n`;
             cartText += `${priceText} × ${item.quantity} = ₹${item.itemTotal.toFixed(0)}\n\n`;
         }
 
@@ -919,40 +991,45 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
 
         if (cartImages.length > 0) {
             try {
-                const mediaGroup = cartImages.map(item => ({
-                    type: 'photo',
-                    media: { url: this.optimizeImageUrl(item.image, { width: 600 }) },
-                    caption: `📸 *${item.name}*`,
-                    parse_mode: 'Markdown'
-                }));
+                // If we have images, we prefer a single photo with caption to avoid message flooding
+                // and to allow easy EDITING which is faster.
+                const primaryImageUrl = this.optimizeImageUrl(cartImages[0].image, { width: 800 });
 
-                // If it's a callback, we delete the original message to avoid duplication
-                // because we can't edit a text message into a media group
-                if (isActuallyCallback) {
-                    await ctx.deleteMessage().catch(() => { });
-                }
-
-                if (mediaGroup.length > 1) {
-                    await ctx.replyWithMediaGroup(mediaGroup);
-                    await ctx.replyWithMarkdown(cartText, keyboard);
+                if (isActuallyCallback && ctx.callbackQuery.message.photo) {
+                    // Update existing photo message
+                    await ctx.editMessageMedia({
+                        type: 'photo',
+                        media: { url: primaryImageUrl },
+                        caption: cartText,
+                        parse_mode: 'Markdown'
+                    }, keyboard);
                 } else {
-                    await ctx.replyWithPhoto({ url: mediaGroup[0].media.url }, {
+                    // If callback but no photo (e.g. from text menu), delete and send new
+                    if (isActuallyCallback) await ctx.deleteMessage().catch(() => { });
+
+                    await ctx.replyWithPhoto({ url: primaryImageUrl }, {
                         caption: cartText,
                         parse_mode: 'Markdown',
                         ...keyboard
                     });
                 }
             } catch (err) {
-                logger.warn('Failed to send cart images:', err.message);
+                logger.warn('Failed to send/edit cart image, falling back to text:', err.message);
+                // Fallback: try to edit text if possible, else reply
                 if (isActuallyCallback) {
-                    await ctx.editMessageText(cartText, { parse_mode: 'Markdown', ...keyboard }).catch(() => ctx.replyWithMarkdown(cartText, keyboard));
+                    await ctx.editMessageText(cartText, { parse_mode: 'Markdown', ...keyboard }).catch(async () => {
+                        await ctx.replyWithMarkdown(cartText, keyboard);
+                    });
                 } else {
                     await ctx.replyWithMarkdown(cartText, keyboard);
                 }
             }
         } else {
+            // No images in cart
             if (isActuallyCallback) {
-                await ctx.editMessageText(cartText, { parse_mode: 'Markdown', ...keyboard }).catch(() => ctx.replyWithMarkdown(cartText, keyboard));
+                await ctx.editMessageText(cartText, { parse_mode: 'Markdown', ...keyboard }).catch(async () => {
+                    await ctx.replyWithMarkdown(cartText, keyboard);
+                });
             } else {
                 await ctx.replyWithMarkdown(cartText, keyboard);
             }
@@ -976,6 +1053,7 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
             // Robustly find the item
             const item = cart.items.find((i) => {
                 const itemProdId = i.product?._id || i.product;
+                if (!itemProdId) return false;
                 return itemProdId.toString() === productId.toString();
             });
 
@@ -1034,43 +1112,54 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
      * Start checkout process
      */
     async startCheckout(ctx) {
-        if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
+        try {
+            if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
 
-        const user = ctx.user;
-        const cartSummary = await cartService.getCartSummary(user._id);
+            const user = ctx.user;
+            const cartSummary = await cartService.getCartSummary(user._id);
 
-        if (cartSummary.isEmpty) {
-            return ctx.reply('Your cart is empty!');
-        }
+            if (cartSummary.isEmpty || cartSummary.items.length === 0) {
+                return ctx.reply('🛒 Your cart is empty! Please add some items before checking out.');
+            }
 
-        // Validate cart
-        const { isValid, issues } = await cartService.validateCart(user._id);
+            // Validate cart for stock and availability
+            const { isValid, issues } = await cartService.validateCart(user._id);
 
-        if (!isValid) {
-            let issueText = '⚠️ *Cart has issues:*\n\n';
-            issues.forEach((issue) => {
-                issueText += `• ${issue.issue}\n`;
-            });
-            return ctx.replyWithMarkdown(issueText);
-        }
+            if (!isValid) {
+                let issueText = '⚠️ Your cart has some issues that need to be fixed:\n\n';
+                issues.forEach((issue) => {
+                    issueText += `• ${issue.issue}\n`;
+                });
+                return ctx.reply(issueText, Markup.inlineKeyboard([
+                    [Markup.button.callback('🛍️ View Cart to Fix', 'show_cart')]
+                ]));
+            }
 
-        user.currentState = 'entering_address';
-        await user.save();
+            // Prepare for address entry/selection
+            user.currentState = 'entering_address';
+            await user.save();
 
-        // Check for saved addresses
-        if (user.addresses.length > 0) {
-            const defaultAddr = user.getDefaultAddress();
+            // Check for saved addresses
+            if (user.addresses && user.addresses.length > 0) {
+                const defaultAddr = user.getDefaultAddress();
 
-            await ctx.replyWithMarkdown(
-                `📍 *Delivery Address*\n\nUse saved address?\n\n${defaultAddr.label}: ${defaultAddr.address}`,
-                Markup.inlineKeyboard([
-                    [Markup.button.callback('✅ Use This Address', 'use_saved_address')],
-                    [Markup.button.callback('📝 Enter New Address', 'enter_new_address')],
-                    [Markup.button.callback('📍 Share Location', 'enter_new_address')],
-                ])
-            );
-        } else {
-            await this.promptNewAddress(ctx);
+                // Use a safe message format to avoid Markdown parsing errors if address has special chars
+                const addressMsg = `📍 *Delivery Address*\n\nUse your saved address?\n\n*${defaultAddr.label}*: ${defaultAddr.address}`;
+
+                await ctx.replyWithMarkdown(
+                    addressMsg,
+                    Markup.inlineKeyboard([
+                        [Markup.button.callback('✅ Use This Address', 'use_saved_address')],
+                        [Markup.button.callback('📝 Enter New Address', 'enter_new_address')],
+                        [Markup.button.callback('🏠 Back to Menu', 'back_to_menu')],
+                    ])
+                );
+            } else {
+                await this.promptNewAddress(ctx);
+            }
+        } catch (error) {
+            logger.error('Error in startCheckout:', error);
+            ctx.reply('❌ Sorry, I encountered an error while starting the checkout. Please try again or contact support if this persists.');
         }
     }
 
@@ -1097,22 +1186,33 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
      * Use saved address
      */
     async useSavedAddress(ctx) {
-        if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
+        try {
+            if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
 
-        const user = ctx.user;
-        const address = user.getDefaultAddress();
+            const user = ctx.user;
+            const address = user.getDefaultAddress();
 
-        user.sessionData = {
-            ...user.sessionData,
-            deliveryAddress: {
-                address: address.address,
-                coordinates: address.location.coordinates,
-            },
-        };
-        user.currentState = 'selecting_payment';
-        await user.save();
+            if (!address) {
+                return ctx.reply('⚠️ No saved address found. Please enter a new address.');
+            }
 
-        await this.showPaymentMethods(ctx);
+            user.sessionData = {
+                ...user.sessionData,
+                deliveryAddress: {
+                    address: address.address,
+                    // Safe check for location coordinates
+                    coordinates: address.location?.coordinates || [77.5946, 12.9716],
+                },
+            };
+            user.currentState = 'selecting_payment';
+            user.markModified('sessionData');
+            await user.save();
+
+            await this.showPaymentMethods(ctx);
+        } catch (error) {
+            logger.error('Error in useSavedAddress:', error);
+            ctx.reply('❌ Sorry, I had trouble loading your saved address. Please try entering a new one.');
+        }
     }
 
     /**
@@ -1221,33 +1321,39 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
      * Handle address input
      */
     async handleAddressInput(ctx, address) {
-        const user = ctx.user;
+        try {
+            const user = ctx.user;
 
-        // Simple geocoding fallback (in production, use Google Maps API)
-        user.sessionData = {
-            ...user.sessionData,
-            deliveryAddress: {
+            // Simple geocoding fallback (in production, use Google Maps API)
+            user.sessionData = {
+                ...user.sessionData,
+                deliveryAddress: {
+                    address: address,
+                    coordinates: [77.5946, 12.9716], // Default to Bangalore
+                },
+            };
+
+            // Save to user addresses
+            user.addresses.push({
+                label: 'Delivery Address',
                 address: address,
-                coordinates: [77.5946, 12.9716], // Default to Bangalore
-            },
-        };
+                location: {
+                    type: 'Point',
+                    coordinates: [77.5946, 12.9716],
+                },
+                isDefault: user.addresses.length === 0,
+            });
 
-        // Save to user addresses
-        user.addresses.push({
-            label: 'Delivery Address',
-            address: address,
-            location: {
-                type: 'Point',
-                coordinates: [77.5946, 12.9716],
-            },
-            isDefault: user.addresses.length === 0,
-        });
+            user.currentState = 'selecting_payment';
+            user.markModified('sessionData');
+            await user.save();
 
-        user.currentState = 'selecting_payment';
-        await user.save();
-
-        await ctx.reply('📍 Address saved!', Markup.removeKeyboard());
-        await this.showPaymentMethods(ctx);
+            await ctx.reply('📍 Address saved!', Markup.removeKeyboard());
+            await this.showPaymentMethods(ctx);
+        } catch (error) {
+            logger.error('Error in handleAddressInput:', error);
+            ctx.reply('❌ Sorry, I had trouble saving your address. Please try again.');
+        }
     }
 
     /**
@@ -1264,12 +1370,13 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
      * Show payment methods
      */
     async showPaymentMethods(ctx) {
-        const user = ctx.user;
-        const cartSummary = await cartService.getCartSummary(user._id);
-        const grandTotal = cartSummary.total + 40;
-        const RAZORPAY_LIMIT = 50000;
+        try {
+            const user = ctx.user;
+            const cartSummary = await cartService.getCartSummary(user._id);
+            const grandTotal = cartSummary.total + 40;
+            const RAZORPAY_LIMIT = 50000;
 
-        let message = `
+            let message = `
 💳 *Select Payment Method*
 
 📦 Items: ${cartSummary.itemCount}
@@ -1279,23 +1386,37 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}
 *Grand Total: ₹${grandTotal.toFixed(0)}*
 `.trim();
 
-        const buttons = [];
+            const buttons = [];
 
-        if (grandTotal > RAZORPAY_LIMIT) {
-            message += `\n\n⚠️ *High Value Order:* Online payment is limited to ₹${RAZORPAY_LIMIT} in test mode. Please use Cash on Delivery or reduce your cart amount.`;
-            buttons.push([Markup.button.callback('💵 Cash on Delivery', 'pay_cod')]);
-        } else {
-            message += `\n\nHow would you like to pay?`;
-            buttons.push([Markup.button.callback('💳 Pay Online (Razorpay)', 'pay_razorpay')]);
-            buttons.push([Markup.button.callback('💵 Cash on Delivery', 'pay_cod')]);
+            if (grandTotal > RAZORPAY_LIMIT) {
+                message += `\n\n⚠️ *High Value Order:* Online payment is limited to ₹${RAZORPAY_LIMIT} in test mode. Please use Cash on Delivery or reduce your cart amount.`;
+                buttons.push([Markup.button.callback('💵 Cash on Delivery', 'pay_cod')]);
+            } else {
+                message += `\n\nHow would you like to pay?`;
+                buttons.push([Markup.button.callback('💳 Pay Online (Razorpay)', 'pay_razorpay')]);
+                buttons.push([Markup.button.callback('💵 Cash on Delivery', 'pay_cod')]);
+            }
+
+            buttons.push([Markup.button.callback('❌ Cancel', 'back_to_menu')]);
+
+            // If it was triggered by a callback, we edit the message for speed
+            if (ctx.callbackQuery) {
+                await ctx.editMessageText(message, {
+                    parse_mode: 'Markdown',
+                    ...Markup.inlineKeyboard(buttons)
+                }).catch(async () => {
+                    await ctx.replyWithMarkdown(message, Markup.inlineKeyboard(buttons));
+                });
+            } else {
+                await ctx.replyWithMarkdown(
+                    message,
+                    Markup.inlineKeyboard(buttons)
+                );
+            }
+        } catch (error) {
+            logger.error('Error in showPaymentMethods:', error);
+            ctx.reply('❌ Error loading payment options. Please try again from the cart.');
         }
-
-        buttons.push([Markup.button.callback('❌ Cancel', 'back_to_menu')]);
-
-        await ctx.replyWithMarkdown(
-            message,
-            Markup.inlineKeyboard(buttons)
-        );
     }
 
     /**
@@ -1824,7 +1945,7 @@ ${order.estimatedDeliveryTime ? `⏱️ ETA: ${new Date(order.estimatedDeliveryT
                 const products = await productService.searchProducts(aiResult.data.product, 1);
                 if (products.length > 0) {
                     const product = products[0];
-                    const imageUrl = this.optimizeImageUrl(product.getPrimaryImage(), { width: 600 });
+                    const imageUrl = this.optimizeImageUrl(product.getPrimaryImage(), { width: 500, quality: 'eco' });
                     if (imageUrl) {
                         try {
                             await ctx.replyWithPhoto({ url: imageUrl }, {
@@ -1858,7 +1979,11 @@ ${order.estimatedDeliveryTime ? `⏱️ ETA: ${new Date(order.estimatedDeliveryT
                                 await this.sendProductCard(ctx, product);
                             }
                         } else {
-                            await ctx.reply(`I couldn't find any products matching "${aiResult.data.product}".`);
+                            await ctx.reply(`I couldn't find any products matching "${aiResult.data.product}". Here are some featured items you might like instead:`);
+                            const featured = await productService.getFeaturedProducts(3);
+                            for (const product of featured) {
+                                await this.sendProductCard(ctx, product);
+                            }
                         }
                     }
                     break;
@@ -1917,6 +2042,17 @@ ${order.estimatedDeliveryTime ? `⏱️ ETA: ${new Date(order.estimatedDeliveryT
             if (query && query.trim().length > 0) {
                 // Search for products
                 products = await productService.searchProducts(query, 20);
+
+                // If results are thin, add some featured products as suggestions
+                if (products.length < 5) {
+                    const featured = await productService.getFeaturedProducts(10);
+                    const existingIds = new Set(products.map(p => p._id.toString()));
+                    for (const f of featured) {
+                        if (!existingIds.has(f._id.toString()) && products.length < 20) {
+                            products.push(f);
+                        }
+                    }
+                }
             } else {
                 // Show featured products if no query
                 products = await productService.getFeaturedProducts(20);

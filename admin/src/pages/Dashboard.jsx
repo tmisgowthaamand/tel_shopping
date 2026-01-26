@@ -10,6 +10,7 @@ import {
     CheckCircle,
     ArrowRight
 } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 import { orderApi, productApi, userApi } from '../services/api';
 
 const Dashboard = () => {
@@ -20,6 +21,7 @@ const Dashboard = () => {
     });
     const [recentOrders, setRecentOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -56,24 +58,30 @@ const Dashboard = () => {
     }
 
     const statCards = [
-        { label: 'Total Revenue', value: `₹${stats.orders.totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'success' },
-        { label: 'Total Orders', value: stats.orders.totalOrders, icon: ShoppingCart, color: 'primary' },
-        { label: 'Total Users', value: stats.users.total, icon: Users, color: 'info' },
-        { label: 'Active Products', value: stats.products.activeProducts, icon: Package, color: 'warning' },
+        { label: 'Total Revenue', value: `₹${stats.orders.totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'success', sub: 'Gross earnings' },
+        { label: 'Total Orders', value: stats.orders.totalOrders, icon: ShoppingCart, color: 'primary', sub: 'Orders placed' },
+        { label: 'Total Users', value: stats.users.total, icon: Users, color: 'info', sub: 'Registered customers' },
+        { label: 'Unique SKUs', value: stats.products.totalProducts, icon: Package, color: 'warning', sub: 'Product variety' },
+        { label: 'Total Inventory', value: stats.products.totalStock, icon: TrendingUp, color: 'primary', sub: 'Items in stock' },
     ];
 
     return (
         <div className="dashboard">
             {/* Stats Grid */}
-            <div className="stats-grid">
+            <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginBottom: '2rem' }}>
                 {statCards.map((stat, index) => (
-                    <div key={index} className="stat-card">
-                        <div className={`stat-icon ${stat.color}`}>
-                            <stat.icon size={24} />
+                    <div key={index} className="stat-card" style={{
+                        border: '1px solid var(--gray-200)',
+                        transition: 'transform 0.2s',
+                        cursor: 'default'
+                    }}>
+                        <div className={`stat-icon ${stat.color}`} style={{ borderRadius: '1rem' }}>
+                            <stat.icon size={20} />
                         </div>
                         <div className="stat-content">
-                            <p>{stat.label}</p>
-                            <h3>{stat.value}</h3>
+                            <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--gray-500)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{stat.label}</p>
+                            <h3 style={{ fontSize: '1.5rem', margin: '0.25rem 0' }}>{stat.value}</h3>
+                            <span style={{ fontSize: '0.7rem', color: 'var(--gray-400)' }}>{stat.sub}</span>
                         </div>
                     </div>
                 ))}
@@ -81,10 +89,16 @@ const Dashboard = () => {
 
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem' }}>
                 {/* Recent Orders */}
-                <div className="card">
+                <div className="card" style={{ border: '1px solid var(--gray-200)' }}>
                     <div className="card-header">
                         <h3 className="card-title">Recent Orders</h3>
-                        <button className="btn btn-secondary">View All <ArrowRight size={16} /></button>
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() => navigate('/orders')}
+                            style={{ gap: '0.5rem', padding: '0.4rem 0.8rem' }}
+                        >
+                            View All <ArrowRight size={14} />
+                        </button>
                     </div>
                     <div className="table-container">
                         <table>

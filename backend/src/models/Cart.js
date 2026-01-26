@@ -20,6 +20,10 @@ const cartItemSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    size: {
+        type: String,
+        default: null,
+    },
 });
 
 const cartSchema = new mongoose.Schema(
@@ -55,11 +59,13 @@ const cartSchema = new mongoose.Schema(
 );
 
 // Method to add item to cart
-cartSchema.methods.addItem = async function (productId, quantity, price, discount = 0) {
+cartSchema.methods.addItem = async function (productId, quantity, price, discount = 0, size = null) {
     const existingItem = this.items.find(
         (item) => {
-            const itemProdId = item.product._id || item.product;
-            return itemProdId.toString() === productId.toString();
+            const itemProdId = item.product?._id || item.product;
+            return itemProdId &&
+                itemProdId.toString() === productId.toString() &&
+                item.size === size;
         }
     );
 
@@ -71,6 +77,7 @@ cartSchema.methods.addItem = async function (productId, quantity, price, discoun
             quantity,
             priceAtAdd: price,
             discountAtAdd: discount,
+            size: size,
         });
     }
 
@@ -82,8 +89,8 @@ cartSchema.methods.addItem = async function (productId, quantity, price, discoun
 cartSchema.methods.updateItemQuantity = async function (productId, quantity) {
     const item = this.items.find(
         (item) => {
-            const itemProdId = item.product._id || item.product;
-            return itemProdId.toString() === productId.toString();
+            const itemProdId = item.product?._id || item.product;
+            return itemProdId && itemProdId.toString() === productId.toString();
         }
     );
 
@@ -91,8 +98,8 @@ cartSchema.methods.updateItemQuantity = async function (productId, quantity) {
         if (quantity <= 0) {
             this.items = this.items.filter(
                 (item) => {
-                    const itemProdId = item.product._id || item.product;
-                    return itemProdId.toString() !== productId.toString();
+                    const itemProdId = item.product?._id || item.product;
+                    return itemProdId && itemProdId.toString() !== productId.toString();
                 }
             );
         } else {
@@ -107,8 +114,8 @@ cartSchema.methods.updateItemQuantity = async function (productId, quantity) {
 cartSchema.methods.removeItem = async function (productId) {
     this.items = this.items.filter(
         (item) => {
-            const itemProdId = item.product._id || item.product;
-            return itemProdId.toString() !== productId.toString();
+            const itemProdId = item.product?._id || item.product;
+            return itemProdId && itemProdId.toString() !== productId.toString();
         }
     );
     await this.calculateTotals();
@@ -132,9 +139,12 @@ cartSchema.methods.calculateTotals = async function () {
         }
     }
 
+    // Final safeguard: filter out any items with missing products that survived
+    this.items = this.items.filter(item => item.product);
+
     this.subtotal = subtotal;
     this.discount = discount;
-    this.total = subtotal - discount;
+    this.total = Math.max(0, subtotal - discount);
     this.lastUpdated = new Date();
 };
 

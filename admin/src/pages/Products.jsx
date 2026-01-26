@@ -9,7 +9,8 @@ import {
     ChevronRight,
     X,
     Upload,
-    AlertCircle
+    AlertCircle,
+    Database
 } from 'lucide-react';
 import { productApi, categoryApi } from '../services/api';
 
@@ -21,11 +22,18 @@ const Products = () => {
     const [page, setPage] = useState(1);
     const [showProductModal, setShowProductModal] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
+    const [stats, setStats] = useState({ totalStock: 0, totalValue: 0 });
     const [searchTerm, setSearchTerm] = useState('');
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [confirmData, setConfirmData] = useState({ title: '', message: '', onConfirm: null });
     const [notification, setNotification] = useState(null);
     const [confirmLoading, setConfirmLoading] = useState(false);
+    const [generatingAI, setGeneratingAI] = useState(false);
+    const [imageSource, setImageSource] = useState('link'); // 'link' or 'device'
+    const [selectedCategory, setSelectedCategory] = useState('all');
+    const [uploadingImage, setUploadingImage] = useState(false);
+    const [showBulkModal, setShowBulkModal] = useState(false);
+    const [bulkJson, setBulkJson] = useState('');
 
     // Form State
     const [formData, setFormData] = useState({
@@ -36,7 +44,8 @@ const Products = () => {
         stock: '',
         category: '',
         isFeatured: false,
-        images: [{ url: '', isPrimary: true }]
+        images: [{ url: '', isPrimary: true }],
+        sizes: []
     });
 
     // Unsplash Search State
@@ -44,6 +53,27 @@ const Products = () => {
     const [unsplashResults, setUnsplashResults] = useState([]);
     const [searchingUnsplash, setSearchingUnsplash] = useState(false);
     const [showUnsplashPicker, setShowUnsplashPicker] = useState(false);
+    const [sizeInput, setSizeInput] = useState('');
+
+    const addSize = (e) => {
+        e.preventDefault();
+        if (!sizeInput.trim()) return;
+        const newSize = sizeInput.trim().toUpperCase();
+        if (!formData.sizes.includes(newSize)) {
+            setFormData({
+                ...formData,
+                sizes: [...formData.sizes, newSize]
+            });
+        }
+        setSizeInput('');
+    };
+
+    const removeSize = (sizeToRemove) => {
+        setFormData({
+            ...formData,
+            sizes: formData.sizes.filter(s => s !== sizeToRemove)
+        });
+    };
 
     useEffect(() => {
         fetchCategories();
@@ -54,7 +84,7 @@ const Products = () => {
             fetchProducts();
         }, 500);
         return () => clearTimeout(delaySearch);
-    }, [page, searchTerm]);
+    }, [page, searchTerm, selectedCategory]);
 
     const fetchProducts = async () => {
         setLoading(true);
@@ -62,10 +92,15 @@ const Products = () => {
             const response = await productApi.getProducts({
                 page,
                 limit: 12,
-                search: searchTerm
+                search: searchTerm,
+                category: selectedCategory === 'all' ? undefined : selectedCategory
             });
             setProducts(response.data.products);
             setTotal(response.data.total);
+
+            // Fetch global stats for the header
+            const statsRes = await productApi.getStats();
+            setStats(statsRes.data);
         } catch (error) {
             console.error('Error fetching products:', error);
         } finally {
@@ -92,7 +127,8 @@ const Products = () => {
             stock: product.stock,
             category: product.category?._id || product.category,
             isFeatured: product.isFeatured,
-            images: product.images.length > 0 ? product.images : [{ url: '', isPrimary: true }]
+            images: product.images.length > 0 ? product.images : [{ url: '', isPrimary: true }],
+            sizes: product.sizes || []
         });
         setShowProductModal(true);
     };
@@ -148,6 +184,50 @@ const Products = () => {
         setShowUnsplashPicker(false);
     };
 
+    const generateAIDescription = async () => {
+        if (!formData.name) {
+            showToast('Please enter a product name first', 'danger');
+            return;
+        }
+        setGeneratingAI(true);
+        try {
+            const response = await productApi.generateAIDescription({
+                name: formData.name,
+                categoryId: formData.category
+            });
+            setFormData({ ...formData, description: response.data.description });
+            showToast('Description generated!');
+        } catch (error) {
+            console.error('AI error:', error);
+            showToast('AI generation failed', 'danger');
+        } finally {
+            setGeneratingAI(false);
+        }
+    };
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formDataToUpload = new FormData();
+        formDataToUpload.append('image', file);
+
+        setUploadingImage(true);
+        try {
+            const response = await productApi.uploadImage(formDataToUpload);
+            setFormData({
+                ...formData,
+                images: [{ url: response.data.url, isPrimary: true }]
+            });
+            showToast('Image uploaded successfully');
+        } catch (error) {
+            console.error('Upload error:', error);
+            showToast('Upload failed', 'danger');
+        } finally {
+            setUploadingImage(false);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -166,6 +246,7 @@ const Products = () => {
             setShowProductModal(false);
             setEditingProduct(null);
             setSearchTerm('');
+            setSelectedCategory('all');
             showToast(editingProduct ? 'Product updated' : 'Product created');
             fetchProducts();
         } catch (error) {
@@ -173,8 +254,69 @@ const Products = () => {
         }
     };
 
+    const handleBulkSubmit = async () => {
+        try {
+            const data = JSON.parse(bulkJson);
+            if (!Array.isArray(data)) {
+                showToast('Must be a JSON array', 'danger');
+                return;
+            }
+            setConfirmLoading(true);
+            await productApi.bulkCreate(data);
+            showToast(`Bulk add successful!`);
+            setShowBulkModal(false);
+            setBulkJson('');
+            fetchProducts();
+        } catch (error) {
+            showToast('Invalid JSON or error: ' + (error.response?.data?.error || error.message), 'danger');
+        } finally {
+            setConfirmLoading(false);
+        }
+    };
+
     return (
         <div className="products-page">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <h1 className="page-title" style={{ margin: 0, display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                    Products
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <span style={{
+                            fontSize: '0.875rem',
+                            background: 'rgba(99, 102, 241, 0.1)',
+                            color: 'var(--primary)',
+                            padding: '0.25rem 0.75rem',
+                            borderRadius: '0.5rem',
+                            fontWeight: 600,
+                            border: '1px solid rgba(99, 102, 241, 0.2)'
+                        }}>
+                            {total} Unique SKUs
+                        </span>
+                        <span style={{
+                            fontSize: '0.875rem',
+                            background: 'rgba(16, 185, 129, 0.1)',
+                            color: 'var(--success)',
+                            padding: '0.25rem 0.75rem',
+                            borderRadius: '0.5rem',
+                            fontWeight: 600,
+                            border: '1px solid rgba(16, 185, 129, 0.2)'
+                        }}>
+                            Total Stock: {stats.totalStock}
+                        </span>
+                        <span style={{
+                            fontSize: '0.875rem',
+                            background: 'rgba(245, 158, 11, 0.1)',
+                            color: 'var(--warning)',
+                            padding: '0.25rem 0.75rem',
+                            borderRadius: '0.5rem',
+                            fontWeight: 600,
+                            border: '1px solid rgba(245, 158, 11, 0.2)'
+                        }}>
+                            Inventory Value: ₹{stats.totalValue?.toLocaleString()}
+                        </span>
+                    </div>
+                </h1>
+            </div>
+
             <div className="card" style={{ marginBottom: '1.5rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div style={{ position: 'relative', width: '400px' }}>
@@ -203,13 +345,51 @@ const Products = () => {
                                 stock: '',
                                 category: '',
                                 isFeatured: false,
-                                images: [{ url: '', isPrimary: true }]
+                                images: [{ url: '', isPrimary: true }],
+                                sizes: []
                             });
                             setShowProductModal(true);
                         }}
                     >
                         <Plus size={18} /> Add Product
                     </button>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={() => setShowBulkModal(true)}
+                        style={{ marginLeft: '1rem' }}
+                    >
+                        <Database size={18} /> Bulk Add
+                    </button>
+                </div>
+            </div>
+
+            {/* Category Filter Bar */}
+            <div className="card" style={{ marginBottom: '1.5rem', padding: '0.75rem' }}>
+                <div style={{
+                    display: 'flex',
+                    gap: '0.75rem',
+                    overflowX: 'auto',
+                    paddingBottom: '0.25rem',
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none'
+                }}>
+                    <button
+                        className={`btn ${selectedCategory === 'all' ? 'btn-primary' : 'btn-secondary'}`}
+                        style={{ whiteSpace: 'nowrap', padding: '0.5rem 1.25rem' }}
+                        onClick={() => { setSelectedCategory('all'); setPage(1); }}
+                    >
+                        All Products
+                    </button>
+                    {categories.map(cat => (
+                        <button
+                            key={cat._id}
+                            className={`btn ${selectedCategory === cat._id ? 'btn-primary' : 'btn-secondary'}`}
+                            style={{ whiteSpace: 'nowrap', padding: '0.5rem 1.25rem' }}
+                            onClick={() => { setSelectedCategory(cat._id); setPage(1); }}
+                        >
+                            {cat.icon} {cat.name}
+                        </button>
+                    ))}
                 </div>
             </div>
 
@@ -253,7 +433,7 @@ const Products = () => {
                                     <h4 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '0.5rem' }}>{product.name}</h4>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <div>
-                                            <span style={{ fontWeight: 700, fontSize: '1.25rem' }}>₹{product.finalPrice || product.price}</span>
+                                            <span style={{ fontWeight: 700, fontSize: '1.25rem' }}>₹{Math.round(product.finalPrice || product.price)}</span>
                                             {product.discount > 0 && <span style={{ fontSize: '0.75rem', color: 'var(--gray-500)', textDecoration: 'line-through', marginLeft: '0.5rem' }}>₹{product.price}</span>}
                                         </div>
                                         <span className={`badge ${product.stock > 10 ? 'badge-success' : 'badge-danger'}`}>
@@ -302,7 +482,17 @@ const Products = () => {
                             </div>
 
                             <div className="form-group">
-                                <label className="form-label">Description</label>
+                                <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    Description
+                                    <button
+                                        type="button"
+                                        onClick={generateAIDescription}
+                                        disabled={generatingAI}
+                                        style={{ fontSize: '0.75rem', color: 'var(--primary)', border: 'none', background: 'none', cursor: 'pointer', fontWeight: 600 }}
+                                    >
+                                        {generatingAI ? '✨ Generating...' : '✨ Generate with AI'}
+                                    </button>
+                                </label>
                                 <textarea
                                     className="form-input"
                                     rows="3"
@@ -334,6 +524,24 @@ const Products = () => {
                                 </div>
                             </div>
 
+                            {formData.price && (
+                                <div style={{
+                                    padding: '0.75rem',
+                                    background: 'var(--gray-50)',
+                                    borderRadius: '0.5rem',
+                                    marginBottom: '1rem',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    border: '1px solid var(--gray-200)'
+                                }}>
+                                    <span style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--gray-600)' }}>Final Price to Customer:</span>
+                                    <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--primary)' }}>
+                                        ₹{Math.round(parseFloat(formData.price || 0) - (parseFloat(formData.price || 0) * parseFloat(formData.discount || 0) / 100))}
+                                    </span>
+                                </div>
+                            )}
+
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                                 <div className="form-group">
                                     <label className="form-label">Stock Quantity</label>
@@ -362,37 +570,142 @@ const Products = () => {
                             </div>
 
                             <div className="form-group">
-                                <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    Primary Image URL
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setUnsplashSearch(formData.name || 'product');
-                                            setShowUnsplashPicker(true);
-                                        }}
-                                        style={{ fontSize: '0.75rem', color: 'var(--primary)', border: 'none', background: 'none', cursor: 'pointer', fontWeight: 600 }}
-                                    >
-                                        ✨ Search Unsplash
-                                    </button>
-                                </label>
-                                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                <label className="form-label">Available Sizes (Fashion)</label>
+                                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
                                     <input
                                         type="text"
                                         className="form-input"
-                                        placeholder="https://example.com/image.jpg"
-                                        value={formData.images[0].url}
-                                        onChange={(e) => setFormData({
-                                            ...formData,
-                                            images: [{ url: e.target.value, isPrimary: true }]
-                                        })}
-                                        style={{ flex: 1 }}
+                                        placeholder="e.g. S, M, L, XL"
+                                        value={sizeInput}
+                                        onChange={(e) => setSizeInput(e.target.value)}
+                                        onKeyPress={(e) => e.key === 'Enter' && addSize(e)}
                                     />
-                                    {formData.images[0].url && (
-                                        <div style={{ width: '40px', height: '40px', borderRadius: '0.25rem', overflow: 'hidden', flexShrink: 0 }}>
-                                            <img src={formData.images[0].url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Preview" />
-                                        </div>
-                                    )}
+                                    <button type="button" className="btn btn-secondary" onClick={addSize}>Add</button>
                                 </div>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                                    {formData.sizes.map(size => (
+                                        <span key={size} className="badge badge-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem' }}>
+                                            {size}
+                                            <X size={14} style={{ cursor: 'pointer' }} onClick={() => removeSize(size)} />
+                                        </span>
+                                    ))}
+                                    {formData.sizes.length === 0 && <span style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>No sizes added</span>}
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Product Image</label>
+                                <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.75rem' }}>
+                                    <button
+                                        type="button"
+                                        className={`btn ${imageSource === 'link' ? 'btn-primary' : 'btn-secondary'}`}
+                                        style={{ flex: 1, fontSize: '0.75rem', padding: '0.4rem' }}
+                                        onClick={() => setImageSource('link')}
+                                    >
+                                        URL / Unsplash
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={`btn ${imageSource === 'device' ? 'btn-primary' : 'btn-secondary'}`}
+                                        style={{ flex: 1, fontSize: '0.75rem', padding: '0.4rem' }}
+                                        onClick={() => setImageSource('device')}
+                                    >
+                                        Upload from Device
+                                    </button>
+                                </div>
+
+                                {imageSource === 'link' ? (
+                                    <>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                                            <span style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>Enter Image URL</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setUnsplashSearch(formData.name || 'product');
+                                                    setShowUnsplashPicker(true);
+                                                }}
+                                                style={{ fontSize: '0.75rem', color: 'var(--primary)', border: 'none', background: 'none', cursor: 'pointer', fontWeight: 600 }}
+                                            >
+                                                ✨ Search Unsplash
+                                            </button>
+                                        </div>
+                                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                            <input
+                                                type="text"
+                                                className="form-input"
+                                                placeholder="https://example.com/image.jpg"
+                                                value={formData.images[0].url}
+                                                onChange={(e) => setFormData({
+                                                    ...formData,
+                                                    images: [{ url: e.target.value, isPrimary: true }]
+                                                })}
+                                                style={{ flex: 1 }}
+                                            />
+                                            {formData.images[0].url && (
+                                                <div style={{ width: '40px', height: '40px', borderRadius: '0.25rem', overflow: 'hidden', flexShrink: 0 }}>
+                                                    <img src={formData.images[0].url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Preview" />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div style={{
+                                        border: '2px dashed var(--gray-200)',
+                                        borderRadius: '0.5rem',
+                                        padding: '1.5rem',
+                                        textAlign: 'center',
+                                        position: 'relative',
+                                        background: 'var(--gray-50)'
+                                    }}>
+                                        {uploadingImage ? (
+                                            <div className="spinner" style={{ margin: '0 auto' }}></div>
+                                        ) : (
+                                            <>
+                                                {formData.images[0].url ? (
+                                                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                                                        <img
+                                                            src={formData.images[0].url}
+                                                            style={{ maxWidth: '100%', maxHeight: '120px', borderRadius: '0.5rem' }}
+                                                            alt="Preview"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setFormData({ ...formData, images: [{ url: '', isPrimary: true }] })}
+                                                            style={{
+                                                                position: 'absolute',
+                                                                top: '-10px',
+                                                                right: '-10px',
+                                                                background: 'var(--danger)',
+                                                                color: 'white',
+                                                                border: 'none',
+                                                                borderRadius: '50%',
+                                                                width: '24px',
+                                                                height: '24px',
+                                                                cursor: 'pointer',
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                justifyContent: 'center'
+                                                            }}
+                                                        >
+                                                            <X size={14} />
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <label style={{ cursor: 'pointer' }}>
+                                                        <Upload size={32} color="var(--gray-400)" style={{ marginBottom: '0.5rem' }} />
+                                                        <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)' }}>Click to upload image</p>
+                                                        <input
+                                                            type="file"
+                                                            hidden
+                                                            accept="image/*"
+                                                            onChange={handleImageUpload}
+                                                        />
+                                                    </label>
+                                                )}
+                                            </>
+                                        )}
+                                    </div>
+                                )}
                             </div>
 
                             {showUnsplashPicker && (
@@ -495,6 +808,42 @@ const Products = () => {
                                 disabled={confirmLoading}
                             >
                                 {confirmLoading ? 'Deleting...' : 'Delete'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showBulkModal && (
+                <div className="modal-overlay">
+                    <div className="modal" style={{ maxWidth: '600px' }}>
+                        <div className="modal-header">
+                            <h3 className="modal-title">Bulk Add Products</h3>
+                            <button className="btn-close" onClick={() => setShowBulkModal(false)}>
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)', marginBottom: '1rem' }}>
+                                Paste a JSON array of products. Each product should have <code>name</code>, <code>price</code>, <code>category</code>, etc.
+                            </p>
+                            <textarea
+                                className="form-input"
+                                rows="15"
+                                placeholder='[{"name": "Product 1", "price": 100, "category": "CATEGORY_ID", "stock": 10}, ...]'
+                                value={bulkJson}
+                                onChange={(e) => setBulkJson(e.target.value)}
+                                style={{ fontFamily: 'monospace', fontSize: '0.75rem' }}
+                            ></textarea>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowBulkModal(false)}>Cancel</button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleBulkSubmit}
+                                disabled={confirmLoading || !bulkJson.trim()}
+                            >
+                                {confirmLoading ? <div className="spinner" style={{ width: '1rem', height: '1rem' }}></div> : 'Import Products'}
                             </button>
                         </div>
                     </div>

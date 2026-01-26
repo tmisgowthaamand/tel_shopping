@@ -22,16 +22,22 @@ class OrderService {
             // Validate stock
             await this.validateStock(cart.items);
 
-            // Create order items
-            const orderItems = cart.items.map((item) => ({
+            // Create order items - FILTER out items where product no longer exists
+            const validItems = cart.items.filter(item => item.product);
+
+            if (validItems.length === 0) {
+                throw new Error('All products in your cart are no longer available. Please clear your cart and start again.');
+            }
+
+            const orderItems = validItems.map((item) => ({
                 product: item.product._id,
                 productName: item.product.name,
-                productImage: item.product.getPrimaryImage(),
+                productImage: typeof item.product.getPrimaryImage === 'function' ? item.product.getPrimaryImage() : null,
                 quantity: item.quantity,
                 price: item.product.price,
                 discount: item.product.discount,
                 finalPrice: item.product.finalPrice,
-                total: item.product.finalPrice * item.quantity,
+                total: (item.product.finalPrice || item.product.price) * item.quantity,
             }));
 
             // Calculate delivery fee based on location
@@ -108,9 +114,12 @@ class OrderService {
      */
     async validateStock(items) {
         for (const item of items) {
-            const product = await Product.findById(item.product._id || item.product);
+            if (!item || (!item.product && !item.productId)) continue;
+            const productId = item.product?._id || item.product || item.productId;
+            const product = await Product.findById(productId);
             if (!product) {
-                throw new Error(`Product not found: ${item.product}`);
+                // If product is gone, it will be filtered out during order creation
+                continue;
             }
             if (product.availableStock < item.quantity) {
                 throw new Error(`Insufficient stock for ${product.name}`);
@@ -123,8 +132,12 @@ class OrderService {
      */
     async reserveStock(items) {
         for (const item of items) {
-            const product = await Product.findById(item.product._id || item.product);
-            await product.reserveStock(item.quantity);
+            if (!item || (!item.product && !item.productId)) continue;
+            const productId = item.product?._id || item.product || item.productId;
+            const product = await Product.findById(productId);
+            if (product) {
+                await product.reserveStock(item.quantity);
+            }
         }
     }
 

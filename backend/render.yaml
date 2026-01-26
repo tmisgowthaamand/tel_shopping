@@ -1,0 +1,54 @@
+services:
+  # Backend API
+  - type: web
+    name: telegram-store-backend
+    env: docker
+    plan: free
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        fromConfig: true
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: telegram-store-redis
+          property: connectionString
+      - key: TELEGRAM_BOT_TOKEN
+        fromConfig: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: admin@atzstore.com
+      - key: ADMIN_PASSWORD
+        fromConfig: true
+
+  # Background Worker (for BullMQ)
+  - type: worker
+    name: telegram-store-worker
+    env: docker
+    plan: free
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    # Override CMD to run worker
+    startCommand: node src/jobs/worker.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        fromConfig: true
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: telegram-store-redis
+          property: connectionString
+      - key: TELEGRAM_BOT_TOKEN
+        fromConfig: true
+
+  # Redis Instance
+  - type: redis
+    name: telegram-store-redis
+    plan: free
+    ipAllowList: [] # Only allow internal connections

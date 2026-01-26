@@ -37,7 +37,7 @@ const productSchema = new mongoose.Schema(
         finalPrice: {
             type: Number,
             default: function () {
-                return this.price - (this.price * this.discount) / 100;
+                return Math.round((this.price - (this.price * this.discount) / 100) * 100) / 100;
             },
         },
         category: {
@@ -85,6 +85,7 @@ const productSchema = new mongoose.Schema(
             average: { type: Number, default: 0, min: 0, max: 5 },
             count: { type: Number, default: 0 },
         },
+        sizes: [{ type: String }],
     },
     {
         timestamps: true,
@@ -100,7 +101,7 @@ productSchema.virtual('availableStock').get(function () {
 
 // Pre-save middleware to calculate final price
 productSchema.pre('save', function (next) {
-    this.finalPrice = this.price - (this.price * this.discount) / 100;
+    this.finalPrice = Math.round((this.price - (this.price * this.discount) / 100) * 100) / 100;
     next();
 });
 

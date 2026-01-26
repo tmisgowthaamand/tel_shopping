@@ -1,5 +1,8 @@
-const { productService } = require('../services');
+const { productService, aiService } = require('../services');
+const { Product, Category } = require('../models');
 const logger = require('../utils/logger');
+const cloudinary = require('../utils/cloudinary');
+const fs = require('fs');
 
 /**
  * Get all products
@@ -8,31 +11,40 @@ exports.getProducts = async (req, res) => {
     try {
         const { category, page = 1, limit = 20, search, active } = req.query;
 
-        let products;
-        let total;
+        let query = {};
+
+        // Active status filter
+        if (active !== undefined) {
+            query.isActive = active === 'true';
+        } else {
+            query.isActive = true;
+        }
+
+        // Search filter
+        if (search) {
+            query.$text = { $search: search };
+        }
+
+        // Category filter
+        if (category && category !== 'all') {
+            query.category = category;
+        }
+
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+        const limitNum = parseInt(limit);
+
+        let mongoQuery = Product.find(query).populate('category');
 
         if (search) {
-            products = await productService.searchProducts(search, parseInt(limit));
-            total = products.length;
-        } else if (category) {
-            const result = await productService.getProductsByCategory(
-                category,
-                parseInt(page),
-                parseInt(limit)
-            );
-            products = result.products;
-            total = result.total;
+            mongoQuery = mongoQuery.sort({ score: { $meta: 'textScore' } });
         } else {
-            const { Product } = require('../models');
-            // Default to showing only active products unless explicitly requested
-            const query = active !== undefined ? { isActive: active === 'true' } : { isActive: true };
-            products = await Product.find(query)
-                .populate('category')
-                .skip((parseInt(page) - 1) * parseInt(limit))
-                .limit(parseInt(limit))
-                .sort({ createdAt: -1 });
-            total = await Product.countDocuments(query);
+            mongoQuery = mongoQuery.sort({ createdAt: -1 });
         }
+
+        const [products, total] = await Promise.all([
+            mongoQuery.skip(skip).limit(limitNum),
+            Product.countDocuments(query)
+        ]);
 
         res.json({
             products,
@@ -74,6 +86,27 @@ exports.createProduct = async (req, res) => {
     } catch (error) {
         logger.error('Create product error:', error);
         res.status(500).json({ error: error.message || 'Failed to create product' });
+    }
+};
+
+/**
+ * Bulk create products
+ */
+exports.bulkCreateProducts = async (req, res) => {
+    try {
+        if (!Array.isArray(req.body)) {
+            return res.status(400).json({ error: 'Body must be an array of products' });
+        }
+
+        const products = await Product.insertMany(req.body);
+        logger.info(`Bulk created ${products.length} products`);
+        res.status(201).json({
+            message: `Successfully created ${products.length} products`,
+            count: products.length
+        });
+    } catch (error) {
+        logger.error('Bulk create products error:', error);
+        res.status(500).json({ error: error.message || 'Failed to bulk create products' });
     }
 };
 
@@ -214,5 +247,59 @@ exports.deleteCategory = async (req, res) => {
     } catch (error) {
         logger.error('Delete category error:', error);
         res.status(500).json({ error: error.message || 'Failed to delete category' });
+    }
+};
+/**
+ * Generate AI description
+ */
+exports.generateAIDescription = async (req, res) => {
+    try {
+        const { name, categoryId } = req.body;
+        if (!name) return res.status(400).json({ error: 'Product name is required' });
+
+        let categoryName = 'General';
+        if (categoryId) {
+            const category = await productService.getCategory(categoryId);
+            if (category) categoryName = category.name;
+        }
+
+        const description = await aiService.generateProductDescription(name, categoryName);
+        res.json({ description });
+    } catch (error) {
+        logger.error('Generate AI description error:', error);
+        res.status(500).json({ error: 'Failed to generate AI description' });
+    }
+};
+
+/**
+ * Upload product image
+ */
+exports.uploadImage = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' });
+        }
+
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'atz-products',
+            use_filename: true,
+            unique_filename: true,
+        });
+
+        // Delete local file after upload
+        if (fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
+
+        res.json({
+            url: result.secure_url,
+            publicId: result.public_id,
+        });
+    } catch (error) {
+        logger.error('Upload image error:', error);
+        if (req.file && fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
+        res.status(500).json({ error: 'Failed to upload image' });
     }
 };

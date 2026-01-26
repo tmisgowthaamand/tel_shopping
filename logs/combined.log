@@ -1,0 +1,44 @@
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:09:02"}
+{"level":"info","message":"Connected to database for specific custom product seeding","service":"atz-store","timestamp":"2026-01-26 13:09:02"}
+{"level":"info","message":"Added product: Halonix 10W White LED Bulb B22","service":"atz-store","timestamp":"2026-01-26 13:09:03"}
+{"level":"info","message":"Updated product: Desidiya Universe Crystal Ball Night Light","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Desidiya LED Rice Light","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Zebronics Zeb‑Bro Wired Earphones","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Zebronics Zeb‑Jaguar Wireless Mouse","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Havells 9W Smart Bulb","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Longway Kwid Dry Iron","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Kenstar Estella Electric Kettle","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Pigeon Amaze Plus Electric Kettle","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: boAt BassHeads 100 Earphones","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Lifelong LLMG300 Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Updated product: Lifelong LLMG202 Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Longway Super Pro Juicer Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Voltas Beko Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"Added product: Cadlec JarGenie 4 Jar Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:09:04"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Connected to database for specific custom product seeding","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Halonix 10W White LED Bulb B22","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Desidiya Universe Crystal Ball Night Light","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Desidiya LED Rice Light","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Zebronics Zeb‑Bro Wired Earphones","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Zebronics Zeb‑Jaguar Wireless Mouse","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Havells 9W Smart Bulb","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Longway Kwid Dry Iron","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Kenstar Estella Electric Kettle","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Pigeon Amaze Plus Electric Kettle","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: boAt BassHeads 100 Earphones","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Lifelong LLMG300 Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Lifelong LLMG202 Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Longway Super Pro Juicer Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Voltas Beko Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"Updated product: Cadlec JarGenie 4 Jar Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:25:27"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"Connected to database for book seeding","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"Added book: Story Books For Kids | Set Of 10","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"Added book: Biographies For Kids | Set Of 5","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"Added book: The Art of Programming","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:43:09"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:12:49"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:20:41"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:29:27"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:39:59"}

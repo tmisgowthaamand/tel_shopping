@@ -4,6 +4,7 @@ module.exports = {
   // Server
   port: process.env.PORT || 3000,
   nodeEnv: process.env.NODE_ENV || 'development',
+  allowedOrigins: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : ['*'],
 
   // Telegram
   telegram: {

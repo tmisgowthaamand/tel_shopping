@@ -3340,3 +3340,845 @@
 {"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 10:14:55"}
 {"level":"error","message":"Error getting cart summary: Cannot read properties of null (reading '_id')","service":"atz-store","stack":"TypeError: Cannot read properties of null (reading '_id')\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\cartService.js:179:41\n    at Array.map (<anonymous>)\n    at methods.<computed> (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\types\\array\\methods\\index.js:1092:24)\n    at CartService.getCartSummary (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\cartService.js:178:38)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async BotService.showCart (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:861:29)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:141:13\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)","timestamp":"2026-01-26 10:15:04"}
 {"level":"error","message":"Bot error: Cannot read properties of null (reading '_id')","service":"atz-store","stack":"TypeError: Cannot read properties of null (reading '_id')\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\cartService.js:179:41\n    at Array.map (<anonymous>)\n    at methods.<computed> (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\types\\array\\methods\\index.js:1092:24)\n    at CartService.getCartSummary (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\cartService.js:178:38)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async BotService.showCart (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:861:29)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:141:13\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)","timestamp":"2026-01-26 10:15:04"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 10:16:04"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 10:16:04"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 10:16:04"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 10:16:04"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 10:16:08"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 10:16:08"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 10:16:08"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 10:16:08"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 10:16:08"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 10:16:08"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 10:16:08"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 10:16:08"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 10:16:08"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 10:16:09"}
+{"level":"info","message":"Cleared cart for user 69705d1444117a748bb93b21","service":"atz-store","timestamp":"2026-01-26 10:16:09"}
+{"level":"warn","message":"Media group failed, falling back to individual cards:","service":"atz-store","timestamp":"2026-01-26 10:16:29"}
+{"level":"warn","message":"Failed to send photo for product Aura Belt 30, falling back to text:","service":"atz-store","timestamp":"2026-01-26 10:16:32"}
+{"level":"warn","message":"Failed to send photo for product Elite Dress 29, falling back to text:","service":"atz-store","timestamp":"2026-01-26 10:16:33"}
+{"level":"info","message":"Added 1x Urban Sneakers 2 to cart for user 69705d1444117a748bb93b21","service":"atz-store","timestamp":"2026-01-26 10:16:53"}
+{"level":"warn","message":"Media group failed, falling back to individual cards:","service":"atz-store","timestamp":"2026-01-26 10:17:13"}
+{"level":"warn","message":"Failed to send photo for product Ethereal Hair Serum 3, falling back to text:","service":"atz-store","timestamp":"2026-01-26 10:17:13"}
+{"level":"warn","message":"Failed to send photo for product Velvet Perfume 20, falling back to text:","service":"atz-store","timestamp":"2026-01-26 10:17:18"}
+{"level":"warn","message":"Failed to send photo for product Pure Hair Serum 19, falling back to text:","service":"atz-store","timestamp":"2026-01-26 10:17:20"}
+{"level":"info","message":"Added 1x Radiance Moisturizer 1 to cart for user 69705d1444117a748bb93b21","service":"atz-store","timestamp":"2026-01-26 10:17:27"}
+{"level":"info","message":"Order created: ATZ-1769402874600-8FCCF7E2","service":"atz-store","timestamp":"2026-01-26 10:17:54"}
+{"cause":{"code":401,"details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","domain":"googleapis.com","metadata":{"method":"google.apps.sheets.v4.SpreadsheetsService.AppendValues","service":"sheets.googleapis.com"},"reason":"CREDENTIALS_MISSING"}],"errors":[{"domain":"global","location":"Authorization","locationType":"header","message":"Login Required.","reason":"required"}],"message":"Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"},"code":401,"config":{"apiVersion":"","body":"{\"values\":[[\"ATZ-1769402874600-8FCCF7E2\",\"2026-01-26T04:47:54.611Z\",\"69705d1444117a748bb93b21\",\"Urban Sneakers 2 (x1), Radiance Moisturizer 1 (x1)\",10019,\"cod\",\"pending\",\"confirmed\",\"Lat: 12.991227, Long: 80.118440\"]]}","data":{"values":[["ATZ-1769402874600-8FCCF7E2","2026-01-26T04:47:54.611Z","69705d1444117a748bb93b21","Urban Sneakers 2 (x1), Radiance Moisturizer 1 (x1)",10019,"cod","pending","confirmed","Lat: 12.991227, Long: 80.118440"]]},"duplex":"half","headers":{},"method":"POST","params":{"valueInputOption":"USER_ENTERED"},"responseType":"unknown","retry":true,"retryConfig":{"currentRetryAttempt":0,"httpMethodsToRetry":["GET","HEAD","PUT","OPTIONS","DELETE"],"maxRetryDelay":9007199254740991,"noResponseRetries":2,"retry":3,"retryDelayMultiplier":2,"statusCodesToRetry":[[100,199],[408,408],[429,429],[500,599]],"timeOfFirstRequest":1769402875258,"totalTimeout":9007199254740991},"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A2:append?valueInputOption=USER_ENTERED","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"level":"error","message":"Error syncing order to Google Sheets: Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","response":{"config":{"apiVersion":"","body":"{\"values\":[[\"ATZ-1769402874600-8FCCF7E2\",\"2026-01-26T04:47:54.611Z\",\"69705d1444117a748bb93b21\",\"Urban Sneakers 2 (x1), Radiance Moisturizer 1 (x1)\",10019,\"cod\",\"pending\",\"confirmed\",\"Lat: 12.991227, Long: 80.118440\"]]}","data":{"values":[["ATZ-1769402874600-8FCCF7E2","2026-01-26T04:47:54.611Z","69705d1444117a748bb93b21","Urban Sneakers 2 (x1), Radiance Moisturizer 1 (x1)",10019,"cod","pending","confirmed","Lat: 12.991227, Long: 80.118440"]]},"duplex":"half","headers":{},"method":"POST","params":{"valueInputOption":"USER_ENTERED"},"responseType":"unknown","retry":true,"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A2:append?valueInputOption=USER_ENTERED","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"data":{"error":{"code":401,"details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","domain":"googleapis.com","metadata":{"method":"google.apps.sheets.v4.SpreadsheetsService.AppendValues","service":"sheets.googleapis.com"},"reason":"CREDENTIALS_MISSING"}],"errors":[{"domain":"global","location":"Authorization","locationType":"header","message":"Login Required.","reason":"required"}],"message":"Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}},"size":0},"service":"atz-store","stack":"Error: Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.\n    at Gaxios._request (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\gaxios\\build\\cjs\\src\\gaxios.js:155:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async JWT.requestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:463:20)\n    at async createAPIRequestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\googleapis-common\\build\\src\\apirequest.js:308:25)\n    at async GoogleSheetsService.syncOrder (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\googleSheetsService.js:43:13)","status":401,"timestamp":"2026-01-26 10:17:55"}
+{"level":"info","message":"Order ATZ-1769402874600-8FCCF7E2 already confirmed or in process (Status: confirmed)","service":"atz-store","timestamp":"2026-01-26 10:17:55"}
+{"level":"info","message":"Admin logged in: admin@atzstore.com","service":"atz-store","timestamp":"2026-01-26 10:18:45"}
+{"level":"info","message":"Order status updated: ATZ-1769402874600-8FCCF7E2 -> preparing","service":"atz-store","timestamp":"2026-01-26 10:18:58"}
+{"cause":{"code":403,"errors":[{"domain":"global","message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","reason":"forbidden"}],"message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","status":"PERMISSION_DENIED"},"code":403,"config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"retryConfig":{"currentRetryAttempt":0,"httpMethodsToRetry":["GET","HEAD","PUT","OPTIONS","DELETE"],"maxRetryDelay":9007199254740991,"noResponseRetries":2,"retry":3,"retryDelayMultiplier":2,"statusCodesToRetry":[[100,199],[408,408],[429,429],[500,599]],"timeOfFirstRequest":1769402939307,"totalTimeout":9007199254740991},"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"level":"error","message":"Error updating status in Google Sheets: Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","response":{"config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"data":{"error":{"code":403,"errors":[{"domain":"global","message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","reason":"forbidden"}],"message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","status":"PERMISSION_DENIED"}},"size":0},"service":"atz-store","stack":"Error: Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\n    at Gaxios._request (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\gaxios\\build\\cjs\\src\\gaxios.js:155:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async JWT.requestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:463:20)\n    at async createAPIRequestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\googleapis-common\\build\\src\\apirequest.js:308:25)\n    at async GoogleSheetsService.updateOrderStatus (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\googleSheetsService.js:63:30)","status":403,"timestamp":"2026-01-26 10:18:59"}
+{"level":"info","message":"Partner Asni accepted order ATZ-1769402874600-8FCCF7E2","service":"atz-store","timestamp":"2026-01-26 10:19:26"}
+{"level":"info","message":"Order status updated: ATZ-1769402874600-8FCCF7E2 -> out_for_delivery","service":"atz-store","timestamp":"2026-01-26 10:20:02"}
+{"cause":{"code":403,"errors":[{"domain":"global","message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","reason":"forbidden"}],"message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","status":"PERMISSION_DENIED"},"code":403,"config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"retryConfig":{"currentRetryAttempt":0,"httpMethodsToRetry":["GET","HEAD","PUT","OPTIONS","DELETE"],"maxRetryDelay":9007199254740991,"noResponseRetries":2,"retry":3,"retryDelayMultiplier":2,"statusCodesToRetry":[[100,199],[408,408],[429,429],[500,599]],"timeOfFirstRequest":1769403003056,"totalTimeout":9007199254740991},"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"level":"error","message":"Error updating status in Google Sheets: Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","response":{"config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"data":{"error":{"code":403,"errors":[{"domain":"global","message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","reason":"forbidden"}],"message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","status":"PERMISSION_DENIED"}},"size":0},"service":"atz-store","stack":"Error: Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\n    at Gaxios._request (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\gaxios\\build\\cjs\\src\\gaxios.js:155:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async JWT.requestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:463:20)\n    at async createAPIRequestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\googleapis-common\\build\\src\\apirequest.js:308:25)\n    at async GoogleSheetsService.updateOrderStatus (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\googleSheetsService.js:63:30)","status":403,"timestamp":"2026-01-26 10:20:03"}
+{"level":"info","message":"Partner Asni earnings updated for order ATZ-1769402874600-8FCCF7E2","service":"atz-store","timestamp":"2026-01-26 10:20:23"}
+{"level":"info","message":"Order status updated: ATZ-1769402874600-8FCCF7E2 -> delivered","service":"atz-store","timestamp":"2026-01-26 10:20:23"}
+{"cause":{"code":403,"errors":[{"domain":"global","message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","reason":"forbidden"}],"message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","status":"PERMISSION_DENIED"},"code":403,"config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"retryConfig":{"currentRetryAttempt":0,"httpMethodsToRetry":["GET","HEAD","PUT","OPTIONS","DELETE"],"maxRetryDelay":9007199254740991,"noResponseRetries":2,"retry":3,"retryDelayMultiplier":2,"statusCodesToRetry":[[100,199],[408,408],[429,429],[500,599]],"timeOfFirstRequest":1769403023936,"totalTimeout":9007199254740991},"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"level":"error","message":"Error updating status in Google Sheets: Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","response":{"config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"data":{"error":{"code":403,"errors":[{"domain":"global","message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","reason":"forbidden"}],"message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","status":"PERMISSION_DENIED"}},"size":0},"service":"atz-store","stack":"Error: Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\n    at Gaxios._request (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\gaxios\\build\\cjs\\src\\gaxios.js:155:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async JWT.requestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:463:20)\n    at async createAPIRequestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\googleapis-common\\build\\src\\apirequest.js:308:25)\n    at async GoogleSheetsService.updateOrderStatus (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\googleSheetsService.js:63:30)","status":403,"timestamp":"2026-01-26 10:20:23"}
+{"level":"info","message":"Added 1x Radiance Moisturizer 1 to cart for user 69705d1444117a748bb93b21","service":"atz-store","timestamp":"2026-01-26 11:42:42"}
+{"level":"info","message":"Razorpay order created: order_S8P71NDwvf35Jm for order: ATZ-1769407983538-37BB262F","service":"atz-store","timestamp":"2026-01-26 11:43:04"}
+{"level":"info","message":"Payment link generated for order: ATZ-1769407983538-37BB262F","service":"atz-store","timestamp":"2026-01-26 11:43:05"}
+{"level":"info","message":"Order created: ATZ-1769407983538-37BB262F","service":"atz-store","timestamp":"2026-01-26 11:43:05"}
+{"cause":{"code":401,"details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","domain":"googleapis.com","metadata":{"method":"google.apps.sheets.v4.SpreadsheetsService.AppendValues","service":"sheets.googleapis.com"},"reason":"CREDENTIALS_MISSING"}],"errors":[{"domain":"global","location":"Authorization","locationType":"header","message":"Login Required.","reason":"required"}],"message":"Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"},"code":401,"config":{"apiVersion":"","body":"{\"values\":[[\"ATZ-1769407983538-37BB262F\",\"2026-01-26T06:13:03.541Z\",\"69705d1444117a748bb93b21\",\"Radiance Moisturizer 1 (x1)\",4441,\"razorpay\",\"pending\",\"pending\",\"Lat: 12.991227, Long: 80.118440\"]]}","data":{"values":[["ATZ-1769407983538-37BB262F","2026-01-26T06:13:03.541Z","69705d1444117a748bb93b21","Radiance Moisturizer 1 (x1)",4441,"razorpay","pending","pending","Lat: 12.991227, Long: 80.118440"]]},"duplex":"half","headers":{},"method":"POST","params":{"valueInputOption":"USER_ENTERED"},"responseType":"unknown","retry":true,"retryConfig":{"currentRetryAttempt":0,"httpMethodsToRetry":["GET","HEAD","PUT","OPTIONS","DELETE"],"maxRetryDelay":9007199254740991,"noResponseRetries":2,"retry":3,"retryDelayMultiplier":2,"statusCodesToRetry":[[100,199],[408,408],[429,429],[500,599]],"timeOfFirstRequest":1769407985943,"totalTimeout":9007199254740991},"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A2:append?valueInputOption=USER_ENTERED","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"level":"error","message":"Error syncing order to Google Sheets: Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","response":{"config":{"apiVersion":"","body":"{\"values\":[[\"ATZ-1769407983538-37BB262F\",\"2026-01-26T06:13:03.541Z\",\"69705d1444117a748bb93b21\",\"Radiance Moisturizer 1 (x1)\",4441,\"razorpay\",\"pending\",\"pending\",\"Lat: 12.991227, Long: 80.118440\"]]}","data":{"values":[["ATZ-1769407983538-37BB262F","2026-01-26T06:13:03.541Z","69705d1444117a748bb93b21","Radiance Moisturizer 1 (x1)",4441,"razorpay","pending","pending","Lat: 12.991227, Long: 80.118440"]]},"duplex":"half","headers":{},"method":"POST","params":{"valueInputOption":"USER_ENTERED"},"responseType":"unknown","retry":true,"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A2:append?valueInputOption=USER_ENTERED","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"data":{"error":{"code":401,"details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","domain":"googleapis.com","metadata":{"method":"google.apps.sheets.v4.SpreadsheetsService.AppendValues","service":"sheets.googleapis.com"},"reason":"CREDENTIALS_MISSING"}],"errors":[{"domain":"global","location":"Authorization","locationType":"header","message":"Login Required.","reason":"required"}],"message":"Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}},"size":0},"service":"atz-store","stack":"Error: Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.\n    at Gaxios._request (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\gaxios\\build\\cjs\\src\\gaxios.js:155:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async JWT.requestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:463:20)\n    at async createAPIRequestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\googleapis-common\\build\\src\\apirequest.js:308:25)\n    at async GoogleSheetsService.syncOrder (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\googleSheetsService.js:43:13)","status":401,"timestamp":"2026-01-26 11:43:05"}
+{"level":"info","message":"Payment success callback query:","razorpay_payment_id":"pay_S8P7UJ79Z56IXP","razorpay_payment_link_id":"plink_S8P71vwBiYxZa7","razorpay_payment_link_reference_id":"","razorpay_payment_link_status":"paid","razorpay_signature":"4e44f1642ef8d1dcc3ce44df4ab8baa3cee97fe95d9dc1e16c20c5e29299f792","service":"atz-store","timestamp":"2026-01-26 11:43:48"}
+{"level":"info","message":"Handling payment success for Razorpay Payment Link: plink_S8P71vwBiYxZa7","service":"atz-store","timestamp":"2026-01-26 11:43:48"}
+{"level":"info","message":"Signature verification result: true","service":"atz-store","timestamp":"2026-01-26 11:43:48"}
+{"level":"info","message":"Payment successful for order: ATZ-1769407983538-37BB262F","service":"atz-store","timestamp":"2026-01-26 11:43:48"}
+{"level":"info","message":"Order confirmed & tracking simulation started: ATZ-1769407983538-37BB262F","service":"atz-store","timestamp":"2026-01-26 11:43:48"}
+{"level":"error","message":"Error sending email: Unauthorized","response":{"header":{"access-control-allow-credentials":"true","access-control-allow-headers":"*","access-control-allow-methods":"PUT, POST, GET, DELETE, PATCH, OPTIONS","access-control-allow-origin":"*","cf-cache-status":"DYNAMIC","cf-ray":"9c3dddcf9ccf22a0-CDG","connection":"close","content-length":"59","content-type":"application/json","date":"Mon, 26 Jan 2026 06:13:48 GMT","server":"cloudflare","sib-request-id":"098789ce-d247-954a-a7f0-1f7bd68ae465","x-envoy-upstream-service-time":"8"},"req":{"data":{"htmlContent":"\n                <html>\n                    <body>\n                        <h1>Thank you for your order, Gowthaaman Eswar!</h1>\n                        <p>Your order <strong>ATZ-1769407983538-37BB262F</strong> has been confirmed.</p>\n                        <p>Total amount: ₹4441</p>\n                        <p>Items: Radiance Moisturizer 1 (x1)</p>\n                        <p>Delivery to: Lat: 12.991227, Long: 80.118440</p>\n                    </body>\n                </html>\n            ","sender":{"email":"noreply@atzstore.com","name":"ATZ Store"},"subject":"Order Confirmed - ATZ-1769407983538-37BB262F","to":[{"email":"customer@example.com","name":"Gowthaaman Eswar"}]},"headers":{"accept":"application/json","api-key":"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","content-type":"application/json","user-agent":"sendinblue_clientAPI/v8.5.0/node"},"method":"POST","url":"https://api.sendinblue.com/v3/smtp/email"},"status":401,"text":"{\"message\":\"API Key is not enabled\",\"code\":\"unauthorized\"}\n"},"service":"atz-store","stack":"Error: Unauthorized\n    at Request.callback (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\superagent\\lib\\node\\index.js:688:13)\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\superagent\\lib\\node\\index.js:891:18\n    at IncomingMessage.<anonymous> (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\superagent\\lib\\node\\parsers\\json.js:17:7)\n    at IncomingMessage.emit (node:events:520:35)\n    at endReadableNT (node:internal/streams/readable:1701:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)","status":401,"timestamp":"2026-01-26 11:43:49"}
+{"level":"warn","message":"No delivery partners available for order: ATZ-1769407983538-37BB262F","service":"atz-store","timestamp":"2026-01-26 11:43:49"}
+{"level":"info","message":"Order status updated: ATZ-1769407983538-37BB262F -> preparing","service":"atz-store","timestamp":"2026-01-26 11:44:48"}
+{"cause":{"code":"ENOTFOUND","errno":"ENOTFOUND","erroredSysCall":"getaddrinfo","type":"system"},"code":"ENOTFOUND","config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"retryConfig":{"currentRetryAttempt":2,"httpMethodsToRetry":["GET","HEAD","PUT","OPTIONS","DELETE"],"maxRetryDelay":9007199254740991,"noResponseRetries":2,"retry":3,"retryDelayMultiplier":2,"statusCodesToRetry":[[100,199],[408,408],[429,429],[500,599]],"timeOfFirstRequest":1769408103236,"totalTimeout":9007199254740991},"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"error":{"code":"ENOTFOUND","errno":"ENOTFOUND","erroredSysCall":"getaddrinfo","type":"system"},"level":"error","message":"Error updating status in Google Sheets: request to https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH failed, reason: getaddrinfo ENOTFOUND sheets.googleapis.com","service":"atz-store","stack":"Error: request to https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH failed, reason: getaddrinfo ENOTFOUND sheets.googleapis.com\n    at Gaxios._request (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\gaxios\\build\\cjs\\src\\gaxios.js:165:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async JWT.requestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:463:20)\n    at async createAPIRequestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\googleapis-common\\build\\src\\apirequest.js:308:25)\n    at async GoogleSheetsService.updateOrderStatus (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\googleSheetsService.js:63:30)","timestamp":"2026-01-26 11:45:03"}
+{"level":"info","message":"Admin logged in: admin@atzstore.com","service":"atz-store","timestamp":"2026-01-26 11:46:13"}
+{"level":"info","message":"Order status updated: ATZ-1769407983538-37BB262F -> out_for_delivery","service":"atz-store","timestamp":"2026-01-26 11:46:48"}
+{"cause":{"code":403,"errors":[{"domain":"global","message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","reason":"forbidden"}],"message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","status":"PERMISSION_DENIED"},"code":403,"config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"retryConfig":{"currentRetryAttempt":0,"httpMethodsToRetry":["GET","HEAD","PUT","OPTIONS","DELETE"],"maxRetryDelay":9007199254740991,"noResponseRetries":2,"retry":3,"retryDelayMultiplier":2,"statusCodesToRetry":[[100,199],[408,408],[429,429],[500,599]],"timeOfFirstRequest":1769408208959,"totalTimeout":9007199254740991},"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"level":"error","message":"Error updating status in Google Sheets: Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","response":{"config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"data":{"error":{"code":403,"errors":[{"domain":"global","message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","reason":"forbidden"}],"message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","status":"PERMISSION_DENIED"}},"size":0},"service":"atz-store","stack":"Error: Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\n    at Gaxios._request (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\gaxios\\build\\cjs\\src\\gaxios.js:155:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async JWT.requestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:463:20)\n    at async createAPIRequestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\googleapis-common\\build\\src\\apirequest.js:308:25)\n    at async GoogleSheetsService.updateOrderStatus (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\googleSheetsService.js:63:30)","status":403,"timestamp":"2026-01-26 11:46:48"}
+{"level":"info","message":"Order status updated: ATZ-1769407983538-37BB262F -> delivered","service":"atz-store","timestamp":"2026-01-26 11:53:48"}
+{"cause":{"code":403,"errors":[{"domain":"global","message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","reason":"forbidden"}],"message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","status":"PERMISSION_DENIED"},"code":403,"config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"retryConfig":{"currentRetryAttempt":0,"httpMethodsToRetry":["GET","HEAD","PUT","OPTIONS","DELETE"],"maxRetryDelay":9007199254740991,"noResponseRetries":2,"retry":3,"retryDelayMultiplier":2,"statusCodesToRetry":[[100,199],[408,408],[429,429],[500,599]],"timeOfFirstRequest":1769408629059,"totalTimeout":9007199254740991},"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"level":"error","message":"Error updating status in Google Sheets: Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","response":{"config":{"apiVersion":"","headers":{},"method":"GET","responseType":"unknown","retry":true,"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A%3AH","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"data":{"error":{"code":403,"errors":[{"domain":"global","message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","reason":"forbidden"}],"message":"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","status":"PERMISSION_DENIED"}},"size":0},"service":"atz-store","stack":"Error: Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\n    at Gaxios._request (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\gaxios\\build\\cjs\\src\\gaxios.js:155:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async JWT.requestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:463:20)\n    at async createAPIRequestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\googleapis-common\\build\\src\\apirequest.js:308:25)\n    at async GoogleSheetsService.updateOrderStatus (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\googleSheetsService.js:63:30)","status":403,"timestamp":"2026-01-26 11:53:49"}
+{"level":"info","message":"Partner Demo Partner accepted order ATZ-1769407983538-37BB262F","service":"atz-store","timestamp":"2026-01-26 12:00:29"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Connected to database for specific Zepto product seeding","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: Halonix 10W White Led Bulb | B22 Base Holder","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: Desidiya Universe Crystal Ball Night Light","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: DesiDiya String LED Rice Light | Gold","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: Zebronics Bro in Ear Wired Earphones with Mic","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: Zebronics Zeb-Jaguar Wireless Mouse","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: Havells 9W V Smart Bulb","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: Kenstar Estella Electric Kettle | 1.6 L","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: Longway Kwid Light Weight Dry Iron","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: Pigeon by Stovekraft Amaze Plus Electric Kettle","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: boAt BassHeads 100 Wired Earphones","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: Lifelong LLMG300 Power Pro LX Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"Added product: Voltas Beko Mixer Grinder With Grindx","service":"atz-store","timestamp":"2026-01-26 12:48:46"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 12:48:58"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 12:48:58"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 12:48:58"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 12:48:58"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 12:48:59"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 12:49:00"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 12:49:00"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 12:49:00"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 12:49:00"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 12:49:00"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 12:49:00"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 12:49:00"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 12:49:00"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 12:49:00"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 12:49:51"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 12:49:51"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 12:49:51"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 12:49:51"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 12:49:53"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 12:49:54"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 12:49:54"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 12:49:54"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 12:49:54"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 12:49:54"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 12:49:55"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 12:49:55"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 12:49:55"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 12:49:55"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Connected to database for specific Zepto product seeding","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: Halonix 10W White Led Bulb | B22 Base Holder","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: Desidiya Universe Crystal Ball Night Light","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: DesiDiya String LED Rice Light | Gold","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: Zebronics Bro in Ear Wired Earphones with Mic","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: Zebronics Zeb-Jaguar Wireless Mouse","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: Havells 9W V Smart Bulb","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: Kenstar Estella Electric Kettle | 1.6 L","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: Longway Kwid Light Weight Dry Iron","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: Pigeon by Stovekraft Amaze Plus Electric Kettle","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: boAt BassHeads 100 Wired Earphones","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: Lifelong LLMG300 Power Pro LX Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Added product: Lifelong LLMG202 Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Added product: Longway Super Dlx 750 Watt Juicer Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Product already exists, skipping: Voltas Beko Mixer Grinder With Grindx","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Added product: Cadlec JarGenie 4 Jar 750W Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"Added product: Longway Sag... Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 12:50:26"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:09:10"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:09:10"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:09:10"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:09:10"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:09:11"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:09:12"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:09:12"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:09:12"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:09:12"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:09:12"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:09:12"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:09:12"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:09:12"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:09:12"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:10:19"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:10:19"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:10:19"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:10:19"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:10:24"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:10:24"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:10:24"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:10:24"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:10:24"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:10:25"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:10:25"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:10:25"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:10:25"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:10:25"}
+{"level":"info","message":"Product deleted: Cadlec JarGenie 4 Jar Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:11:34"}
+{"level":"info","message":"Product deleted: Kenstar Estella Electric Kettle","service":"atz-store","timestamp":"2026-01-26 13:11:39"}
+{"level":"info","message":"Product deleted: Zebronics Zeb‑Bro Wired Earphones","service":"atz-store","timestamp":"2026-01-26 13:11:46"}
+{"level":"info","message":"Product deleted: Havells 9W Smart Bulb","service":"atz-store","timestamp":"2026-01-26 13:11:54"}
+{"level":"info","message":"Product deleted: Longway Sag... Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:12:02"}
+{"level":"info","message":"Product deleted: Longway Super Dlx 750 Watt Juicer Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:12:11"}
+{"level":"info","message":"Product deleted: Voltas Beko Mixer Grinder With Grindx","service":"atz-store","timestamp":"2026-01-26 13:12:15"}
+{"level":"info","message":"Product deleted: Cadlec JarGenie 4 Jar 750W Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 13:12:23"}
+{"level":"info","message":"Product deleted: Longway Kwid Light Weight Dry Iron","service":"atz-store","timestamp":"2026-01-26 13:12:38"}
+{"level":"info","message":"Product updated: Kenstar Estella Electric Kettle | 1.6 L","service":"atz-store","timestamp":"2026-01-26 13:13:57"}
+{"level":"info","message":"Product updated: Pigeon by Stovekraft Amaze Plus Electric Kettle","service":"atz-store","timestamp":"2026-01-26 13:14:37"}
+{"level":"info","message":"Product updated: Havells 9W V Smart Bulb","service":"atz-store","timestamp":"2026-01-26 13:16:05"}
+{"level":"info","message":"Product deleted: Halonix 10W White Led Bulb | B22 Base Holder","service":"atz-store","timestamp":"2026-01-26 13:16:21"}
+{"level":"info","message":"Product deleted: Modern Journal 7","service":"atz-store","timestamp":"2026-01-26 13:16:25"}
+{"level":"info","message":"Product deleted: Classic Sci-Fi Collection 8","service":"atz-store","timestamp":"2026-01-26 13:16:27"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:23:25"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:23:25"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:23:25"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:23:25"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:23:26"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:23:26"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:23:26"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:23:26"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:23:26"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:23:26"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:23:27"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:23:27"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:23:27"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:23:27"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:23:41"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:23:41"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:23:41"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:23:41"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:23:42"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:23:43"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:23:43"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:23:43"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:23:43"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:23:43"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:23:43"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:23:43"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:23:43"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:23:43"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:24:58"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:24:58"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:24:58"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:24:58"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:24:59"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:25:00"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:25:00"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:25:00"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:25:00"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:25:00"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:25:00"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:25:00"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:25:00"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:25:00"}
+{"level":"info","message":"Product created: Story Books For Kids | Set Of 10 | Biographies For Kids | Age 6+","service":"atz-store","timestamp":"2026-01-26 13:28:56"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:29:03"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:29:03"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:29:03"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:29:03"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:29:04"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:29:05"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:29:05"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:29:05"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:29:05"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:29:05"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:29:05"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:29:05"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:29:05"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:29:05"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:29:14"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:29:14"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:29:14"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:29:15"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:29:17"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:29:17"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:29:17"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:29:17"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:29:17"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:29:17"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:29:17"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:29:17"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:29:17"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:29:17"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:29:27"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:29:27"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:29:27"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:29:27"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:29:28"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:29:28"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:29:28"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:29:28"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:29:28"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:29:28"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:29:28"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:29:28"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:29:28"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:29:29"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:29:45"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:29:45"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:29:45"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:29:45"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:30:12"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:30:12"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:30:12"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:30:12"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:30:13"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:30:14"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:30:14"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:30:14"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:30:14"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:30:14"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:30:14"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:30:14"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:30:14"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:30:14"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:34:05"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:34:05"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:34:05"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:34:05"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:34:06"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:34:07"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:34:07"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:34:07"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:34:07"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:34:07"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:34:08"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:34:08"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:34:08"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:34:08"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:34:23"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:34:23"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:34:24"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:34:24"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:34:25"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:34:25"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:34:25"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:34:25"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:34:25"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:34:25"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:34:25"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:34:25"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:34:25"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:34:25"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:35:01"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:35:01"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:35:01"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:35:01"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:35:02"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:35:03"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:35:03"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:35:03"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:35:03"}
+{"_message":"Validation failed","errors":{"discount":{"kind":"max","message":"Path `discount` (106) is more than maximum allowed value (100).","name":"ValidatorError","path":"discount","properties":{"fullPath":"discount","max":100,"message":"Path `discount` (106) is more than maximum allowed value (100).","path":"discount","type":"max","value":106},"value":106}},"level":"error","message":"Error updating product: Validation failed: discount: Path `discount` (106) is more than maximum allowed value (100).","service":"atz-store","stack":"ValidationError: Validation failed: discount: Path `discount` (106) is more than maximum allowed value (100).\n    at _done (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:227:19)\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:203:11\n    at schemaPath.doValidate.updateValidator (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:136:20)\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\schema\\subdocument.js:303:33\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-01-26 13:37:29"}
+{"_message":"Validation failed","errors":{"discount":{"kind":"max","message":"Path `discount` (106) is more than maximum allowed value (100).","name":"ValidatorError","path":"discount","properties":{"fullPath":"discount","max":100,"message":"Path `discount` (106) is more than maximum allowed value (100).","path":"discount","type":"max","value":106},"value":106}},"level":"error","message":"Update product error: Validation failed: discount: Path `discount` (106) is more than maximum allowed value (100).","service":"atz-store","stack":"ValidationError: Validation failed: discount: Path `discount` (106) is more than maximum allowed value (100).\n    at _done (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:227:19)\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:203:11\n    at schemaPath.doValidate.updateValidator (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:136:20)\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\schema\\subdocument.js:303:33\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-01-26 13:37:29"}
+{"_message":"Validation failed","errors":{"discount":{"kind":"max","message":"Path `discount` (106) is more than maximum allowed value (100).","name":"ValidatorError","path":"discount","properties":{"fullPath":"discount","max":100,"message":"Path `discount` (106) is more than maximum allowed value (100).","path":"discount","type":"max","value":106},"value":106}},"level":"error","message":"Error updating product: Validation failed: discount: Path `discount` (106) is more than maximum allowed value (100).","service":"atz-store","stack":"ValidationError: Validation failed: discount: Path `discount` (106) is more than maximum allowed value (100).\n    at _done (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:227:19)\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:203:11\n    at schemaPath.doValidate.updateValidator (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:136:20)\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\schema\\subdocument.js:303:33\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-01-26 13:37:29"}
+{"_message":"Validation failed","errors":{"discount":{"kind":"max","message":"Path `discount` (106) is more than maximum allowed value (100).","name":"ValidatorError","path":"discount","properties":{"fullPath":"discount","max":100,"message":"Path `discount` (106) is more than maximum allowed value (100).","path":"discount","type":"max","value":106},"value":106}},"level":"error","message":"Update product error: Validation failed: discount: Path `discount` (106) is more than maximum allowed value (100).","service":"atz-store","stack":"ValidationError: Validation failed: discount: Path `discount` (106) is more than maximum allowed value (100).\n    at _done (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:227:19)\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:203:11\n    at schemaPath.doValidate.updateValidator (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\helpers\\updateValidators.js:136:20)\n    at C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongoose\\lib\\schema\\subdocument.js:303:33\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-01-26 13:37:29"}
+{"level":"info","message":"Product updated: Story Books for Kids - Second Reader (Illustrated) (Set of 6 Books)","service":"atz-store","timestamp":"2026-01-26 13:38:30"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:43:04"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:43:04"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:43:04"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:43:04"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:43:07"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:43:07"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:43:07"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:43:07"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:43:08"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:43:08"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:43:09"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:43:09"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:43:09"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:43:09"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 13:44:11"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 13:44:11"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 13:44:11"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 13:44:11"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 13:44:15"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 13:44:15"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 13:44:15"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 13:44:15"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 13:44:15"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 13:44:15"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 13:44:16"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 13:44:16"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 13:44:16"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 13:44:16"}
+{"level":"info","message":"Product created: Joyology Beauty Love Fool Blush | Peach Passion | F201","service":"atz-store","timestamp":"2026-01-26 13:52:21"}
+{"level":"info","message":"Product created: Se7en Stainless Steel Beauty Scissor","service":"atz-store","timestamp":"2026-01-26 13:54:52"}
+{"level":"info","message":"Product created: Just Herbs My Posh Beauty Kit | Skincare Essentials","service":"atz-store","timestamp":"2026-01-26 13:57:05"}
+{"level":"info","message":"Product created: Mila Beaute Locked|In Lipstick Transfer|Proof & Smudge|Proof | 17 Wine Hour","service":"atz-store","timestamp":"2026-01-26 13:59:36"}
+{"level":"info","message":"Product created: Typsy Beauty Powder Puffs","service":"atz-store","timestamp":"2026-01-26 14:01:07"}
+{"level":"info","message":"Product created: Swiss Beauty Makeup Remover Spray","service":"atz-store","timestamp":"2026-01-26 14:02:32"}
+{"level":"info","message":"Product created: Smart And Handsome Radiance Cream For Men","service":"atz-store","timestamp":"2026-01-26 14:03:57"}
+{"level":"info","message":"Product created: Raaga Professional De-Tan Tan Removal Cream","service":"atz-store","timestamp":"2026-01-26 14:05:28"}
+{"level":"info","message":"Product created: Bio-essence Bio-Vlift Face Lifting Cream Net Qty: 1 pc (72 g)","service":"atz-store","timestamp":"2026-01-26 14:06:40"}
+{"level":"warn","message":"Failed to send photo for product Ethereal Hair Serum 3, falling back to text:","service":"atz-store","timestamp":"2026-01-26 14:08:04"}
+{"level":"info","message":"Added 1x Bio-essence Bio-Vlift Face Lifting Cream Net Qty: 1 pc (72 g) to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 14:08:23"}
+{"level":"info","message":"Added 1x Just Herbs My Posh Beauty Kit | Skincare Essentials to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 14:08:28"}
+{"level":"info","message":"Added 1x Just Herbs My Posh Beauty Kit | Skincare Essentials to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 14:08:29"}
+{"level":"warn","message":"Failed to send photo for product Modern Journal 2, falling back to text:","service":"atz-store","timestamp":"2026-01-26 14:08:45"}
+{"level":"info","message":"Added 1x The Art of Programming to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 14:08:58"}
+{"level":"info","message":"Added 1x Modern Journal 2 to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 14:08:58"}
+{"level":"error","message":"Error adding to cart: 400: Bad Request: IMAGE_PROCESS_FAILED","on":{"method":"sendPhoto","payload":{"caption":"✅ *Modern Journal 2* added to cart!\n\n🛍️ Cart: 5 items | ₹5042","chat_id":5389478191,"parse_mode":"Markdown","photo":{"url":"https://images.unsplash.com/photo-1544819667-9abd13165534"},"reply_markup":{"inline_keyboard":[[{"callback_data":"show_cart","hide":false,"text":"🛍️ View Cart"}],[{"callback_data":"show_categories","hide":false,"text":"🛒 Continue Shopping"}]]}}},"response":{"description":"Bad Request: IMAGE_PROCESS_FAILED","error_code":400,"ok":false},"service":"atz-store","stack":"Error: 400: Bad Request: IMAGE_PROCESS_FAILED\n    at Telegram.callApi (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\core\\network\\client.js:315:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async BotService.addToCart (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:778:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:247:13\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21","timestamp":"2026-01-26 14:08:59"}
+{"level":"info","message":"Added 1x Biographies For Kids | Set Of 5 to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 14:09:10"}
+{"level":"error","message":"Bot error: 400: Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222","on":{"method":"sendMessage","payload":{"chat_id":5389478191,"parse_mode":"Markdown","reply_markup":{"inline_keyboard":[[{"callback_data":"use_saved_address","hide":false,"text":"✅ Use This Address"}],[{"callback_data":"enter_new_address","hide":false,"text":"📝 Enter New Address"}],[{"callback_data":"enter_new_address","hide":false,"text":"📍 Share Location"}]]},"text":"📍 *Delivery Address*\n\nUse saved address?\n\nDelivery Address: /Pallavaram/@12.9682551,80.149909,17z/data=!3m1!4b1!4m6!3m5!1s0x3a525e37480a8d47:0x6cd299db8ba36110!8m2!3d12.9682551!4d80.1524839!16s%2Fm%2F0py0nwq?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D"}},"response":{"description":"Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222","error_code":400,"ok":false},"service":"atz-store","stack":"Error: 400: Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222\n    at Telegram.callApi (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\core\\network\\client.js:315:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async BotService.startCheckout (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:1077:13)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:283:13\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21","timestamp":"2026-01-26 14:10:22"}
+{"level":"error","message":"Bot error: 400: Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222","on":{"method":"sendMessage","payload":{"chat_id":5389478191,"parse_mode":"Markdown","reply_markup":{"inline_keyboard":[[{"callback_data":"use_saved_address","hide":false,"text":"✅ Use This Address"}],[{"callback_data":"enter_new_address","hide":false,"text":"📝 Enter New Address"}],[{"callback_data":"enter_new_address","hide":false,"text":"📍 Share Location"}]]},"text":"📍 *Delivery Address*\n\nUse saved address?\n\nDelivery Address: /Pallavaram/@12.9682551,80.149909,17z/data=!3m1!4b1!4m6!3m5!1s0x3a525e37480a8d47:0x6cd299db8ba36110!8m2!3d12.9682551!4d80.1524839!16s%2Fm%2F0py0nwq?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D"}},"response":{"description":"Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222","error_code":400,"ok":false},"service":"atz-store","stack":"Error: 400: Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222\n    at Telegram.callApi (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\core\\network\\client.js:315:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async BotService.startCheckout (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:1077:13)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:283:13\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21","timestamp":"2026-01-26 14:10:52"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 14:15:05"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 14:15:05"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 14:15:05"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 14:15:05"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 14:15:06"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 14:15:06"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 14:15:06"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 14:15:06"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 14:15:06"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 14:15:06"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 14:15:07"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 14:15:07"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 14:15:07"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 14:15:07"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 14:15:34"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 14:15:34"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 14:15:34"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 14:15:34"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 14:15:37"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 14:15:37"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 14:15:37"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 14:15:37"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 14:15:37"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 14:15:37"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 14:15:37"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 14:15:37"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 14:15:37"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 14:15:37"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 14:16:24"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 14:16:24"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 14:16:24"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 14:16:24"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 14:16:25"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 14:16:25"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 14:16:25"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 14:16:25"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 14:16:25"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 14:16:25"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 14:16:26"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 14:16:26"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 14:16:26"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 14:16:26"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 14:16:48"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 14:16:49"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 14:16:49"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 14:16:49"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 14:16:50"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 14:16:50"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 14:16:50"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 14:16:50"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 14:16:50"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 14:16:50"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 14:16:50"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 14:16:50"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 14:16:50"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 14:16:50"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 14:17:36"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 14:17:36"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 14:17:36"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 14:17:36"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 14:17:37"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 14:17:38"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 14:17:38"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 14:17:38"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 14:17:38"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 14:17:38"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 14:17:40"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 14:17:40"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 14:17:40"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 14:17:40"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 14:17:50"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 14:17:50"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 14:17:50"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 14:17:50"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 14:17:51"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 14:17:51"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 14:17:51"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 14:17:51"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 14:17:51"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 14:17:51"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 14:17:51"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 14:17:51"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 14:17:51"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 14:17:51"}
+{"level":"info","message":"Product deleted: Modern Journal 2","service":"atz-store","timestamp":"2026-01-26 14:42:07"}
+{"level":"info","message":"Product deleted: Vintage Novel 1","service":"atz-store","timestamp":"2026-01-26 14:42:13"}
+{"level":"info","message":"Product deleted: Apex Basketball 10","service":"atz-store","timestamp":"2026-01-26 14:42:22"}
+{"level":"info","message":"Product deleted: Sprint Football 9","service":"atz-store","timestamp":"2026-01-26 14:42:25"}
+{"level":"info","message":"Product deleted: Endurance Tennis Racket 8","service":"atz-store","timestamp":"2026-01-26 14:42:28"}
+{"level":"info","message":"Product deleted: Active Yoga Mat 6","service":"atz-store","timestamp":"2026-01-26 14:42:33"}
+{"level":"info","message":"Product deleted: Apex Basketball 5","service":"atz-store","timestamp":"2026-01-26 14:42:36"}
+{"level":"info","message":"Product deleted: Sprint Football 4","service":"atz-store","timestamp":"2026-01-26 14:42:39"}
+{"level":"info","message":"Product deleted: Endurance Tennis Racket 3","service":"atz-store","timestamp":"2026-01-26 14:42:42"}
+{"level":"info","message":"Product deleted: Power Dumbbells 7","service":"atz-store","timestamp":"2026-01-26 14:42:50"}
+{"level":"info","message":"Product deleted: Active Yoga Mat 1","service":"atz-store","timestamp":"2026-01-26 14:42:54"}
+{"level":"info","message":"Product deleted: Pure Hair Serum 19","service":"atz-store","timestamp":"2026-01-26 14:42:57"}
+{"level":"info","message":"Product deleted: Ethereal Lipstick 18","service":"atz-store","timestamp":"2026-01-26 14:43:01"}
+{"level":"info","message":"Product deleted: Velvet Lipstick 10","service":"atz-store","timestamp":"2026-01-26 14:43:04"}
+{"level":"info","message":"Product deleted: Radiance Hair Serum 11","service":"atz-store","timestamp":"2026-01-26 14:43:07"}
+{"level":"info","message":"Product deleted: Comfort Dinner Set 20","service":"atz-store","timestamp":"2026-01-26 14:43:36"}
+{"level":"info","message":"Product deleted: Glow Lipstick 2","service":"atz-store","timestamp":"2026-01-26 14:43:41"}
+{"level":"info","message":"Product deleted: Ethereal Hair Serum 3","service":"atz-store","timestamp":"2026-01-26 14:43:44"}
+{"level":"info","message":"Product deleted: Luxe Cushion 13","service":"atz-store","timestamp":"2026-01-26 14:43:51"}
+{"level":"info","message":"Product deleted: HomeEase Dinner Set 12","service":"atz-store","timestamp":"2026-01-26 14:43:56"}
+{"level":"info","message":"Product deleted: Comfort Cushion 5","service":"atz-store","timestamp":"2026-01-26 14:44:04"}
+{"level":"info","message":"Product deleted: Modern Dinner Set 4","service":"atz-store","timestamp":"2026-01-26 14:44:07"}
+{"level":"info","message":"Product deleted: Nature Olive Oil 23","service":"atz-store","timestamp":"2026-01-26 14:44:15"}
+{"level":"info","message":"Product deleted: Gourmet Green Tea 24","service":"atz-store","timestamp":"2026-01-26 14:44:19"}
+{"level":"info","message":"Product deleted: Farm Mixed Nuts 25","service":"atz-store","timestamp":"2026-01-26 14:44:22"}
+{"level":"info","message":"Product deleted: Organic Oats 26","service":"atz-store","timestamp":"2026-01-26 14:44:25"}
+{"level":"info","message":"Product deleted: Organic Oats 16","service":"atz-store","timestamp":"2026-01-26 14:44:32"}
+{"level":"info","message":"Product deleted: Nature Olive Oil 13","service":"atz-store","timestamp":"2026-01-26 14:44:35"}
+{"level":"info","message":"Product deleted: Farm Mixed Nuts 15","service":"atz-store","timestamp":"2026-01-26 14:44:38"}
+{"level":"info","message":"Product deleted: Gourmet Green Tea 14","service":"atz-store","timestamp":"2026-01-26 14:44:42"}
+{"level":"info","message":"Product deleted: Nature Basmati Rice 18","service":"atz-store","timestamp":"2026-01-26 14:44:45"}
+{"level":"info","message":"Product deleted: Organic Oats 6","service":"atz-store","timestamp":"2026-01-26 14:44:48"}
+{"level":"info","message":"Product deleted: Farm Mixed Nuts 5","service":"atz-store","timestamp":"2026-01-26 14:44:50"}
+{"level":"info","message":"Product deleted: Gourmet Green Tea 4","service":"atz-store","timestamp":"2026-01-26 14:44:54"}
+{"level":"info","message":"Product deleted: Nature Olive Oil 3","service":"atz-store","timestamp":"2026-01-26 14:44:58"}
+{"level":"info","message":"Product deleted: Aura Belt 30","service":"atz-store","timestamp":"2026-01-26 14:45:05"}
+{"level":"info","message":"Product deleted: Elite Dress 29","service":"atz-store","timestamp":"2026-01-26 14:45:08"}
+{"level":"info","message":"Product deleted: Vogue Dress 9","service":"atz-store","timestamp":"2026-01-26 14:45:13"}
+{"level":"info","message":"Product deleted: Nomad Belt 10","service":"atz-store","timestamp":"2026-01-26 14:45:16"}
+{"level":"info","message":"Product deleted: Echo Camera 29","service":"atz-store","timestamp":"2026-01-26 14:45:22"}
+{"level":"info","message":"Product deleted: Titan Monitor 27","service":"atz-store","timestamp":"2026-01-26 14:45:25"}
+{"level":"info","message":"Product deleted: Aura Smartwatch 25","service":"atz-store","timestamp":"2026-01-26 14:45:29"}
+{"level":"info","message":"Product deleted: Aura Camera 19","service":"atz-store","timestamp":"2026-01-26 14:45:36"}
+{"level":"info","message":"Product deleted: Echo Monitor 17","service":"atz-store","timestamp":"2026-01-26 14:45:42"}
+{"level":"info","message":"Product deleted: Titan Smartwatch 15","service":"atz-store","timestamp":"2026-01-26 14:45:45"}
+{"level":"info","message":"Product deleted: Aura Monitor 7","service":"atz-store","timestamp":"2026-01-26 14:45:47"}
+{"level":"info","message":"Product deleted: Titan Camera 9","service":"atz-store","timestamp":"2026-01-26 14:45:51"}
+{"level":"info","message":"Product deleted: Echo Smartwatch 5","service":"atz-store","timestamp":"2026-01-26 14:45:55"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 14:54:08"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 14:54:08"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 14:54:08"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 14:54:08"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 14:54:09"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 14:54:10"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 14:54:10"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 14:54:10"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 14:54:10"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 14:54:10"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 14:54:10"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 14:54:10"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 14:54:10"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 14:54:10"}
+{"level":"info","message":"Added 1x Bio-essence Bio-Vlift Face Lifting Cream Net Qty: 1 pc (72 g) to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 15:05:25"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:12:49"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:12:49"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:12:49"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:12:49"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:12:50"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:12:51"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:12:51"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:12:51"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:12:51"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:12:51"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:12:51"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:12:51"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:12:51"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:12:51"}
+{"level":"info","message":"Product deleted: Campus Sutra Men's Brushed Buffalo Check Shirt","service":"atz-store","timestamp":"2026-01-26 15:13:28"}
+{"level":"info","message":"Product deleted: Silken Dress 19","service":"atz-store","timestamp":"2026-01-26 15:13:42"}
+{"level":"info","message":"Product deleted: Urban Belt 20","service":"atz-store","timestamp":"2026-01-26 15:13:46"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:16:01"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:16:02"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:16:02"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:16:02"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:16:03"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:16:03"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:16:03"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:16:03"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:16:03"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:16:03"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:16:03"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:16:03"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:16:03"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:16:03"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:16:14"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:16:14"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:16:14"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:16:14"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:16:36"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:16:36"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:16:36"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:16:36"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:16:38"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:16:38"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:16:38"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:16:38"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:16:38"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:16:38"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:16:38"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:16:38"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:16:38"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:16:38"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:19:42"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:19:42"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:19:42"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:19:42"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:19:44"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:19:44"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:19:44"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:19:44"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:19:44"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:19:44"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:19:44"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:19:44"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:19:44"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:19:44"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:20:23"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:20:23"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:20:23"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:20:23"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:20:28"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:20:29"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:20:29"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:20:29"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:20:29"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:20:29"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:20:29"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:20:29"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:20:29"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:20:29"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:29:19"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:29:19"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:29:19"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:29:19"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:29:24"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:29:24"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:29:24"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:29:24"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:29:25"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:29:25"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:29:25"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:29:26"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:29:26"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:29:26"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:32:07"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:32:07"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:32:07"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:32:07"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:32:08"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:32:09"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:32:09"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:32:09"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:32:09"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:32:09"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:32:10"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:32:10"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:32:10"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:32:10"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:32:31"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:32:31"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:32:32"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:32:32"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:32:33"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:32:33"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:32:33"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:32:33"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:32:33"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:32:33"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:32:33"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:32:33"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:32:33"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:32:33"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:40:03"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:40:03"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:40:03"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:40:03"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:40:06"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:40:07"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:40:07"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:40:07"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:40:07"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:40:07"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:40:07"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:40:07"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:40:07"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:40:07"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:40:36"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:40:36"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:40:36"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:40:36"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:40:37"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:40:38"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:40:38"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:40:38"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:40:38"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:40:38"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:40:38"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:40:38"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:40:38"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:40:38"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:41:25"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:41:25"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:41:25"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:41:25"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:41:35"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:41:35"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:41:35"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:41:35"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:41:35"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:41:35"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:41:36"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:41:36"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:41:36"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:41:36"}
+{"level":"info","message":"Product deleted: Lavie Sport Pioneer Laptop Backpack","service":"atz-store","timestamp":"2026-01-26 15:43:01"}
+{"level":"info","message":"Product deleted: ZOUK Women's Printed Oversized Shoulder Bag","service":"atz-store","timestamp":"2026-01-26 15:43:05"}
+{"level":"info","message":"Product deleted: Lavie Ficus Small Satchel","service":"atz-store","timestamp":"2026-01-26 15:43:09"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:45:09"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:45:09"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:45:09"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:45:09"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:45:10"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:45:10"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:45:10"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:45:10"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:45:11"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:45:11"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:45:11"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:45:11"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:45:11"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:45:12"}
+{"level":"info","message":"Added 1x ZOUK FloMotif Sling Bag to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 15:48:54"}
+{"level":"info","message":"Cleared cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 15:49:40"}
+{"level":"warn","message":"Failed to send photo for product KitchenPro Air Fryer 1, falling back to text:","service":"atz-store","timestamp":"2026-01-26 15:50:49"}
+{"level":"error","message":"Bot error: Promise timed out after 90000 milliseconds","name":"TimeoutError","service":"atz-store","stack":"TimeoutError: Promise timed out after 90000 milliseconds\n    at Timeout._onTimeout (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\p-timeout\\index.js:39:64)\n    at listOnTimeout (node:internal/timers:608:17)\n    at process.processTimers (node:internal/timers:543:7)","timestamp":"2026-01-26 15:51:23"}
+{"level":"info","message":"Added 1x HomeEase Coffee Maker 2 to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 15:51:25"}
+{"level":"info","message":"Added 1x HomeEase Coffee Maker 2 to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 15:51:25"}
+{"level":"info","message":"Added 1x Luxe Coffee Maker 18 to cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 15:51:43"}
+{"level":"error","message":"Bot error: 400: Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222","on":{"method":"sendMessage","payload":{"chat_id":5389478191,"parse_mode":"Markdown","reply_markup":{"inline_keyboard":[[{"callback_data":"use_saved_address","hide":false,"text":"✅ Use This Address"}],[{"callback_data":"enter_new_address","hide":false,"text":"📝 Enter New Address"}],[{"callback_data":"enter_new_address","hide":false,"text":"📍 Share Location"}]]},"text":"📍 *Delivery Address*\n\nUse saved address?\n\nDelivery Address: /Pallavaram/@12.9682551,80.149909,17z/data=!3m1!4b1!4m6!3m5!1s0x3a525e37480a8d47:0x6cd299db8ba36110!8m2!3d12.9682551!4d80.1524839!16s%2Fm%2F0py0nwq?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D"}},"response":{"description":"Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222","error_code":400,"ok":false},"service":"atz-store","stack":"Error: 400: Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222\n    at Telegram.callApi (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\core\\network\\client.js:315:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async BotService.startCheckout (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:1126:13)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:295:13\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21","timestamp":"2026-01-26 15:51:52"}
+{"level":"info","message":"Updated quantity for product 6976f047204b7ebcf31f3746 in cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 15:52:03"}
+{"level":"info","message":"Updated quantity for product 6976f047204b7ebcf31f3746 in cart for user 6970c0df2bad5a4777defe9a","service":"atz-store","timestamp":"2026-01-26 15:52:14"}
+{"level":"error","message":"Bot error: 400: Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222","on":{"method":"sendMessage","payload":{"chat_id":5389478191,"parse_mode":"Markdown","reply_markup":{"inline_keyboard":[[{"callback_data":"use_saved_address","hide":false,"text":"✅ Use This Address"}],[{"callback_data":"enter_new_address","hide":false,"text":"📝 Enter New Address"}],[{"callback_data":"enter_new_address","hide":false,"text":"📍 Share Location"}]]},"text":"📍 *Delivery Address*\n\nUse saved address?\n\nDelivery Address: /Pallavaram/@12.9682551,80.149909,17z/data=!3m1!4b1!4m6!3m5!1s0x3a525e37480a8d47:0x6cd299db8ba36110!8m2!3d12.9682551!4d80.1524839!16s%2Fm%2F0py0nwq?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D"}},"response":{"description":"Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222","error_code":400,"ok":false},"service":"atz-store","stack":"Error: 400: Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 222\n    at Telegram.callApi (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\core\\network\\client.js:315:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async BotService.startCheckout (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:1126:13)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\bot\\botService.js:295:13\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21\n    at async execute (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:518:17)\n    at async C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\telegraf\\lib\\composer.js:519:21","timestamp":"2026-01-26 15:52:23"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:57:43"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 15:57:43"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 15:57:43"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 15:57:43"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 15:57:45"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 15:57:45"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 15:57:45"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 15:57:45"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 15:57:45"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 15:57:45"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 15:57:45"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 15:57:45"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 15:57:45"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 15:57:45"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 16:00:57"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 16:00:57"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 16:00:57"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 16:00:57"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 16:00:58"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 16:00:59"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 16:00:59"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 16:00:59"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 16:00:59"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 16:00:59"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 16:00:59"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:00:59"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:00:59"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:00:59"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 16:01:19"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 16:01:19"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 16:01:19"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 16:01:19"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 16:01:20"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 16:01:20"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 16:01:20"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 16:01:20"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 16:01:20"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 16:01:20"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 16:01:20"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:01:20"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:01:20"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:01:20"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 16:02:28"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 16:02:28"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 16:02:28"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 16:02:28"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 16:02:31"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 16:02:31"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 16:02:31"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 16:02:31"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 16:02:31"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 16:02:31"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 16:02:32"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:02:32"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:02:32"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:02:32"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 16:04:12"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 16:04:12"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 16:04:12"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 16:04:12"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 16:04:13"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 16:04:14"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 16:04:14"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 16:04:14"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 16:04:14"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 16:04:14"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 16:04:14"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:04:14"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:04:14"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:04:14"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 16:06:03"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 16:06:03"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 16:06:03"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 16:06:03"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 16:06:04"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 16:06:04"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 16:06:04"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 16:06:04"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 16:06:04"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 16:06:04"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 16:06:04"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:06:04"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:06:04"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:06:05"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 16:07:27"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 16:07:27"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 16:07:27"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 16:07:27"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 16:07:28"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 16:07:28"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 16:07:28"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 16:07:28"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 16:07:28"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 16:07:28"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 16:07:29"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:07:29"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:07:29"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:07:29"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 16:07:38"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 16:07:38"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 16:07:38"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 16:07:38"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 16:07:39"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 16:07:40"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 16:07:40"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 16:07:40"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 16:07:40"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 16:07:40"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 16:07:40"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:07:40"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:07:40"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:07:40"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 16:07:50"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 16:07:50"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 16:07:50"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 16:07:51"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 16:07:51"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 16:07:52"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 16:07:52"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 16:07:52"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 16:07:52"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 16:07:52"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 16:07:52"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:07:52"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:07:52"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:07:52"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 16:08:13"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 16:08:13"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 16:08:13"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 16:08:13"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 16:08:15"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 16:08:15"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 16:08:15"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 16:08:15"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 16:08:15"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 16:08:15"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 16:08:16"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:08:16"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:08:16"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:08:16"}
+{"level":"info","message":"Added 1x Story Books For Kids | Set Of 10 | Biographies For Kids | Age 6+ to cart for user 69705d1444117a748bb93b21","service":"atz-store","timestamp":"2026-01-26 16:08:48"}
+{"level":"info","message":"Added 1x Longway Super Pro Juicer Mixer Grinder to cart for user 69705d1444117a748bb93b21","service":"atz-store","timestamp":"2026-01-26 16:09:26"}
+{"level":"info","message":"Added 1x Zouk Women's Red Kalamkari Shoulder Tote to cart for user 69705d1444117a748bb93b21","service":"atz-store","timestamp":"2026-01-26 16:10:09"}
+{"level":"warn","message":"Reverse geocoding failed:","service":"atz-store","timestamp":"2026-01-26 16:11:06"}
+{"level":"info","message":"Razorpay order created: order_S8TgIJQt6uci5r for order: ATZ-1769424073421-6F441F74","service":"atz-store","timestamp":"2026-01-26 16:11:14"}
+{"level":"info","message":"Payment link generated for order: ATZ-1769424073421-6F441F74","service":"atz-store","timestamp":"2026-01-26 16:11:15"}
+{"level":"info","message":"Order created: ATZ-1769424073421-6F441F74","service":"atz-store","timestamp":"2026-01-26 16:11:15"}
+{"cause":{"code":401,"details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","domain":"googleapis.com","metadata":{"method":"google.apps.sheets.v4.SpreadsheetsService.AppendValues","service":"sheets.googleapis.com"},"reason":"CREDENTIALS_MISSING"}],"errors":[{"domain":"global","location":"Authorization","locationType":"header","message":"Login Required.","reason":"required"}],"message":"Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"},"code":401,"config":{"apiVersion":"","body":"{\"values\":[[\"ATZ-1769424073421-6F441F74\",\"2026-01-26T10:41:13.423Z\",\"69705d1444117a748bb93b21\",\"Story Books For Kids | Set Of 10 | Biographies For Kids | Age 6+ (x1), Longway Super Pro Juicer Mixer Grinder (x1), Zouk Women's Red Kalamkari Shoulder Tote (x1)\",3060.64,\"razorpay\",\"pending\",\"pending\",\"Lat: 20.659324, Long: -11.406255\"]]}","data":{"values":[["ATZ-1769424073421-6F441F74","2026-01-26T10:41:13.423Z","69705d1444117a748bb93b21","Story Books For Kids | Set Of 10 | Biographies For Kids | Age 6+ (x1), Longway Super Pro Juicer Mixer Grinder (x1), Zouk Women's Red Kalamkari Shoulder Tote (x1)",3060.64,"razorpay","pending","pending","Lat: 20.659324, Long: -11.406255"]]},"duplex":"half","headers":{},"method":"POST","params":{"valueInputOption":"USER_ENTERED"},"responseType":"unknown","retry":true,"retryConfig":{"currentRetryAttempt":0,"httpMethodsToRetry":["GET","HEAD","PUT","OPTIONS","DELETE"],"maxRetryDelay":9007199254740991,"noResponseRetries":2,"retry":3,"retryDelayMultiplier":2,"statusCodesToRetry":[[100,199],[408,408],[429,429],[500,599]],"timeOfFirstRequest":1769424075783,"totalTimeout":9007199254740991},"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A2:append?valueInputOption=USER_ENTERED","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"level":"error","message":"Error syncing order to Google Sheets: Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","response":{"config":{"apiVersion":"","body":"{\"values\":[[\"ATZ-1769424073421-6F441F74\",\"2026-01-26T10:41:13.423Z\",\"69705d1444117a748bb93b21\",\"Story Books For Kids | Set Of 10 | Biographies For Kids | Age 6+ (x1), Longway Super Pro Juicer Mixer Grinder (x1), Zouk Women's Red Kalamkari Shoulder Tote (x1)\",3060.64,\"razorpay\",\"pending\",\"pending\",\"Lat: 20.659324, Long: -11.406255\"]]}","data":{"values":[["ATZ-1769424073421-6F441F74","2026-01-26T10:41:13.423Z","69705d1444117a748bb93b21","Story Books For Kids | Set Of 10 | Biographies For Kids | Age 6+ (x1), Longway Super Pro Juicer Mixer Grinder (x1), Zouk Women's Red Kalamkari Shoulder Tote (x1)",3060.64,"razorpay","pending","pending","Lat: 20.659324, Long: -11.406255"]]},"duplex":"half","headers":{},"method":"POST","params":{"valueInputOption":"USER_ENTERED"},"responseType":"unknown","retry":true,"url":"https://sheets.googleapis.com/v4/spreadsheets/1VuASNFQMZ_6q3LmqaBCAls3We7fmQLA5HaJchNV6iMc/values/Orders%21A2:append?valueInputOption=USER_ENTERED","userAgentDirectives":[{"comment":"gzip","product":"google-api-nodejs-client","version":"8.0.1"}]},"data":{"error":{"code":401,"details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","domain":"googleapis.com","metadata":{"method":"google.apps.sheets.v4.SpreadsheetsService.AppendValues","service":"sheets.googleapis.com"},"reason":"CREDENTIALS_MISSING"}],"errors":[{"domain":"global","location":"Authorization","locationType":"header","message":"Login Required.","reason":"required"}],"message":"Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}},"size":0},"service":"atz-store","stack":"Error: Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.\n    at Gaxios._request (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\gaxios\\build\\cjs\\src\\gaxios.js:155:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async JWT.requestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:463:20)\n    at async createAPIRequestAsync (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\googleapis-common\\build\\src\\apirequest.js:308:25)\n    at async GoogleSheetsService.syncOrder (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\src\\services\\googleSheetsService.js:43:13)","status":401,"timestamp":"2026-01-26 16:11:15"}
+{"level":"info","message":"Order cancelled: ATZ-1769424073421-6F441F74, reason: User requested","service":"atz-store","timestamp":"2026-01-26 16:12:51"}

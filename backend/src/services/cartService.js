@@ -20,7 +20,7 @@ class CartService {
     /**
      * Add item to cart
      */
-    async addToCart(userId, productId, quantity = 1) {
+    async addToCart(userId, productId, quantity = 1, size = null) {
         try {
             const product = await productService.getProduct(productId);
 
@@ -37,7 +37,7 @@ class CartService {
             }
 
             const cart = await Cart.getOrCreate(userId);
-            await cart.addItem(productId, quantity, product.price, product.discount);
+            await cart.addItem(productId, quantity, product.price, product.discount, size);
 
             await cart.populate('items.product');
 
@@ -59,6 +59,9 @@ class CartService {
 
             if (quantity > 0) {
                 const product = await productService.getProduct(productId);
+                if (!product) {
+                    throw new Error('Product not found');
+                }
                 if (product.availableStock < quantity) {
                     throw new Error(`Only ${product.availableStock} items available`);
                 }
@@ -184,8 +187,9 @@ class CartService {
                     price: item.product.price,
                     discount: item.product.discount,
                     finalPrice: item.product.finalPrice,
+                    size: item.size,
                     quantity: item.quantity,
-                    itemTotal: item.product.finalPrice * item.quantity,
+                    itemTotal: (item.product.finalPrice || item.product.price) * item.quantity,
                     inStock: item.product.availableStock >= item.quantity,
                 }));
 

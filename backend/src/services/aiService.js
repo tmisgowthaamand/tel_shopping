@@ -93,6 +93,32 @@ Example JSON:
             };
         }
     }
+
+    /**
+     * Generate product description using AI
+     */
+    async generateProductDescription(productName, categoryName) {
+        if (!this.client) throw new Error('AI Service not initialized');
+
+        try {
+            const prompt = `Generate a compelling, professional, and SEO-friendly product description for a product named "${productName}" in the category "${categoryName}". 
+            Keep it between 100-150 words. Focus on benefits, quality, and use cases. Use a premium and helpful tone.
+            Return ONLY the description text, no preamble or extra commentary.`;
+
+            const chatCompletion = await this.client.chat.completions.create({
+                messages: [
+                    { role: 'system', content: 'You are a professional e-commerce copywriter.' },
+                    { role: 'user', content: prompt }
+                ],
+                model: config.groq.model,
+            });
+
+            return chatCompletion.choices[0].message.content.trim();
+        } catch (error) {
+            logger.error('AI description generation error:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = new AIService();

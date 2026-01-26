@@ -29,9 +29,7 @@ const app = express();
 // Security middleware
 app.use(helmet());
 app.use(cors({
-    origin: config.nodeEnv === 'production'
-        ? ['https://your-admin-domain.com']
-        : ['http://localhost:3001', 'http://localhost:5173'],
+    origin: config.allowedOrigins,
     credentials: true,
 }));
 
