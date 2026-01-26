@@ -1,23 +1,15 @@
 require('dotenv').config();
+const mongoose = require('mongoose');
 const connectDB = require('./src/config/database');
-const { Category, Product, Admin, DeliveryPartner, User, Order } = require('./src/models');
-const logger = require('./src/utils/logger');
+const { Category, Product } = require('./src/models');
 
 async function check() {
-    try {
-        await connectDB();
-        console.log('--- DB Content Check ---');
-        console.log('Categories:', await Category.countDocuments());
-        console.log('Products:', await Product.countDocuments());
-        console.log('Users:', await User.countDocuments());
-        console.log('Orders:', await Order.countDocuments());
-        console.log('Delivery Partners:', await DeliveryPartner.countDocuments());
-        console.log('Admins:', await Admin.countDocuments());
-        process.exit(0);
-    } catch (error) {
-        console.error('Check failed:', error);
-        process.exit(1);
-    }
+    await connectDB();
+    const cat = await Category.findOne({ slug: 'electronics' });
+    const count = await Product.countDocuments({ category: cat._id });
+    console.log(`Electronics Product Count: ${count}`);
+    const products = await Product.find({ category: cat._id }).select('name');
+    products.forEach(p => console.log(`- ${p.name}`));
+    process.exit(0);
 }
-
 check();

@@ -4327,3 +4327,73 @@
 {"level":"info","message":"Sample delivery partners created (Online & Available)","service":"atz-store","timestamp":"2026-01-26 17:29:38"}
 {"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:29:53"}
 {"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-02.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:29:54"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:54:45"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:54:46"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 17:54:46"}
+{"level":"warn","message":"Main Redis connection failed (redis://localhost:6379). Switching to ioredis-mock.","service":"atz-store","timestamp":"2026-01-26 17:54:46"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 17:54:46"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 17:54:47"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 17:54:47"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 17:54:47"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 17:54:47"}
+{"level":"warn","message":"Redis connection failed (redis://localhost:6379), switching to mock:","service":"atz-store","timestamp":"2026-01-26 17:54:47"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:54:47"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 17:54:47"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 17:54:47"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 17:54:47"}
+{"level":"info","message":"Environment: production","service":"atz-store","timestamp":"2026-01-26 17:54:47"}
+{"level":"info","message":"Telegram bot webhook set: https://tel-shopping.onrender.com/webhook/telegram/webhook/telegram","service":"atz-store","timestamp":"2026-01-26 17:54:48"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:54:48"}
+{"level":"info","message":"Connected to database for specialized electronic seeding","service":"atz-store","timestamp":"2026-01-26 17:54:48"}
+{"level":"info","message":"Removed 30 old electronic products","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Halonix 10W White Led Bulb | B22 Base Holder","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Desidiya Universe Crystal Ball Night Light","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: DesiDiya String LED Rice Light | Gold","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Zebronics Bro in Ear Wired Earphones with Mic","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Zebronics Zeb-Jaguar Wireless Mouse","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Havells 9W V Smart Bulb","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Kenstar Estella Electric Kettle | 1.6 L","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Longway Kwid Light Weight Dry Iron","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Pigeon by Stovekraft Amaze Plus Electric Kettle","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: boAt BassHeads 100 Wired Earphones","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Lifelong LLMG300 Power Pro LX Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Lifelong LLMG202 Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Longway Super Dlx 750 Watt Juicer Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Voltas Beko Mixer Grinder With Grindx","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Added: Cadlec JarGenie 4 Jar 750W Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 17:54:49"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:55:08"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-02.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:55:09"}
+{"level":"info","message":"Connected to database for specialized electronic seeding","service":"atz-store","timestamp":"2026-01-26 17:55:09"}
+{"level":"info","message":"Removed 15 old electronic products","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Halonix 10W White Led Bulb | B22 Base Holder","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Desidiya Universe Crystal Ball Night Light","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: DesiDiya String LED Rice Light | Gold","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Zebronics Bro in Ear Wired Earphones with Mic","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Zebronics Zeb-Jaguar Wireless Mouse","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Havells 9W V Smart Bulb","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Kenstar Estella Electric Kettle | 1.6 L","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Longway Kwid Light Weight Dry Iron","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Pigeon by Stovekraft Amaze Plus Electric Kettle","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: boAt BassHeads 100 Wired Earphones","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Lifelong LLMG300 Power Pro LX Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Lifelong LLMG202 Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Longway Super Dlx 750 Watt Juicer Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Voltas Beko Mixer Grinder With Grindx","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Added: Cadlec JarGenie 4 Jar 750W Mixer Grinder","service":"atz-store","timestamp":"2026-01-26 17:55:10"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:55:29"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:55:31"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 17:55:31"}
+{"level":"warn","message":"Main Redis connection failed (redis://localhost:6379). Switching to ioredis-mock.","service":"atz-store","timestamp":"2026-01-26 17:55:31"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 17:55:31"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 17:55:32"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 17:55:33"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 17:55:33"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 17:55:33"}
+{"level":"warn","message":"Redis connection failed (redis://localhost:6379), switching to mock:","service":"atz-store","timestamp":"2026-01-26 17:55:33"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 17:55:33"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 17:55:33"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 17:55:33"}
+{"level":"info","message":"Environment: production","service":"atz-store","timestamp":"2026-01-26 17:55:33"}
+{"level":"info","message":"Telegram bot webhook set: https://tel-shopping.onrender.com/webhook/telegram/webhook/telegram","service":"atz-store","timestamp":"2026-01-26 17:55:33"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:55:38"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-00.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:55:39"}

@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: atz-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - atz-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: atz-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend/.env
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/atz-store
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+    networks:
+      - atz-network
+    restart: always
+
+networks:
+  atz-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
