@@ -4,6 +4,9 @@ const logger = require('../utils/logger');
 
 const connectDB = async () => {
     try {
+        const maskedUri = config.mongodb.uri.replace(/:([^:@]{1,})@/, ':****@');
+        logger.info(`Connecting to MongoDB: ${maskedUri}`);
+
         const conn = await mongoose.connect(config.mongodb.uri, {
             maxPoolSize: 10,
             serverSelectionTimeoutMS: 5000,
