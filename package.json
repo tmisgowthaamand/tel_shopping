@@ -1,0 +1,16 @@
+{
+    "name": "telegram-e-commerce",
+    "version": "1.0.0",
+    "description": "Premium Telegram-based E-commerce & Hyperlocal Delivery Platform",
+    "scripts": {
+        "install:all": "npm install --prefix backend && npm install --prefix admin",
+        "backend": "npm run dev --prefix backend",
+        "admin": "npm run dev --prefix admin",
+        "dev": "concurrently \"npm run backend\" \"npm run admin\"",
+        "seed": "npm run seed --prefix backend",
+        "worker": "npm run worker --prefix backend"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
