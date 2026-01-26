@@ -4196,3 +4196,18 @@
 {"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:20:12"}
 {"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:20:12"}
 {"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:20:12"}
+{"level":"info","message":"Connecting to MongoDB: mongodb://localhost:27017/atz_store","service":"atz-store","timestamp":"2026-01-26 16:31:42"}
+{"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 16:31:42"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 16:31:42"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 16:31:42"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 16:31:42"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 16:31:43"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:31:44"}

@@ -1,6 +1,7 @@
 {
     "version": 2,
     "framework": "vite",
+    "buildCommand": "npx vite build",
     "rewrites": [
         {
             "source": "/(.*)",
