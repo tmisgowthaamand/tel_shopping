@@ -4397,3 +4397,46 @@
 {"level":"info","message":"Telegram bot webhook set: https://tel-shopping.onrender.com/webhook/telegram/webhook/telegram","service":"atz-store","timestamp":"2026-01-26 17:55:33"}
 {"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:55:38"}
 {"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-00.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:55:39"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 18:32:55"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-02.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 18:32:56"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 18:32:56"}
+{"level":"warn","message":"Main Redis connection failed (redis://localhost:6379). Switching to ioredis-mock.","service":"atz-store","timestamp":"2026-01-26 18:32:56"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 18:32:57"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 18:32:58"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 18:32:58"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 18:32:58"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 18:32:58"}
+{"level":"warn","message":"Redis connection failed (redis://localhost:6379), switching to mock:","service":"atz-store","timestamp":"2026-01-26 18:32:58"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 18:32:58"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 18:33:00"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 18:33:00"}
+{"level":"info","message":"Environment: production","service":"atz-store","timestamp":"2026-01-26 18:33:00"}
+{"level":"info","message":"Telegram bot webhook set: https://tel-shopping.onrender.com/webhook/telegram/webhook/telegram","service":"atz-store","timestamp":"2026-01-26 18:33:00"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 18:46:38"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 18:46:39"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 18:46:39"}
+{"level":"warn","message":"Main Redis connection failed (redis://localhost:6379). Switching to ioredis-mock.","service":"atz-store","timestamp":"2026-01-26 18:46:39"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 18:46:39"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 18:46:40"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 18:46:41"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 18:46:41"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 18:46:41"}
+{"level":"warn","message":"Redis connection failed (redis://localhost:6379), switching to mock:","service":"atz-store","timestamp":"2026-01-26 18:46:41"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 18:48:33"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 18:48:34"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 18:48:34"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-26 18:48:34"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 18:48:35"}
+{"level":"info","message":"🤖 Initializing Telegram bot...","service":"atz-store","timestamp":"2026-01-26 18:48:35"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"level":"info","message":"🔄 Starting bot in Polling mode (Dev/Local)...","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 18:48:36"}
+{"code":11000,"errorLabelSet":{},"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: test.users index: telegramId_1 dup key: { telegramId: \"991557828\" }","index":0,"keyPattern":{"telegramId":1},"keyValue":{"telegramId":"991557828"}},"index":0,"keyPattern":{"telegramId":1},"keyValue":{"telegramId":"991557828"},"level":"error","message":"Middleware error: E11000 duplicate key error collection: test.users index: telegramId_1 dup key: { telegramId: \"991557828\" }","service":"atz-store","stack":"MongoServerError: E11000 duplicate key error collection: test.users index: telegramId_1 dup key: { telegramId: \"991557828\" }\n    at InsertOneOperation.handleOk (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at tryOperation (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:214:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async executeOperation (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:78:16)\n    at async Collection.insertOne (C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\Telegram\\backend\\node_modules\\mongodb\\lib\\collection.js:154:16)","timestamp":"2026-01-26 18:48:37"}

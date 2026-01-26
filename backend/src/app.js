@@ -88,18 +88,26 @@ async function initialize() {
 
         // Initialize Telegram bot
         try {
+            logger.info('🤖 Initializing Telegram bot...');
             await botService.initialize();
+
             // Initialize delivery bot handlers
             const deliveryHandler = new DeliveryBotHandler(botService.getBot());
             deliveryHandler.initialize();
+
             // Start bot background task
-            if (config.nodeEnv === 'production' && config.telegram.webhookUrl) {
+            const isLocal = config.allowedOrigins.some(origin => origin.includes('localhost'));
+            const useWebhook = config.nodeEnv === 'production' && config.telegram.webhookUrl && !isLocal;
+
+            if (useWebhook) {
+                logger.info('🌐 Starting bot in Webhook mode...');
                 botService.startWebhook(app, '/webhook/telegram').catch(e => logger.error('Bot Webhook failed:', e));
             } else {
+                logger.info('🔄 Starting bot in Polling mode (Dev/Local)...');
                 botService.startPolling().catch(e => logger.error('Bot Polling failed:', e));
             }
         } catch (e) {
-            logger.error('Bot initialization failed:', e);
+            logger.error('CRITICAL: Bot initialization failed:', e);
         }
 
         // Initialize background job workers

@@ -100,21 +100,43 @@ userSchema.methods.getDefaultAddress = function () {
 
 // Static method to find or create user
 userSchema.statics.findOrCreateByTelegramId = async function (telegramData) {
-    let user = await this.findOne({ telegramId: telegramData.id.toString() });
+    const telegramId = telegramData.id.toString();
+    let user = await this.findOne({ telegramId });
 
     if (!user) {
-        user = await this.create({
-            telegramId: telegramData.id.toString(),
-            username: telegramData.username,
-            firstName: telegramData.first_name,
-            lastName: telegramData.last_name,
-        });
+        try {
+            user = await this.create({
+                telegramId,
+                username: telegramData.username,
+                firstName: telegramData.first_name,
+                lastName: telegramData.last_name,
+            });
+        } catch (error) {
+            // Handle race condition where user was created by parallel request
+            if (error.code === 11000) {
+                user = await this.findOne({ telegramId });
+            } else {
+                throw error;
+            }
+        }
     } else {
         // Update user info if changed
-        user.username = telegramData.username || user.username;
-        user.firstName = telegramData.first_name || user.firstName;
-        user.lastName = telegramData.last_name || user.lastName;
-        await user.save();
+        let hasChanges = false;
+        if (telegramData.username && user.username !== telegramData.username) {
+            user.username = telegramData.username;
+            hasChanges = true;
+        }
+        if (telegramData.first_name && user.firstName !== telegramData.first_name) {
+            user.firstName = telegramData.first_name;
+            hasChanges = true;
+        }
+        if (telegramData.last_name && user.lastName !== telegramData.last_name) {
+            user.lastName = telegramData.last_name;
+            hasChanges = true;
+        }
+        if (hasChanges) {
+            await user.save();
+        }
     }
 
     return user;
