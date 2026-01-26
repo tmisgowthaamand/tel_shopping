@@ -4211,3 +4211,119 @@
 {"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
 {"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
 {"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-26 16:31:44"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:23:11"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:23:12"}
+{"level":"info","message":"Connected to database","service":"atz-store","timestamp":"2026-01-26 17:23:12"}
+{"level":"info","message":"Cleared existing data","service":"atz-store","timestamp":"2026-01-26 17:23:12"}
+{"level":"info","message":"Created category: Electronics","service":"atz-store","timestamp":"2026-01-26 17:23:12"}
+{"level":"info","message":"Created category: Fashion","service":"atz-store","timestamp":"2026-01-26 17:23:13"}
+{"level":"info","message":"Created category: Groceries","service":"atz-store","timestamp":"2026-01-26 17:23:13"}
+{"level":"info","message":"Created category: Home & Kitchen","service":"atz-store","timestamp":"2026-01-26 17:23:13"}
+{"level":"info","message":"Created category: Beauty","service":"atz-store","timestamp":"2026-01-26 17:23:13"}
+{"level":"info","message":"Created category: Sports","service":"atz-store","timestamp":"2026-01-26 17:23:13"}
+{"level":"info","message":"Created category: Books","service":"atz-store","timestamp":"2026-01-26 17:23:13"}
+{"level":"info","message":"Created 25 products...","service":"atz-store","timestamp":"2026-01-26 17:23:14"}
+{"level":"info","message":"Created 50 products...","service":"atz-store","timestamp":"2026-01-26 17:23:16"}
+{"level":"info","message":"Created 75 products...","service":"atz-store","timestamp":"2026-01-26 17:23:17"}
+{"level":"info","message":"Created 100 products...","service":"atz-store","timestamp":"2026-01-26 17:23:18"}
+{"level":"info","message":"Created 125 products...","service":"atz-store","timestamp":"2026-01-26 17:23:20"}
+{"level":"info","message":"Created 150 products...","service":"atz-store","timestamp":"2026-01-26 17:23:21"}
+{"level":"info","message":"Default admin created and hashed successfully","service":"atz-store","timestamp":"2026-01-26 17:23:21"}
+{"level":"info","message":"Sample delivery partners created (Online & Available)","service":"atz-store","timestamp":"2026-01-26 17:23:22"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:24:14"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:24:16"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:24:24"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-00.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:24:24"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 17:24:24"}
+{"level":"warn","message":"Main Redis connection failed (redis://localhost:6379). Switching to ioredis-mock.","service":"atz-store","timestamp":"2026-01-26 17:24:24"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 17:24:25"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 17:24:26"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 17:24:27"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 17:24:27"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 17:24:27"}
+{"level":"warn","message":"Redis connection failed (redis://localhost:6379), switching to mock:","service":"atz-store","timestamp":"2026-01-26 17:24:27"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 17:24:27"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 17:24:27"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 17:24:27"}
+{"level":"info","message":"Environment: production","service":"atz-store","timestamp":"2026-01-26 17:24:27"}
+{"level":"info","message":"Telegram bot webhook set: https://tel-shopping.onrender.com/webhook/telegram/webhook/telegram","service":"atz-store","timestamp":"2026-01-26 17:24:27"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:24:48"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:24:49"}
+{"level":"info","message":"Connected to database","service":"atz-store","timestamp":"2026-01-26 17:24:49"}
+{"level":"info","message":"Cleared existing data","service":"atz-store","timestamp":"2026-01-26 17:24:49"}
+{"level":"info","message":"Created category: Face","service":"atz-store","timestamp":"2026-01-26 17:24:49"}
+{"level":"info","message":"Created category: Lips","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created category: Eyes","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created category: Tools","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Warm Wishes Soft Matte Powder Bronzer","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Soft Pinch Liquid Blush","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Soft Pinch Liquid Contour","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Positive Light Liquid Luminizer","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Kind Words Matte Lip Liner","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Find Comfort Lip Butter","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Soft Pinch Tinted Lip Oil","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Brow Harmony Flexible Lifting Gel","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Perfect Strokes Universal Volumizing Mascara","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Angled Powder Brush","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Soft Pinch Blush Brush","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Liquid Touch Foundation Brush","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Created product: Positive Light Precision Highlighter Brush","service":"atz-store","timestamp":"2026-01-26 17:24:50"}
+{"level":"info","message":"Rare Beauty Admin created","service":"atz-store","timestamp":"2026-01-26 17:24:51"}
+{"level":"info","message":"Delivery partners restored","service":"atz-store","timestamp":"2026-01-26 17:24:52"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:25:05"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:25:05"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:25:33"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-02.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:25:35"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:25:40"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-02.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:25:40"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 17:25:40"}
+{"level":"warn","message":"Main Redis connection failed (redis://localhost:6379). Switching to ioredis-mock.","service":"atz-store","timestamp":"2026-01-26 17:25:41"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 17:25:41"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 17:25:42"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 17:25:42"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 17:25:42"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 17:25:42"}
+{"level":"warn","message":"Redis connection failed (redis://localhost:6379), switching to mock:","service":"atz-store","timestamp":"2026-01-26 17:25:42"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 17:25:43"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 17:25:43"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 17:25:43"}
+{"level":"info","message":"Environment: production","service":"atz-store","timestamp":"2026-01-26 17:25:43"}
+{"level":"info","message":"Telegram bot webhook set: https://tel-shopping.onrender.com/webhook/telegram/webhook/telegram","service":"atz-store","timestamp":"2026-01-26 17:25:43"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:26:02"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:26:03"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-26 17:26:03"}
+{"level":"warn","message":"Main Redis connection failed (redis://localhost:6379). Switching to ioredis-mock.","service":"atz-store","timestamp":"2026-01-26 17:26:03"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-26 17:26:04"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-26 17:26:04"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-26 17:26:05"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-26 17:26:05"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-26 17:26:05"}
+{"level":"warn","message":"Redis connection failed (redis://localhost:6379), switching to mock:","service":"atz-store","timestamp":"2026-01-26 17:26:05"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-26 17:26:05"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-26 17:26:05"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-26 17:26:05"}
+{"level":"info","message":"Environment: production","service":"atz-store","timestamp":"2026-01-26 17:26:05"}
+{"level":"info","message":"Telegram bot webhook set: https://tel-shopping.onrender.com/webhook/telegram/webhook/telegram","service":"atz-store","timestamp":"2026-01-26 17:26:05"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:26:08"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:26:09"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:29:24"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-02.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:29:27"}
+{"level":"info","message":"Connected to database","service":"atz-store","timestamp":"2026-01-26 17:29:27"}
+{"level":"info","message":"Cleared existing data","service":"atz-store","timestamp":"2026-01-26 17:29:29"}
+{"level":"info","message":"Created category: Electronics","service":"atz-store","timestamp":"2026-01-26 17:29:29"}
+{"level":"info","message":"Created category: Fashion","service":"atz-store","timestamp":"2026-01-26 17:29:29"}
+{"level":"info","message":"Created category: Groceries","service":"atz-store","timestamp":"2026-01-26 17:29:29"}
+{"level":"info","message":"Created category: Home & Kitchen","service":"atz-store","timestamp":"2026-01-26 17:29:29"}
+{"level":"info","message":"Created category: Beauty","service":"atz-store","timestamp":"2026-01-26 17:29:29"}
+{"level":"info","message":"Created category: Sports","service":"atz-store","timestamp":"2026-01-26 17:29:29"}
+{"level":"info","message":"Created category: Books","service":"atz-store","timestamp":"2026-01-26 17:29:29"}
+{"level":"info","message":"Created 25 products...","service":"atz-store","timestamp":"2026-01-26 17:29:30"}
+{"level":"info","message":"Created 50 products...","service":"atz-store","timestamp":"2026-01-26 17:29:32"}
+{"level":"info","message":"Created 75 products...","service":"atz-store","timestamp":"2026-01-26 17:29:33"}
+{"level":"info","message":"Created 100 products...","service":"atz-store","timestamp":"2026-01-26 17:29:35"}
+{"level":"info","message":"Created 125 products...","service":"atz-store","timestamp":"2026-01-26 17:29:36"}
+{"level":"info","message":"Created 150 products...","service":"atz-store","timestamp":"2026-01-26 17:29:38"}
+{"level":"info","message":"Default admin created and hashed successfully","service":"atz-store","timestamp":"2026-01-26 17:29:38"}
+{"level":"info","message":"Sample delivery partners created (Online & Available)","service":"atz-store","timestamp":"2026-01-26 17:29:38"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-26 17:29:53"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-02.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-26 17:29:54"}
