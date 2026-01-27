@@ -753,6 +753,12 @@ ${product.availableStock > 0 ? '✅ In Stock' : '❌ Out of Stock'}
             return ctx.reply('Product not found.');
         }
 
+        // Store as last interacted product for chat context (e.g. "add 3")
+        user.sessionData.lastProductId = productId;
+        user.currentState = 'viewing_product';
+        user.markModified('sessionData');
+        await user.save();
+
         let imageUrl = product.getPrimaryImage();
         imageUrl = this.optimizeImageUrl(imageUrl, { width: 800, quality: 'good' });
         const hasDiscount = product.discount > 0;
@@ -825,6 +831,11 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
             if (!product || !product.isActive) {
                 return ctx.reply('This product is not available.');
             }
+
+            // Store as last interacted product for chat context
+            user.sessionData.lastProductId = productId;
+            user.markModified('sessionData');
+            await user.save();
 
             // If product has sizes and no size is selected yet
             if (product.sizes && product.sizes.length > 0 && !size) {
@@ -1092,11 +1103,14 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
             if (item) {
                 const newQty = item.quantity + change;
                 await cartService.updateQuantity(user._id, productId, newQty);
-                // The model logic (updateItemQuantity) handles quantity <= 0 by removing the item
             } else if (change > 0) {
-                // If item not found but we're trying to add it, maybe handle as add to cart
                 await cartService.addToCart(user._id, productId, 1);
             }
+
+            // Update context
+            user.sessionData.lastProductId = productId;
+            user.markModified('sessionData');
+            await user.save();
 
             await this.showCart(ctx);
         } catch (error) {
@@ -1350,9 +1364,40 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
                 break;
 
             default:
+                // Check for Quick Cart Update Patterns (e.g., "add 3", "remove 1", "5 more")
+                const lowerText = text.toLowerCase().trim();
+                const addMatch = lowerText.match(/^add\s+(\d+)(?:\s+to\s+cart)?$/i) || lowerText.match(/^(\d+)\s+(?:more|add(?:\s+to\s+cart)?)$/i);
+                const removeMatch = lowerText.match(/^remove\s+(\d+)(?:\s+from\s+cart)?$/i) || lowerText.match(/^(\d+)\s+remove(?:\s+from\s+cart)?$/i);
+
+                if ((addMatch || removeMatch) && user.sessionData?.lastProductId) {
+                    const productId = user.sessionData.lastProductId;
+                    const amount = parseInt(addMatch ? addMatch.find(m => /^\d+$/.test(m)) : removeMatch.find(m => /^\d+$/.test(m)));
+
+                    if (!isNaN(amount)) {
+                        try {
+                            if (addMatch) {
+                                await cartService.addToCart(user._id, productId, amount);
+                                await ctx.reply(`✅ Added ${amount} more to your cart.`);
+                            } else {
+                                const cart = await cartService.getCart(user._id);
+                                const item = cart.items.find(i => (i.product?._id || i.product).toString() === productId);
+                                if (item) {
+                                    const newQty = Math.max(0, item.quantity - amount);
+                                    await cartService.updateQuantity(user._id, productId, newQty);
+                                    await ctx.reply(`✅ Removed ${amount} from your cart.`);
+                                }
+                            }
+                            return this.showCart(ctx);
+                        } catch (err) {
+                            logger.error('Quick cart update failed:', err);
+                            // Fallback to AI if quick update fails (e.g. stock issue)
+                        }
+                    }
+                }
+
                 // Check if it's a greeting or just process with AI
                 const greetings = ['hi', 'hello', 'hey', 'start'];
-                if (greetings.includes(text.toLowerCase())) {
+                if (greetings.includes(lowerText)) {
                     await this.handleStart(ctx);
                 } else {
                     await this.handleAIRequest(ctx, text);
