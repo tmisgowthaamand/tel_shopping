@@ -1403,8 +1403,24 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
                 // Define supported sizes for fashion
                 const sizeMatch = lowerText.match(/\b(s|m|l|xl|xxl|3xl)\b/i);
                 const quantityMatch = lowerText.match(/\b(\d+)\b/);
-                const isAdd = /\b(add|more|plus)\b/i.test(lowerText);
-                const isRemove = /\b(remove|less|minus)\b/i.test(lowerText);
+                const isAdd = /\b(add|more|plus|need|want|buy|get)\b/i.test(lowerText);
+                const isRemove = /\b(remove|less|minus|delete)\b/i.test(lowerText);
+                const isCheckout = /\b(checkout|pay|buy\s+now|order\s+now|ready)\b/i.test(lowerText);
+                const isExit = /\b(exit|bye|quit|end|done)\b/i.test(lowerText);
+
+                if (isExit) {
+                    return this.handleExit(ctx);
+                }
+
+                if (isCheckout) {
+                    const cartSummary = await cartService.getCartSummary(user._id);
+                    if (cartSummary.isEmpty) {
+                        return ctx.reply('🛒 Your cart is empty. Browse some products first!', Markup.inlineKeyboard([
+                            [Markup.button.callback('🛍️ Browse Categories', 'show_categories')]
+                        ]));
+                    }
+                    return this.startCheckout(ctx);
+                }
 
                 if ((isAdd || isRemove) && quantityMatch && user.sessionData?.lastProductId) {
                     const productId = user.sessionData.lastProductId;
@@ -2157,9 +2173,37 @@ ${order.estimatedDeliveryTime ? `⏱️ ETA: ${new Date(order.estimatedDeliveryT
                     if (aiResult.data?.product) {
                         const products = await productService.searchProducts(aiResult.data.product);
                         if (products.length > 0) {
-                            await this.addToCart(ctx, products[0]._id);
+                            const quantity = parseInt(aiResult.data.quantity) || 1;
+                            const size = aiResult.data.size || null;
+                            await cartService.addToCart(user._id, products[0]._id, quantity, size);
+                            await ctx.reply(`✅ Added ${quantity} ${products[0].name}${size ? ` [${size}]` : ''} to your cart.`);
+                            await this.showCart(ctx);
                         } else {
                             await ctx.reply(`I couldn't find "${aiResult.data.product}" to add to your cart.`);
+                        }
+                    }
+                    break;
+                case 'remove_from_cart':
+                    if (aiResult.data?.product) {
+                        const products = await productService.searchProducts(aiResult.data.product);
+                        if (products.length > 0) {
+                            const quantity = parseInt(aiResult.data.quantity) || 1;
+                            const size = aiResult.data.size || null;
+                            const cart = await cartService.getCart(user._id);
+                            const item = cart.items.find(i =>
+                                (i.product?._id || i.product).toString() === products[0]._id.toString() &&
+                                (i.size || null) === (size || null)
+                            );
+                            if (item) {
+                                const newQty = Math.max(0, item.quantity - quantity);
+                                await cartService.updateQuantity(user._id, products[0]._id, newQty, size);
+                                await ctx.reply(`✅ Removed ${quantity} ${products[0].name}${size ? ` [${size}]` : ''} from your cart.`);
+                                await this.showCart(ctx);
+                            } else {
+                                await ctx.reply(`I couldn't find ${products[0].name} in your cart.`);
+                            }
+                        } else {
+                            await ctx.reply(`I couldn't find "${aiResult.data.product}" in your cart.`);
                         }
                     }
                     break;

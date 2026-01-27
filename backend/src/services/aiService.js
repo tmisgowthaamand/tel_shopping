@@ -62,9 +62,9 @@ Rules:
 6. Keep responses concise and friendly, suitable for a chat bot.
 
 IMPORTANT: You must return your response in JSON format with two fields:
-- "intent": One of ["browse", "search", "add_to_cart", "view_cart", "checkout", "track_order", "cancel_order", "help", "general"]
+- "intent": One of ["browse", "search", "add_to_cart", "remove_from_cart", "view_cart", "checkout", "track_order", "cancel_order", "help", "general"]
 - "response": The natural language response to the user.
-- "data": (Optional) Any specific data extracted (e.g., product name, quantity, order ID).
+- "data": (Optional) Any specific data extracted (e.g., product name, quantity, size [S, M, L, XL, XXL], order ID).
 
 Example JSON:
 {
