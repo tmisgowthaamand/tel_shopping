@@ -180,6 +180,10 @@ const orderSchema = new mongoose.Schema(
             type: String,
             default: '',
         },
+        paymentRetries: {
+            type: Number,
+            default: 0,
+        },
     },
     {
         timestamps: true,
@@ -196,9 +200,9 @@ orderSchema.index({ paymentStatus: 1, expiresAt: 1 });
 
 // Pre-save middleware
 orderSchema.pre('save', function (next) {
-    // Set expiry for pending orders (15 minutes)
+    // Set expiry for pending orders (10 minutes)
     if (this.isNew && this.status === 'pending' && this.paymentMethod === 'razorpay') {
-        this.expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+        this.expiresAt = new Date(Date.now() + 10 * 60 * 1000);
     }
 
     // Add to status history

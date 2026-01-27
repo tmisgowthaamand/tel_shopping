@@ -189,7 +189,7 @@ class CartService {
                     finalPrice: item.product.finalPrice,
                     size: item.size,
                     quantity: item.quantity,
-                    itemTotal: (item.product.finalPrice || item.product.price) * item.quantity,
+                    itemTotal: Math.round(((item.product.finalPrice || item.product.price) * item.quantity) * 100) / 100,
                     inStock: item.product.availableStock >= item.quantity,
                 }));
 

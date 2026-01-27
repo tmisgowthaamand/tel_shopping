@@ -315,12 +315,17 @@ class BotService {
 
         // Order actions
         this.bot.action(/^order_(.+)$/, async (ctx) => {
-            const orderId = ctx.match[1];
+            const orderId = ctx.match[1].trim();
             await this.showOrderDetails(ctx, orderId);
         });
 
+        this.bot.action(/^retry_payment_(.+)$/, async (ctx) => {
+            const orderId = ctx.match[1].trim();
+            await this.retryPaymentAction(ctx, orderId);
+        });
+
         this.bot.action(/^cancel_order_(.+)$/, async (ctx) => {
-            const orderId = ctx.match[1];
+            const orderId = ctx.match[1].trim();
             await this.cancelOrder(ctx, orderId);
         });
 
@@ -1586,6 +1591,13 @@ ${text}
 
         const buttons = [];
 
+        if (['pending'].includes(order.status) && order.paymentMethod === 'razorpay') {
+            buttons.push([
+                Markup.button.url('💳 Pay Now', order.paymentLink),
+                Markup.button.callback('🔄 Retry Link', `retry_payment_${order._id}`),
+            ]);
+        }
+
         if (['pending', 'confirmed', 'preparing'].includes(order.status)) {
             buttons.push([
                 Markup.button.callback('❌ Cancel Order', `cancel_order_${order._id}`),
@@ -1599,6 +1611,27 @@ ${text}
         buttons.push([Markup.button.callback('🏠 Menu', 'back_to_menu')]);
 
         await ctx.replyWithMarkdown(orderText, Markup.inlineKeyboard(buttons));
+    }
+
+    /**
+     * Retry payment action
+     */
+    async retryPaymentAction(ctx, orderId) {
+        try {
+            if (ctx.callbackQuery) await ctx.answerCbQuery('Generating new link...').catch(() => { });
+
+            const updatedOrder = await orderService.retryPayment(orderId);
+
+            await ctx.replyWithMarkdown(
+                `✅ *New Payment Link Generated!*\n\n💰 Amount: ₹${updatedOrder.total.toFixed(2)}\n⏱️ Expiry: ${new Date(updatedOrder.expiresAt).toLocaleTimeString()}\n\nClick below to pay:`,
+                Markup.inlineKeyboard([
+                    [Markup.button.url('💳 Pay Now', updatedOrder.paymentLink)],
+                    [Markup.button.callback('📦 View Order', `order_${updatedOrder._id}`)]
+                ])
+            );
+        } catch (error) {
+            ctx.reply(`❌ ${error.message}`);
+        }
     }
 
     /**
@@ -1639,9 +1672,6 @@ ${text}
     }
 
     /**
-     * Get status emoji
-     */
-    /**
      * Get tracking progress bar and text (Zepto Style - 10 Min Delivery)
      */
     getTrackingProgress(order) {
@@ -1652,9 +1682,17 @@ ${text}
             { id: 'delivered', label: 'Delivered', icon: '🏠' }
         ];
 
-        if (order.status === 'pending') return { text: '⏳ *Awaiting Payment Confirmation*', progress: '🕒' };
-        if (order.status === 'cancelled') return { text: '❌ *Status: CANCELLED*', progress: '🛑' };
-        if (order.status === 'refunded') return { text: '💰 *Status: REFUNDED*', progress: '🛑' };
+        const findTime = (status) => {
+            const entry = order.statusHistory.find(h => h.status === status);
+            return entry ? new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : null;
+        };
+
+        if (order.status === 'pending') {
+            const expiry = order.expiresAt ? `\n⏳ *Expires at:* ${new Date(order.expiresAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : '';
+            return { text: `⏳ *Awaiting Payment Confirmation*${expiry}`, progress: '🕒' };
+        }
+        if (order.status === 'cancelled') return { text: `❌ *Status: CANCELLED*\n📅 ${findTime('cancelled') || ''}`, progress: '🛑' };
+        if (order.status === 'refunded') return { text: `💰 *Status: REFUNDED*\n📅 ${findTime('refunded') || ''}`, progress: '🛑' };
 
         let currentIndex = statuses.findIndex(s => s.id === order.status);
         if (order.status === 'ready_for_pickup') currentIndex = 1;
@@ -1670,11 +1708,11 @@ ${text}
 
         let subText = '';
         switch (order.status) {
-            case 'confirmed': subText = '_Store has received your order and is starting to pick items!_'; break;
-            case 'preparing': subText = '_Our store partner is packing your items with care._'; break;
-            case 'ready_for_pickup': subText = '_Bag is packed! Waiting for the nearest rider._'; break;
-            case 'out_for_delivery': subText = `_⚡ *Speedy Delivery:* Rider is zipping to your location!_`; break;
-            case 'delivered': subText = '_Delivered in 10 minutes! We hope you love the speed!_'; break;
+            case 'confirmed': subText = `_Received at ${findTime('confirmed') || 'just now'} - Store is starting to pick items!_`; break;
+            case 'preparing': subText = `_Packing started at ${findTime('preparing') || ''} - Store partner is packing with care._`; break;
+            case 'ready_for_pickup': subText = `_Ready for pickup since ${findTime('ready_for_pickup') || ''}_`; break;
+            case 'out_for_delivery': subText = `_🚀 *Speedy Delivery:* Left store at ${findTime('out_for_delivery') || ''}_`; break;
+            case 'delivered': subText = `_✅ *Delivered at ${findTime('delivered') || ''}*_`; break;
             default: subText = '';
         }
 

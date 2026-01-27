@@ -233,33 +233,6 @@ class OrderService {
             order.expiresAt = null;
             await order.save();
 
-            // Zepto-style Ultra-Fast Simulation (10 Min Delivery)
-            // Confirmed -> Packing (1 min) -> Out for delivery (3 min) -> Delivered (10 min)
-
-            // 1. Packing (1 minute later)
-            setTimeout(async () => {
-                const o = await Order.findById(orderId);
-                if (o && o.status === 'confirmed') {
-                    await this.updateOrderStatus(orderId, 'preparing', 'Store partner is picking and packing your items');
-                }
-            }, 60000);
-
-            // 2. Out for Delivery (3 minutes later)
-            setTimeout(async () => {
-                const o = await Order.findById(orderId);
-                if (o && (o.status === 'preparing' || o.status === 'confirmed')) {
-                    await this.updateOrderStatus(orderId, 'out_for_delivery', 'Delivery partner is arriving at speed to your location');
-                }
-            }, 3 * 60000);
-
-            // 3. Delivered (10 minutes later)
-            setTimeout(async () => {
-                const o = await Order.findById(orderId);
-                if (o && o.status === 'out_for_delivery') {
-                    await this.updateOrderStatus(orderId, 'delivered', 'Order delivered successfully in 10 minutes!');
-                }
-            }, 10 * 60000);
-
             // Assign delivery partner
             const { addNotificationJob, addDeliveryAssignmentJob } = require('../jobs/queues');
 
@@ -408,10 +381,38 @@ class OrderService {
     }
 
     /**
-     * Get expired unpaid orders
+     * Retry payment for an order
      */
-    async getExpiredOrders() {
-        return Order.getExpiredUnpaidOrders();
+    async retryPayment(orderId) {
+        try {
+            const order = await Order.findById(orderId).populate('user');
+            if (!order) throw new Error('Order not found');
+
+            if (order.status !== 'pending') {
+                throw new Error('This order is no longer pending or already confirmed');
+            }
+
+            if (order.paymentRetries >= 2) {
+                throw new Error('Maximum payment retries exceeded. Please place a new order.');
+            }
+
+            order.paymentRetries += 1;
+
+            // Create New Razorpay order & Link
+            await paymentService.createRazorpayOrder(order);
+            const paymentLink = await paymentService.generatePaymentLink(order, order.user);
+            order.paymentLink = paymentLink;
+
+            // Extend expiry by another 10 minutes
+            order.expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+            await order.save();
+
+            logger.info(`Payment retry ${order.paymentRetries} for order ${order.orderId}`);
+            return order;
+        } catch (error) {
+            logger.error('Error retrying payment:', error);
+            throw error;
+        }
     }
 
     /**
@@ -424,7 +425,7 @@ class OrderService {
             for (const order of expiredOrders) {
                 await this.cancelOrder(
                     order._id,
-                    'Auto-cancelled: Payment not received within 15 minutes',
+                    'Auto-cancelled: Payment not received within 10 minutes',
                     'system'
                 );
                 logger.info(`Auto-cancelled expired order: ${order.orderId}`);

@@ -83,6 +83,12 @@ class DeliveryBotHandler {
             const orderId = ctx.match[1];
             await this.showNavigation(ctx, orderId);
         });
+
+        // COD Paid and Delivered
+        this.bot.action(/^delivery_paid_delivered_(.+)$/, async (ctx) => {
+            const orderId = ctx.match[1];
+            await this.handleCODPaymentAndDelivery(ctx, orderId);
+        });
     }
 
     /**
@@ -246,24 +252,23 @@ ${order.items.map((i) => `• ${i.productName} × ${i.quantity}`).join('\n')}
         const [longitude, latitude] = order.deliveryAddress.location.coordinates;
         const navLink = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
 
-        await ctx.replyWithMarkdown(
-            message,
-            Markup.inlineKeyboard([
-                [Markup.button.url('🗺️ Navigate', navLink)],
-                [
-                    Markup.button.callback(
-                        '📦 Picked Up',
-                        `delivery_status_${order._id}_out_for_delivery`
-                    ),
-                ],
-                [
-                    Markup.button.callback(
-                        '✅ Delivered',
-                        `delivery_status_${order._id}_delivered`
-                    ),
-                ],
-            ])
-        );
+        const buttons = [
+            [Markup.button.url('🗺️ Navigate', navLink)],
+        ];
+
+        if (order.status === 'confirmed' || order.status === 'preparing') {
+            buttons.push([Markup.button.callback('📦 Picked Up', `delivery_status_${order._id}_out_for_delivery`)]);
+        }
+
+        if (order.status === 'out_for_delivery') {
+            if (order.paymentMethod === 'cod' && order.paymentStatus !== 'completed') {
+                buttons.push([Markup.button.callback('💵 Mark as Paid & Delivered', `delivery_paid_delivered_${order._id}`)]);
+            } else {
+                buttons.push([Markup.button.callback('✅ Mark Delivered', `delivery_status_${order._id}_delivered`)]);
+            }
+        }
+
+        await ctx.replyWithMarkdown(message, Markup.inlineKeyboard(buttons));
     }
 
     /**
@@ -334,7 +339,12 @@ Use /my_delivery to view details and navigate.
             const partner = await this.getPartner(ctx);
             if (!partner) return;
 
-            const order = await deliveryService.updateDeliveryStatus(
+            const order = await Order.findById(orderId).populate('user');
+            if (order.paymentMethod === 'cod' && status === 'delivered' && order.paymentStatus !== 'completed') {
+                return ctx.reply('⚠️ For COD orders, please use "Mark as Paid & Delivered" button to confirm payment.');
+            }
+
+            const updatedOrder = await deliveryService.updateDeliveryStatus(
                 partner._id,
                 orderId,
                 status
@@ -348,21 +358,64 @@ Use /my_delivery to view details and navigate.
             await ctx.reply(statusMessages[status] || `Status updated to: ${status}`);
 
             // Notify customer
-            const user = await User.findById(order.user);
+            const user = updatedOrder.user;
             if (user) {
                 const botService = require('./botService');
-                await botService.notifyOrderUpdate(order, user);
+                await botService.notifyOrderUpdate(updatedOrder, user);
             }
 
             if (status === 'delivered') {
-                // Show earnings
-                const earnings = deliveryService.calculateDeliveryEarnings(3); // Would use actual distance
+                const earnings = deliveryService.calculateDeliveryEarnings(0);
                 await ctx.reply(`💵 You earned ₹${earnings} for this delivery!`);
+                await this.showPartnerStatus(ctx);
             }
 
-            logger.info(`Partner ${partner.name} updated order ${order.orderId} to ${status}`);
+            logger.info(`Partner ${partner.name} updated order ${updatedOrder.orderId} to ${status}`);
         } catch (error) {
             logger.error('Error updating delivery status:', error);
+            ctx.reply(`❌ ${error.message}`);
+        }
+    }
+
+    /**
+     * Handle COD Paid and Delivered
+     */
+    async handleCODPaymentAndDelivery(ctx, orderId) {
+        try {
+            if (ctx.callbackQuery) await ctx.answerCbQuery('Processing COD Delivery...').catch(() => { });
+
+            const partner = await this.getPartner(ctx);
+            if (!partner) return;
+
+            const order = await Order.findById(orderId);
+            if (!order) throw new Error('Order not found');
+
+            // 1. Mark Payment as Completed
+            order.paymentStatus = 'completed';
+            await order.save();
+
+            // 2. Mark Delivery as Completed
+            await deliveryService.updateDeliveryStatus(partner._id, orderId, 'delivered');
+
+            await ctx.reply('✅ Payment confirmed and order delivered successfully!');
+
+            // Notify customer
+            const user = await User.findById(order.user);
+            if (user) {
+                const botService = require('./botService');
+                const updatedOrder = await Order.findById(orderId);
+                await botService.notifyOrderUpdate(updatedOrder, user);
+            }
+
+            // Show earnings
+            const earnings = deliveryService.calculateDeliveryEarnings(0);
+            await ctx.reply(`💵 You earned ₹${earnings} for this delivery!`);
+
+            await this.showPartnerStatus(ctx);
+
+            logger.info(`Partner ${partner.name} completed COD order ${order.orderId}`);
+        } catch (error) {
+            logger.error('Error in handleCODPaymentAndDelivery:', error);
             ctx.reply(`❌ ${error.message}`);
         }
     }
