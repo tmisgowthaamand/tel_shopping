@@ -101,6 +101,25 @@ class BotService {
     }
 
     /**
+     * Schedule a message for deletion
+     * @param {number|string} chatId 
+     * @param {number} messageId 
+     * @param {number} delayMs default 2 minutes (120000ms)
+     */
+    scheduleDeletion(chatId, messageId, delayMs = 120000) {
+        if (!chatId || !messageId) return;
+        setTimeout(async () => {
+            try {
+                if (this.bot) {
+                    await this.bot.telegram.deleteMessage(chatId, messageId).catch(() => { });
+                }
+            } catch (err) {
+                // Silently ignore deletion errors
+            }
+        }, delayMs);
+    }
+
+    /**
      * Register middleware
      */
     registerMiddleware() {
@@ -707,9 +726,9 @@ What would you like to do?
     /**
      * Send product card
      */
-    async sendProductCard(ctx, product) {
-        let imageUrl = product.getPrimaryImage();
-        imageUrl = this.optimizeImageUrl(imageUrl, { width: 500 });
+    async sendProductCard(ctx, product, options = { includeImage: true, autoDelete: true }) {
+        let imageUrl = options.includeImage ? product.getPrimaryImage() : null;
+        if (imageUrl) imageUrl = this.optimizeImageUrl(imageUrl, { width: 500 });
         const hasDiscount = product.discount > 0;
 
         const priceText = hasDiscount
@@ -735,21 +754,28 @@ ${product.availableStock > 0 ? '✅ In Stock' : '❌ Out of Stock'}
             [Markup.button.callback('📋 Details', `product_${product._id}`)],
         ]);
 
+        let sentMsg = null;
         if (imageUrl) {
             try {
                 // Use { url: imageUrl } for more reliable sending
-                return await ctx.replyWithPhoto({ url: imageUrl }, {
+                sentMsg = await ctx.replyWithPhoto({ url: imageUrl }, {
                     caption,
                     parse_mode: 'HTML',
                     ...keyboard,
                 });
             } catch (photoError) {
                 logger.warn(`Failed to send photo for product ${product.name}, falling back to text:`, photoError.message);
-                return await ctx.replyWithHTML(caption, keyboard);
+                sentMsg = await ctx.replyWithHTML(caption, keyboard);
             }
         } else {
-            return await ctx.replyWithHTML(caption, keyboard);
+            sentMsg = await ctx.replyWithHTML(caption, keyboard);
         }
+
+        if (sentMsg && options.autoDelete) {
+            this.scheduleDeletion(ctx.chat.id, sentMsg.message_id);
+        }
+
+        return sentMsg;
     }
 
     /**
@@ -758,6 +784,7 @@ ${product.availableStock > 0 ? '✅ In Stock' : '❌ Out of Stock'}
     async showProduct(ctx, productId) {
         if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
 
+        const user = ctx.user;
         const product = await productService.getProduct(productId);
 
         if (!product) {
@@ -1433,9 +1460,12 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
                     // Proactively search and display related items
                     const products = await productService.searchProducts(searchBuffer, 10);
                     if (products.length > 0) {
-                        await ctx.reply(`🔍 Here are the best ${searchBuffer} I found for you:`);
+                        const infoMsg = await ctx.reply(`🔍 Here are the best ${searchBuffer} I found for you:`);
+                        this.scheduleDeletion(ctx.chat.id, infoMsg.message_id);
+
                         for (const product of products) {
-                            await this.sendProductCard(ctx, product);
+                            // FAST MODE: Disable images for search lists, user can click Details for image
+                            await this.sendProductCard(ctx, product, { includeImage: false, autoDelete: true });
                         }
                         return;
                     }
@@ -2176,15 +2206,19 @@ ${order.estimatedDeliveryTime ? `⏱️ ETA: ${new Date(order.estimatedDeliveryT
                     if (aiResult.data?.product) {
                         const products = await productService.searchProducts(aiResult.data.product);
                         if (products.length > 0) {
-                            await ctx.reply(`🔍 I found these results for "${aiResult.data.product}":`);
+                            const resMsg = await ctx.reply(`🔍 I found these results for "${aiResult.data.product}":`);
+                            this.scheduleDeletion(ctx.chat.id, resMsg.message_id);
                             for (const product of products.slice(0, 10)) {
-                                await this.sendProductCard(ctx, product);
+                                // Performance: Use text-only cards for large searches, user can click Details for image
+                                await this.sendProductCard(ctx, product, { includeImage: false, autoDelete: true });
                             }
                         } else {
-                            await ctx.reply(`I couldn't find any products matching "${aiResult.data.product}". Here are some featured items you might like instead:`);
+                            const resMsg = await ctx.reply(`I couldn't find any products matching "${aiResult.data.product}". Here are some featured items you might like instead:`);
+                            this.scheduleDeletion(ctx.chat.id, resMsg.message_id);
                             const featured = await productService.getFeaturedProducts(3);
                             for (const product of featured) {
-                                await this.sendProductCard(ctx, product);
+                                // Keep images for featured items since they are few (3)
+                                await this.sendProductCard(ctx, product, { includeImage: true, autoDelete: true });
                             }
                         }
                     }
@@ -2250,7 +2284,8 @@ ${order.estimatedDeliveryTime ? `⏱️ ETA: ${new Date(order.estimatedDeliveryT
                         const products = await productService.searchProducts(aiResult.data.product, 3);
                         if (products.length > 0) {
                             for (const product of products) {
-                                await this.sendProductCard(ctx, product);
+                                // Default mention: show up to 3 cards with images for better discovery
+                                await this.sendProductCard(ctx, product, { includeImage: true, autoDelete: true });
                             }
                         }
                     }
