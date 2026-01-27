@@ -262,9 +262,14 @@ const Orders = () => {
             {/* Detail Modal */}
             {showDetailModal && selectedOrder && (
                 <div className="modal-overlay">
-                    <div className="modal" style={{ maxWidth: '800px' }}>
+                    <div className="modal" style={{ maxWidth: '850px', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
                         <div className="modal-header">
-                            <h3 className="modal-title">Order Details: {selectedOrder.orderId}</h3>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                <h3 className="modal-title">Order Info</h3>
+                                <span className={`badge badge-${getStatusColor(selectedOrder.status)}`} style={{ textTransform: 'uppercase', fontSize: '0.75rem' }}>
+                                    {selectedOrder.status.replace(/_/g, ' ')}
+                                </span>
+                            </div>
                             <button
                                 className="modal-close"
                                 onClick={() => setShowDetailModal(false)}
@@ -273,219 +278,243 @@ const Orders = () => {
                             </button>
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-                            <div>
-                                <h4 style={{ marginBottom: '1rem', borderBottom: '1px solid var(--gray-200)', paddingBottom: '0.5rem', fontWeight: 700 }}>Items Summary</h4>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                                    {selectedOrder.items.map((item, idx) => (
-                                        <div key={idx} style={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            alignItems: 'center',
-                                            padding: '0.75rem',
-                                            background: '#f8fafc',
-                                            borderRadius: '0.75rem',
-                                            border: '1px solid #e2e8f0'
-                                        }}>
-                                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flex: 1 }}>
-                                                <div style={{
-                                                    width: '50px',
-                                                    height: '50px',
-                                                    background: 'white',
-                                                    borderRadius: '0.5rem',
-                                                    border: '1px solid #edf2f7',
-                                                    backgroundImage: item.productImage ? `url(${item.productImage})` : 'none',
-                                                    backgroundSize: 'cover',
-                                                    backgroundPosition: 'center',
-                                                    flexShrink: 0
-                                                }}>
-                                                    {!item.productImage && <ShoppingBag size={20} style={{ margin: '15px', color: '#cbd5e0' }} />}
-                                                </div>
-                                                <div style={{ minWidth: 0 }}>
-                                                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#1a202c', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                        {item.productName}
-                                                    </div>
-                                                    <div style={{ fontSize: '0.75rem', color: '#718096', marginTop: '0.25rem' }}>
-                                                        {item.quantity} × <span style={{ textDecoration: 'line-through', marginRight: '4px' }}>₹{item.price.toFixed(0)}</span>
-                                                        <b style={{ color: 'var(--primary)' }}>₹{item.finalPrice.toFixed(2)}</b>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style={{ fontWeight: 800, color: '#2d3748', marginLeft: '1rem' }}>
-                                                ₹{Number(item.total).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div style={{
-                                    marginTop: '1.5rem',
-                                    padding: '1.25rem',
-                                    background: 'var(--gray-50)',
-                                    borderRadius: '1rem',
-                                    border: '1px solid var(--gray-200)'
-                                }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.875rem' }}>
-                                        <span style={{ color: 'var(--gray-600)' }}>Subtotal (Original)</span>
-                                        <span style={{ textDecoration: 'line-through', color: 'var(--gray-400)' }}>₹{Number(selectedOrder.subtotal).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
-                                    </div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#059669', fontWeight: 600 }}>
-                                        <span>Discount Savings</span>
-                                        <span>-₹{Number(selectedOrder.discount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
-                                    </div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontSize: '0.875rem' }}>
-                                        <span>Delivery Fee</span>
-                                        <span>₹{Number(selectedOrder.deliveryFee).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
-                                    </div>
-                                    <div style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        fontWeight: 900,
-                                        fontSize: '1.25rem',
-                                        color: 'var(--primary)',
-                                        marginTop: '0.75rem',
-                                        paddingTop: '0.75rem',
-                                        borderTop: '2px solid #e2e8f0'
-                                    }}>
-                                        <span>Grand Total</span>
-                                        <span>₹{Number(selectedOrder.total).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
-                                    </div>
-                                    {selectedOrder.verifiedPaymentType && (
-                                        <div style={{ marginTop: '0.75rem', textAlign: 'center' }}>
-                                            <span style={{
-                                                background: '#dcfce7',
-                                                color: '#166534',
-                                                padding: '0.4rem 1rem',
-                                                borderRadius: '2rem',
-                                                fontSize: '0.75rem',
-                                                fontWeight: 800,
-                                                display: 'inline-flex',
-                                                alignItems: 'center',
-                                                gap: '0.4rem',
-                                                border: '1px solid #bbf7d0'
-                                            }}>
-                                                <Check size={14} /> VERIFIED BY PARTNER: {selectedOrder.verifiedPaymentType.toUpperCase()}
-                                            </span>
-                                        </div>
-                                    )}
+                        <div style={{ padding: '1.5rem', overflowY: 'auto', flex: 1 }}>
+                            <div style={{ marginBottom: '1.5rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem' }}>
+                                <div style={{ fontWeight: 800, fontSize: '1.25rem', color: '#1a202c' }}>{selectedOrder.orderId}</div>
+                                <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem', fontSize: '0.875rem', color: '#718096' }}>
+                                    <span>Placed on: {new Date(selectedOrder.createdAt).toLocaleString()}</span>
+                                    <span>•</span>
+                                    <span>Payment: {selectedOrder.paymentMethod.toUpperCase()}</span>
                                 </div>
                             </div>
 
-                            <div>
-                                <h4 style={{ marginBottom: '1rem', borderBottom: '1px solid var(--gray-200)', paddingBottom: '0.5rem' }}>Service Info</h4>
-
-                                <div style={{ marginBottom: '1.5rem' }}>
-                                    <p className="form-label" style={{ fontWeight: 700 }}>Delivery Information</p>
-                                    <div style={{ 
-                                        display: 'flex', 
-                                        justifyContent: 'space-between', 
-                                        alignItems: 'flex-start',
-                                        background: '#f1f5f9', 
-                                        padding: '1rem', 
-                                        borderRadius: '1rem',
-                                        border: '1px solid #e2e8f0'
-                                    }}>
-                                        <div style={{ fontSize: '0.875rem', color: '#334155', flex: 1, marginRight: '1rem', lineHeight: '1.5' }}>
-                                            {selectedOrder.deliveryAddress.address}
-                                        </div>
-                                        <a 
-                                            href={selectedOrder.deliveryAddress.address.startsWith('http') ? selectedOrder.deliveryAddress.address : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedOrder.deliveryAddress.address)}`} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            title="Open Maps"
-                                            style={{ 
-                                                color: 'var(--primary)', 
-                                                padding: '0.6rem', 
-                                                borderRadius: '0.75rem', 
-                                                background: 'white', 
-                                                border: '1px solid #e2e8f0',
+                            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '2.5rem' }}>
+                                <div>
+                                    <h4 style={{ marginBottom: '1rem', borderBottom: '1px solid var(--gray-200)', paddingBottom: '0.5rem', fontWeight: 700 }}>Items Summary</h4>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                        {selectedOrder.items.map((item, idx) => (
+                                            <div key={idx} style={{
                                                 display: 'flex',
+                                                justifyContent: 'space-between',
                                                 alignItems: 'center',
-                                                boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-                                            }}
-                                        >
-                                            <ExternalLink size={18} />
-                                        </a>
+                                                padding: '0.75rem',
+                                                background: '#f8fafc',
+                                                borderRadius: '0.75rem',
+                                                border: '1px solid #e2e8f0'
+                                            }}>
+                                                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flex: 1 }}>
+                                                    <div style={{
+                                                        width: '50px',
+                                                        height: '50px',
+                                                        background: 'white',
+                                                        borderRadius: '0.5rem',
+                                                        border: '1px solid #edf2f7',
+                                                        backgroundImage: item.productImage ? `url(${item.productImage})` : 'none',
+                                                        backgroundSize: 'cover',
+                                                        backgroundPosition: 'center',
+                                                        flexShrink: 0
+                                                    }}>
+                                                        {!item.productImage && <ShoppingBag size={20} style={{ margin: '15px', color: '#cbd5e0' }} />}
+                                                    </div>
+                                                    <div style={{ minWidth: 0 }}>
+                                                        <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#1a202c', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                            {item.productName}
+                                                        </div>
+                                                        <div style={{ fontSize: '0.75rem', color: '#718096', marginTop: '0.25rem' }}>
+                                                            {item.quantity} × <span style={{ textDecoration: 'line-through', marginRight: '4px' }}>₹{item.price.toFixed(0)}</span>
+                                                            <b style={{ color: 'var(--primary)' }}>₹{item.finalPrice.toFixed(2)}</b>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style={{ fontWeight: 800, color: '#2d3748', marginLeft: '1rem' }}>
+                                                    ₹{Number(item.total).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div style={{
+                                        marginTop: '1.5rem',
+                                        padding: '1.25rem',
+                                        background: 'var(--gray-50)',
+                                        borderRadius: '1rem',
+                                        border: '1px solid var(--gray-200)'
+                                    }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.875rem' }}>
+                                            <span style={{ color: 'var(--gray-600)' }}>Subtotal (Original)</span>
+                                            <span style={{ textDecoration: 'line-through', color: 'var(--gray-400)' }}>₹{Number(selectedOrder.subtotal).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#059669', fontWeight: 600 }}>
+                                            <span>Discount Savings</span>
+                                            <span>-₹{Number(selectedOrder.discount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontSize: '0.875rem' }}>
+                                            <span>Delivery Fee</span>
+                                            <span>₹{Number(selectedOrder.deliveryFee).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                                        </div>
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            fontWeight: 900,
+                                            fontSize: '1.25rem',
+                                            color: 'var(--primary)',
+                                            marginTop: '0.75rem',
+                                            paddingTop: '0.75rem',
+                                            borderTop: '2px solid #e2e8f0'
+                                        }}>
+                                            <span>Grand Total</span>
+                                            <span>₹{Number(selectedOrder.total).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                                        </div>
+                                        {selectedOrder.verifiedPaymentType && (
+                                            <div style={{ marginTop: '0.75rem', textAlign: 'center' }}>
+                                                <span style={{
+                                                    background: '#dcfce7',
+                                                    color: '#166534',
+                                                    padding: '0.4rem 1rem',
+                                                    borderRadius: '2rem',
+                                                    fontSize: '0.75rem',
+                                                    fontWeight: 800,
+                                                    display: 'inline-flex',
+                                                    alignItems: 'center',
+                                                    gap: '0.4rem',
+                                                    border: '1px solid #bbf7d0'
+                                                }}>
+                                                    <Check size={14} /> VERIFIED BY PARTNER: {selectedOrder.verifiedPaymentType.toUpperCase()}
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
 
-                                <div className="form-group">
-                                    <label className="form-label">Assign Delivery Partner</label>
-                                    <select
-                                        className="form-input"
-                                        onChange={(e) => handleAssignPartner(selectedOrder._id, e.target.value)}
-                                        value={selectedOrder.deliveryPartner?._id || ""}
-                                        disabled={['delivered', 'cancelled'].includes(selectedOrder.status)}
-                                    >
-                                        <option value="">{selectedOrder.deliveryPartner ? selectedOrder.deliveryPartner.name : "Select Partner"}</option>
-                                        {partners
-                                            .filter(p => !selectedOrder.deliveryPartner || p._id !== selectedOrder.deliveryPartner._id)
-                                            .map(p => (
-                                                <option key={p._id} value={p._id}>{p.name} ({p.vehicleType})</option>
-                                            ))
-                                        }
-                                    </select>
-                                </div>
+                                <div>
+                                    <h4 style={{ marginBottom: '1rem', borderBottom: '1px solid var(--gray-200)', paddingBottom: '0.5rem' }}>Service Info</h4>
 
-                                <div style={{
-                                    padding: '1.25rem',
-                                    background: '#fff',
-                                    borderRadius: '1rem',
-                                    border: '1px solid #e2e8f0',
-                                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
-                                }}>
-                                    <label className="form-label" style={{ fontWeight: 700, marginBottom: '0.75rem' }}>Management Actions</label>
-                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-                                        {['pending', 'confirmed'].includes(selectedOrder.status) && (
-                                            <button
-                                                className="btn btn-success"
-                                                onClick={() => handleUpdateStatus(selectedOrder._id, 'preparing')}
+                                    <div style={{ marginBottom: '1.5rem' }}>
+                                        <p className="form-label" style={{ fontWeight: 700 }}>Delivery Information</p>
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'flex-start',
+                                            background: '#f1f5f9',
+                                            padding: '1rem',
+                                            borderRadius: '1rem',
+                                            border: '1px solid #e2e8f0'
+                                        }}>
+                                            <div style={{ fontSize: '0.875rem', color: '#334155', flex: 1, marginRight: '1rem', lineHeight: '1.5' }}>
+                                                {selectedOrder.deliveryAddress.address}
+                                            </div>
+                                            <a
+                                                href={selectedOrder.deliveryAddress.address.startsWith('http') ? selectedOrder.deliveryAddress.address : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedOrder.deliveryAddress.address)}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                title="Open Maps"
+                                                style={{
+                                                    color: 'var(--primary)',
+                                                    padding: '0.6rem',
+                                                    borderRadius: '0.75rem',
+                                                    background: 'white',
+                                                    border: '1px solid #e2e8f0',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+                                                }}
                                             >
-                                                <Check size={18} /> Mark Preparing
-                                            </button>
-                                        )}
-                                        {selectedOrder.status === 'preparing' && (
-                                            <button
-                                                className="btn btn-info"
-                                                onClick={() => handleUpdateStatus(selectedOrder._id, 'out_for_delivery')}
-                                            >
-                                                <Truck size={18} /> Out for Delivery
-                                            </button>
-                                        )}
-                                        {selectedOrder.status === 'out_for_delivery' && (
-                                            <button
-                                                className="btn btn-success"
-                                                onClick={() => handleUpdateStatus(selectedOrder._id, 'delivered')}
-                                            >
-                                                <Check size={18} /> Complete Order
-                                            </button>
-                                        )}
-                                        <button
-                                            className="btn btn-danger"
-                                            style={{ gridColumn: (['delivered', 'cancelled'].includes(selectedOrder.status)) ? 'span 2' : 'auto' }}
-                                            onClick={() => {
-                                                setCancellingOrderId(selectedOrder._id);
-                                                setShowCancelModal(true);
-                                            }}
+                                                <ExternalLink size={18} />
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group" style={{ background: '#f8fafc', padding: '1rem', borderRadius: '1rem', border: '1px solid #e2e8f0' }}>
+                                        <label className="form-label" style={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <Truck size={18} /> Assign Delivery Partner
+                                        </label>
+                                        <select
+                                            className="form-input"
+                                            style={{ marginTop: '0.5rem', background: 'white' }}
+                                            onChange={(e) => handleAssignPartner(selectedOrder._id, e.target.value)}
+                                            value={selectedOrder.deliveryPartner?._id || ""}
                                             disabled={['delivered', 'cancelled'].includes(selectedOrder.status)}
                                         >
-                                            <X size={18} /> Cancel Order
-                                        </button>
+                                            {!selectedOrder.deliveryPartner && <option value="">Select a Partner...</option>}
+                                            {selectedOrder.deliveryPartner && (
+                                                <option value={selectedOrder.deliveryPartner._id}>
+                                                    {selectedOrder.deliveryPartner.name} (Current)
+                                                </option>
+                                            )}
+                                            {partners
+                                                .filter(p => !selectedOrder.deliveryPartner || p._id !== selectedOrder.deliveryPartner._id)
+                                                .map(p => (
+                                                    <option key={p._id} value={p._id}>{p.name} ({p.vehicleType})</option>
+                                                ))
+                                            }
+                                        </select>
+                                        {partners.length === 0 && !selectedOrder.deliveryPartner && (
+                                            <p style={{ fontSize: '0.7rem', color: 'var(--danger)', marginTop: '0.5rem' }}>
+                                                ⚠️ No online partners available.
+                                            </p>
+                                        )}
                                     </div>
 
-                                    {['delivered', 'cancelled'].includes(selectedOrder.status) && (
-                                        <p style={{
-                                            marginTop: '0.75rem',
-                                            fontSize: '0.75rem',
-                                            textAlign: 'center',
-                                            color: 'var(--gray-500)',
-                                            background: 'var(--gray-50)',
-                                            padding: '0.5rem',
-                                            borderRadius: '0.5rem'
-                                        }}>
-                                            Order is {selectedOrder.status}. Further actions are disabled.
-                                        </p>
-                                    )}
+                                    <div style={{
+                                        padding: '1.25rem',
+                                        background: '#fff',
+                                        borderRadius: '1rem',
+                                        border: '1px solid #e2e8f0',
+                                        boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+                                    }}>
+                                        <label className="form-label" style={{ fontWeight: 700, marginBottom: '0.75rem' }}>Management Actions</label>
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                                            {['pending', 'confirmed'].includes(selectedOrder.status) && (
+                                                <button
+                                                    className="btn btn-success"
+                                                    onClick={() => handleUpdateStatus(selectedOrder._id, 'preparing')}
+                                                >
+                                                    <Check size={18} /> Mark Preparing
+                                                </button>
+                                            )}
+                                            {selectedOrder.status === 'preparing' && (
+                                                <button
+                                                    className="btn btn-info"
+                                                    onClick={() => handleUpdateStatus(selectedOrder._id, 'out_for_delivery')}
+                                                >
+                                                    <Truck size={18} /> Out for Delivery
+                                                </button>
+                                            )}
+                                            {selectedOrder.status === 'out_for_delivery' && (
+                                                <button
+                                                    className="btn btn-success"
+                                                    onClick={() => handleUpdateStatus(selectedOrder._id, 'delivered')}
+                                                >
+                                                    <Check size={18} /> Complete Order
+                                                </button>
+                                            )}
+                                            <button
+                                                className="btn btn-danger"
+                                                style={{ gridColumn: (['delivered', 'cancelled'].includes(selectedOrder.status)) ? 'span 2' : 'auto' }}
+                                                onClick={() => {
+                                                    setCancellingOrderId(selectedOrder._id);
+                                                    setShowCancelModal(true);
+                                                }}
+                                                disabled={['delivered', 'cancelled'].includes(selectedOrder.status)}
+                                            >
+                                                <X size={18} /> Cancel Order
+                                            </button>
+                                        </div>
+
+                                        {['delivered', 'cancelled'].includes(selectedOrder.status) && (
+                                            <p style={{
+                                                marginTop: '0.75rem',
+                                                fontSize: '0.75rem',
+                                                textAlign: 'center',
+                                                color: 'var(--gray-500)',
+                                                background: 'var(--gray-50)',
+                                                padding: '0.5rem',
+                                                borderRadius: '0.5rem'
+                                            }}>
+                                                Order is {selectedOrder.status}. Further actions are disabled.
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
