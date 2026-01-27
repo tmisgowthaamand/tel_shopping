@@ -7,6 +7,7 @@ const mapsService = require('./mapsService');
 const aiService = require('./aiService');
 const googleSheetsService = require('./googleSheetsService');
 const emailService = require('./emailService');
+const cloudinaryService = require('./cloudinaryService');
 
 module.exports = {
     paymentService,
@@ -18,4 +19,5 @@ module.exports = {
     aiService,
     googleSheetsService,
     emailService,
+    cloudinaryService,
 };

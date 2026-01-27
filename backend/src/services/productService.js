@@ -1,5 +1,6 @@
 const { Product, Category, Cart } = require('../models');
 const logger = require('../utils/logger');
+const cloudinaryService = require('./cloudinaryService');
 
 class ProductService {
     /**
@@ -196,22 +197,64 @@ class ProductService {
     }
 
     /**
-     * Delete product (soft delete)
+     * Delete product
+     * @param {string} productId 
+     * @param {boolean} hardDelete If true, permanently removes from DB and Cloudinary
      */
-    async deleteProduct(productId) {
+    async deleteProduct(productId, hardDelete = false) {
         try {
-            const product = await Product.findByIdAndUpdate(productId, {
-                isActive: false,
-            });
-
+            const product = await Product.findById(productId);
             if (!product) {
                 throw new Error('Product not found');
             }
 
-            logger.info(`Product deleted: ${product.name}`);
+            if (hardDelete) {
+                // Delete all images from Cloudinary first
+                for (const img of product.images) {
+                    if (img.publicId) {
+                        await cloudinaryService.deleteImage(img.publicId);
+                    }
+                }
+                await Product.findByIdAndDelete(productId);
+                logger.info(`Product permanently deleted: ${product.name}`);
+            } else {
+                product.isActive = false;
+                await product.save();
+                logger.info(`Product soft deleted: ${product.name}`);
+            }
+
             return product;
         } catch (error) {
             logger.error('Error deleting product:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Delete a specific image from a product
+     */
+    async deleteProductImage(productId, imageId) {
+        try {
+            const product = await Product.findById(productId);
+            if (!product) throw new Error('Product not found');
+
+            const imageIndex = product.images.findIndex(img => img._id.toString() === imageId.toString());
+            if (imageIndex === -1) throw new Error('Image not found');
+
+            const image = product.images[imageIndex];
+
+            // Delete from Cloudinary if publicId exists
+            if (image.publicId) {
+                await cloudinaryService.deleteImage(image.publicId);
+            }
+
+            // Remove from array
+            product.images.splice(imageIndex, 1);
+            await product.save();
+
+            return product;
+        } catch (error) {
+            logger.error('Error deleting product image:', error);
             throw error;
         }
     }

@@ -22,5 +22,7 @@ router.put('/:id', authenticateAdmin, checkPermission('products'), productContro
 router.delete('/:id', authenticateAdmin, checkPermission('products'), productController.deleteProduct);
 router.patch('/:id/stock', authenticateAdmin, checkPermission('products'), productController.updateStock);
 router.post('/ai-description', authenticateAdmin, checkPermission('products'), productController.generateAIDescription);
+router.post('/cloudinary-sync', authenticateAdmin, checkPermission('products'), productController.syncCloudinary);
+router.delete('/:id/images/:imageId', authenticateAdmin, checkPermission('products'), productController.deleteImage);
 
 module.exports = router;

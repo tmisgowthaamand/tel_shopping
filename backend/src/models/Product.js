@@ -20,6 +20,7 @@ const productSchema = new mongoose.Schema(
             {
                 url: { type: String, required: true },
                 alt: { type: String },
+                publicId: { type: String }, // For Cloudinary management
                 isPrimary: { type: Boolean, default: false },
             },
         ],

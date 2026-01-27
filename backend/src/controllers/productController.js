@@ -308,3 +308,32 @@ exports.uploadImage = async (req, res) => {
         res.status(500).json({ error: 'Failed to upload image' });
     }
 };
+
+/**
+ * Trigger Cloudinary synchronization
+ */
+exports.syncCloudinary = async (req, res) => {
+    try {
+        const syncImagesToCloudinary = require('../services/cloudinarySync');
+        // Run in background
+        syncImagesToCloudinary();
+        res.json({ message: 'Synchronization started in background' });
+    } catch (error) {
+        logger.error('Sync Cloudinary error:', error);
+        res.status(500).json({ error: 'Failed to start synchronization' });
+    }
+};
+
+/**
+ * Delete product image
+ */
+exports.deleteImage = async (req, res) => {
+    try {
+        const { id, imageId } = req.params;
+        const product = await productService.deleteProductImage(id, imageId);
+        res.json(product);
+    } catch (error) {
+        logger.error('Delete image error:', error);
+        res.status(500).json({ error: error.message || 'Failed to delete image' });
+    }
+};
