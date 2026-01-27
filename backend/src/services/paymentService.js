@@ -67,7 +67,7 @@ class PaymentService {
                 },
                 callback_url: `${config.telegram.webhookUrl.replace(/\/telegram$/, '')}/payment/success`,
                 callback_method: 'get',
-                expire_by: Math.floor(Date.now() / 1000) + 10 * 60, // 10 minutes
+                expire_by: Math.floor(Date.now() / 1000) + 20 * 60, // 20 minutes (Min 15 required by Razorpay)
             });
 
             order.paymentLink = paymentLink.short_url;
