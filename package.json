@@ -1,6 +1,8 @@
 {
     "name": "telegram-e-commerce",
     "version": "1.0.0",
+    "license": "MIT",
+    "private": true,
     "description": "Premium Telegram-based E-commerce & Hyperlocal Delivery Platform",
     "scripts": {
         "install:all": "npm install --prefix backend && npm install --prefix admin",
