@@ -42,3 +42,5 @@
 {"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:20:41"}
 {"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:29:27"}
 {"level":"info","message":"MongoDB Connected: localhost","service":"atz-store","timestamp":"2026-01-26 15:39:59"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-27 18:58:57"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-00.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-27 18:58:57"}

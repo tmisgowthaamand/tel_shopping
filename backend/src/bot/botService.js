@@ -1458,14 +1458,31 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
                 if (searchKeywords.test(lowerText) || needMatch) {
                     const searchBuffer = needMatch ? needMatch[1].trim() : lowerText;
                     // Proactively search and display related items
-                    const products = await productService.searchProducts(searchBuffer, 10);
+                    let products = await productService.searchProducts(searchBuffer, 10);
+                    
                     if (products.length > 0) {
+                        // Strict category filtering for shirts vs pants to ensure accuracy
+                        const isShirtQuery = /\b(shirts?|t-?shirts?)\b/i.test(lowerText);
+                        const isPantQuery = /\b(pants?|trousers?|jeans)\b/i.test(lowerText);
+                        
+                        if (isShirtQuery && !isPantQuery) {
+                            products = products.filter(p => 
+                                p.name.toLowerCase().includes('shirt') || 
+                                (p.category && p.category.name.toLowerCase().includes('shirt'))
+                            );
+                        } else if (isPantQuery && !isShirtQuery) {
+                            products = products.filter(p => 
+                                (p.name.toLowerCase().includes('pant') || p.name.toLowerCase().includes('trouser') || p.name.toLowerCase().includes('jean')) ||
+                                (p.category && (p.category.name.toLowerCase().includes('pant') || p.category.name.toLowerCase().includes('trouser') || p.category.name.toLowerCase().includes('jean')))
+                            );
+                        }
+
                         const infoMsg = await ctx.reply(`🔍 Here are the best ${searchBuffer} I found for you:`);
                         this.scheduleDeletion(ctx.chat.id, infoMsg.message_id);
 
                         for (const product of products) {
-                            // FAST MODE: Disable images for search lists, user can click Details for image
-                            await this.sendProductCard(ctx, product, { includeImage: false, autoDelete: true });
+                            // SHOW IMAGES: User specifically requested product images to be shown during chat
+                            await this.sendProductCard(ctx, product, { includeImage: true, autoDelete: true });
                         }
                         return;
                     }
