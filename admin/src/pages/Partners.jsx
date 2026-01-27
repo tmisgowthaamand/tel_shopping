@@ -23,6 +23,7 @@ const Partners = () => {
         telegramId: '',
         name: '',
         phone: '',
+        password: '',
         vehicleType: 'bike'
     });
 
@@ -75,7 +76,7 @@ const Partners = () => {
                 documents: { verified: true }
             });
             setShowAddPartnerModal(false);
-            setNewPartnerData({ telegramId: '', name: '', phone: '', vehicleType: 'bike' });
+            setNewPartnerData({ telegramId: '', name: '', phone: '', password: '', vehicleType: 'bike' });
             fetchPartners();
         } catch (error) {
             alert('Failed to add partner: ' + error.message);
@@ -236,6 +237,17 @@ const Partners = () => {
                                     required
                                     value={newPartnerData.phone}
                                     onChange={(e) => setNewPartnerData({ ...newPartnerData, phone: e.target.value })}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Portal Password</label>
+                                <input
+                                    type="password"
+                                    className="form-input"
+                                    placeholder="Set login password"
+                                    required
+                                    value={newPartnerData.password}
+                                    onChange={(e) => setNewPartnerData({ ...newPartnerData, password: e.target.value })}
                                 />
                             </div>
                             <div className="form-group">
