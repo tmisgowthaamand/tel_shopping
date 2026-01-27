@@ -13,6 +13,17 @@ class PaymentService {
     }
 
     /**
+     * Sanitize strings for Razorpay to avoid collation/character set errors
+     * Removes emojis and non-BMP characters
+     */
+    sanitizeString(str) {
+        if (!str) return '';
+        // Remove any character that is not in the Basic Multilingual Plane (BMP)
+        // This effectively removes most emojis which are 4-byte characters
+        return str.replace(/[^\u0000-\uFFFF]/g, '').trim();
+    }
+
+    /**
      * Create Razorpay order
      */
     async createRazorpayOrder(order) {
@@ -20,7 +31,7 @@ class PaymentService {
             const options = {
                 amount: Math.round(order.total * 100), // Amount in paise
                 currency: 'INR',
-                receipt: order.orderId,
+                receipt: this.sanitizeString(order.orderId),
                 notes: {
                     orderId: order._id.toString(),
                     userId: order.user.toString(),
@@ -51,9 +62,9 @@ class PaymentService {
                 amount: Math.round(order.total * 100),
                 currency: 'INR',
                 accept_partial: false,
-                description: `Order ${order.orderId}`,
+                description: this.sanitizeString(`Order ${order.orderId}`),
                 customer: {
-                    name: user.getFullName(),
+                    name: this.sanitizeString(user.getFullName()),
                     contact: user.phone || '',
                 },
                 notify: {
@@ -229,7 +240,7 @@ class PaymentService {
                 amount: Math.round(refundAmount * 100),
                 notes: {
                     orderId: order._id.toString(),
-                    reason: order.cancellationReason || 'Customer requested refund',
+                    reason: this.sanitizeString(order.cancellationReason || 'Customer requested refund'),
                 },
             });
 
