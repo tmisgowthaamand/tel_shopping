@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Phone, Lock, Loader2, AlertCircle, Truck } from 'lucide-react';
+import { Phone, Lock, Loader2, AlertCircle, Truck, Check } from 'lucide-react';
 import { partnerPortalApi } from '../services/api';
 
 const PartnerLogin = () => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    // Check for saved credentials on load
+    useEffect(() => {
+        const savedPhone = localStorage.getItem('atz_partner_rem_phone');
+        const savedPassword = localStorage.getItem('atz_partner_rem_pass');
+        if (savedPhone && savedPassword) {
+            setPhone(savedPhone);
+            setPassword(savedPassword);
+            setRememberMe(true);
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,6 +30,16 @@ const PartnerLogin = () => {
         try {
             const response = await partnerPortalApi.login({ phone, password });
             localStorage.setItem('atz_partner_token', response.data.token);
+
+            // Handle Remember Me
+            if (rememberMe) {
+                localStorage.setItem('atz_partner_rem_phone', phone);
+                localStorage.setItem('atz_partner_rem_pass', password);
+            } else {
+                localStorage.removeItem('atz_partner_rem_phone');
+                localStorage.removeItem('atz_partner_rem_pass');
+            }
+
             navigate('/partner/dashboard');
         } catch (err) {
             setError(err.response?.data?.error || 'Login failed. Please check your credentials.');
@@ -81,6 +103,28 @@ const PartnerLogin = () => {
                                 required
                             />
                         </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.875rem', color: 'var(--gray-600)' }}>
+                            <div
+                                onClick={() => setRememberMe(!rememberMe)}
+                                style={{
+                                    width: '18px',
+                                    height: '18px',
+                                    borderRadius: '4px',
+                                    border: '2px solid' + (rememberMe ? ' var(--primary)' : ' var(--gray-300)'),
+                                    background: rememberMe ? 'var(--primary)' : 'transparent',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    transition: 'all 0.2s'
+                                }}
+                            >
+                                {rememberMe && <Check size={12} color="white" strokeWidth={4} />}
+                            </div>
+                            Remember me
+                        </label>
                     </div>
 
                     <button
