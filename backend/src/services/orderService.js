@@ -233,6 +233,14 @@ class OrderService {
             order.expiresAt = null;
             await order.save();
 
+            // Update user stats (Total Spent) immediately for online payments
+            if (order.user && order.paymentMethod === 'razorpay') {
+                const user = order.user;
+                user.orderStats.totalSpent = Math.round((user.orderStats.totalSpent + order.total) * 100) / 100;
+                await user.save();
+                logger.info(`Updated totalSpent for user ${user._id} after online payment confirmation`);
+            }
+
             // Assign delivery partner
             const { addNotificationJob, addDeliveryAssignmentJob } = require('../jobs/queues');
 
@@ -282,6 +290,12 @@ class OrderService {
             const user = await User.findById(order.user);
             if (user) {
                 user.orderStats.cancelledOrders += 1;
+
+                // If it was already added to totalSpent (Paid Razorpay orders), subtract it
+                if (order.paymentMethod === 'razorpay' && order.paymentStatus === 'completed') {
+                    user.orderStats.totalSpent = Math.round(Math.max(0, user.orderStats.totalSpent - order.total) * 100) / 100;
+                }
+
                 await user.save();
             }
 
@@ -317,7 +331,14 @@ class OrderService {
                 const user = await User.findById(order.user);
                 if (user) {
                     user.orderStats.completedOrders += 1;
-                    user.orderStats.totalSpent = Math.round((user.orderStats.totalSpent + order.total) * 100) / 100;
+
+                    // Only add to totalSpent if it's COD (Online was added at confirmation)
+                    if (order.paymentMethod === 'cod') {
+                        user.orderStats.totalSpent = Math.round((user.orderStats.totalSpent + order.total) * 100) / 100;
+                        order.paymentStatus = 'completed';
+                        await order.save();
+                    }
+
                     await user.save();
                 }
 

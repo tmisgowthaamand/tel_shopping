@@ -9,7 +9,8 @@
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
     "worker": "node src/jobs/worker.js",
-    "seed": "node src/scripts/seed.js"
+    "seed": "node src/scripts/seed.js",
+    "resync-stats": "node src/scripts/resync_user_stats.js"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
