@@ -1782,6 +1782,7 @@ ${order.estimatedDeliveryTime ? `⏱️ *Arriving by:* ${new Date(order.estimate
     async notifyPaymentSuccess(order, user) {
         let itemsTotal = order.items.map(item => `• ${item.productName} × ${item.quantity}`).join('\n');
 
+        const paymentLabel = order.paymentMethod === 'razorpay' ? 'Online' : 'COD';
         const message = `
 ✅ *Order Received!*
 
@@ -1789,7 +1790,7 @@ ${order.estimatedDeliveryTime ? `⏱️ *Arriving by:* ${new Date(order.estimate
 ────────────────────
 ${itemsTotal}
 
-💰 *Total: ₹${order.total.toFixed(2)}* (COD)
+💰 *Total: ₹${order.total.toFixed(2)}* (${paymentLabel})
 📍 *Delivery to:* ${order.deliveryAddress.address}
 
 🚀 *Zepto Promise:*
