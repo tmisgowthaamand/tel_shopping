@@ -93,7 +93,8 @@ const Products = () => {
                 page,
                 limit: 12,
                 search: searchTerm,
-                category: selectedCategory === 'all' ? undefined : selectedCategory
+                category: (selectedCategory === 'all' || selectedCategory === 'featured') ? undefined : selectedCategory,
+                featured: selectedCategory === 'featured' ? true : undefined
             });
             setProducts(response.data.products);
             setTotal(response.data.total);
@@ -313,6 +314,17 @@ const Products = () => {
                         }}>
                             Inventory Value: ₹{stats.totalValue?.toLocaleString()}
                         </span>
+                        <span style={{
+                            fontSize: '0.875rem',
+                            background: 'rgba(239, 68, 68, 0.1)',
+                            color: 'var(--danger)',
+                            padding: '0.25rem 0.75rem',
+                            borderRadius: '0.5rem',
+                            fontWeight: 600,
+                            border: '1px solid rgba(239, 68, 68, 0.2)'
+                        }}>
+                            Featured: {stats.featuredCount || 0} / {stats.totalProducts || total}
+                        </span>
                     </div>
                 </h1>
             </div>
@@ -379,6 +391,13 @@ const Products = () => {
                         onClick={() => { setSelectedCategory('all'); setPage(1); }}
                     >
                         All Products
+                    </button>
+                    <button
+                        className={`btn ${selectedCategory === 'featured' ? 'btn-primary' : 'btn-secondary'}`}
+                        style={{ whiteSpace: 'nowrap', padding: '0.5rem 1.25rem' }}
+                        onClick={() => { setSelectedCategory('featured'); setPage(1); }}
+                    >
+                        ⭐ Featured
                     </button>
                     {categories.map(cat => (
                         <button

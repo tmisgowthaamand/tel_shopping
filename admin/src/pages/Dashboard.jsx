@@ -15,7 +15,7 @@ import { orderApi, productApi, userApi } from '../services/api';
 
 const Dashboard = () => {
     const [stats, setStats] = useState({
-        orders: { totalOrders: 0, pendingOrders: 0, totalRevenue: 0 },
+        orders: { totalOrders: 0, pendingOrders: 0, totalRevenue: 0, todayRevenue: 0 },
         products: { totalProducts: 0, lowStock: 0 },
         users: { total: 0 },
     });
@@ -59,32 +59,75 @@ const Dashboard = () => {
 
     const statCards = [
         { label: 'Total Revenue', value: `₹${Number(stats.orders.totalRevenue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, icon: DollarSign, color: 'success', sub: 'Gross earnings' },
+        { label: "Today's Revenue", value: `₹${Number(stats.orders.todayRevenue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, icon: TrendingUp, color: 'info', sub: 'Last 24 hours' },
         { label: 'Total Orders', value: stats.orders.totalOrders, icon: ShoppingCart, color: 'primary', sub: 'Orders placed' },
         { label: 'Total Users', value: stats.users.total, icon: Users, color: 'info', sub: 'Registered customers' },
         { label: 'Unique SKUs', value: stats.products.totalProducts, icon: Package, color: 'warning', sub: 'Product variety' },
-        { label: 'Total Inventory', value: stats.products.totalStock, icon: TrendingUp, color: 'primary', sub: 'Items in stock' },
     ];
 
     return (
         <div className="dashboard">
-            {/* Stats Grid */}
-            <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginBottom: '2rem' }}>
-                {statCards.map((stat, index) => (
-                    <div key={index} className="stat-card" style={{
-                        border: '1px solid var(--gray-200)',
-                        transition: 'transform 0.2s',
-                        cursor: 'default'
-                    }}>
-                        <div className={`stat-icon ${stat.color}`} style={{ borderRadius: '1rem' }}>
-                            <stat.icon size={20} />
+            {/* Revenue Highlights */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                <div className="card" style={{
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    color: 'white',
+                    border: 'none'
+                }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div>
+                            <p style={{ fontSize: '0.875rem', opacity: 0.9, fontWeight: 600 }}>TOTAL REVENUE</p>
+                            <h2 style={{ fontSize: '2.5rem', margin: '0.5rem 0', fontWeight: 800 }}>
+                                ₹{Number(stats.orders.totalRevenue).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                            </h2>
+                            <p style={{ fontSize: '0.75rem', opacity: 0.8 }}>Lifetime completed sales</p>
                         </div>
-                        <div className="stat-content">
-                            <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--gray-500)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{stat.label}</p>
-                            <h3 style={{ fontSize: '1.5rem', margin: '0.25rem 0' }}>{stat.value}</h3>
-                            <span style={{ fontSize: '0.7rem', color: 'var(--gray-400)' }}>{stat.sub}</span>
+                        <div style={{ background: 'rgba(255,255,255,0.2)', padding: '1rem', borderRadius: '1rem' }}>
+                            <DollarSign size={40} />
                         </div>
                     </div>
-                ))}
+                </div>
+
+                <div className="card" style={{
+                    background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
+                    color: 'white',
+                    border: 'none'
+                }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div>
+                            <p style={{ fontSize: '0.875rem', opacity: 0.9, fontWeight: 600 }}>TODAY'S REVENUE</p>
+                            <h2 style={{ fontSize: '2.5rem', margin: '0.5rem 0', fontWeight: 800 }}>
+                                ₹{Number(stats.orders.todayRevenue).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                            </h2>
+                            <p style={{ fontSize: '0.75rem', opacity: 0.8 }}>Sales since midnight</p>
+                        </div>
+                        <div style={{ background: 'rgba(255,255,255,0.2)', padding: '1rem', borderRadius: '1rem' }}>
+                            <TrendingUp size={40} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Stats Grid */}
+            <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginBottom: '2rem' }}>
+                {statCards
+                    .filter(s => s.label !== 'Total Revenue' && s.label !== "Today's Revenue")
+                    .map((stat, index) => (
+                        <div key={index} className="stat-card" style={{
+                            border: '1px solid var(--gray-200)',
+                            transition: 'transform 0.2s',
+                            cursor: 'default'
+                        }}>
+                            <div className={`stat-icon ${stat.color}`} style={{ borderRadius: '1rem' }}>
+                                <stat.icon size={20} />
+                            </div>
+                            <div className="stat-content">
+                                <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--gray-500)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{stat.label}</p>
+                                <h3 style={{ fontSize: '1.5rem', margin: '0.25rem 0' }}>{stat.value}</h3>
+                                <span style={{ fontSize: '0.7rem', color: 'var(--gray-400)' }}>{stat.sub}</span>
+                            </div>
+                        </div>
+                    ))}
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem' }}>

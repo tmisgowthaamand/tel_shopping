@@ -329,7 +329,8 @@ class ProductService {
                         totalStock: { $sum: "$stock" },
                         totalValue: { $sum: { $multiply: ["$price", "$stock"] } },
                         outOfStock: { $sum: { $cond: [{ $eq: ["$stock", 0] }, 1, 0] } },
-                        lowStock: { $sum: { $cond: [{ $and: [{ $lte: ["$stock", 10] }, { $gt: ["$stock", 0] }] }, 1, 0] } }
+                        lowStock: { $sum: { $cond: [{ $and: [{ $lte: ["$stock", 10] }, { $gt: ["$stock", 0] }] }, 1, 0] } },
+                        featuredCount: { $sum: { $cond: [{ $eq: ["$isFeatured", true] }, 1, 0] } }
                     }
                 }
             ]);

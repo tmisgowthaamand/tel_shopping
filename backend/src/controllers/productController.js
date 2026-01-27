@@ -9,7 +9,7 @@ const fs = require('fs');
  */
 exports.getProducts = async (req, res) => {
     try {
-        const { category, page = 1, limit = 20, search, active } = req.query;
+        const { category, page = 1, limit = 20, search, active, featured } = req.query;
 
         let query = {};
 
@@ -18,6 +18,11 @@ exports.getProducts = async (req, res) => {
             query.isActive = active === 'true';
         } else {
             query.isActive = true;
+        }
+
+        // Featured filter
+        if (featured === 'true' || featured === true) {
+            query.isFeatured = true;
         }
 
         // Search filter

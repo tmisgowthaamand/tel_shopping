@@ -167,6 +167,9 @@ exports.getStats = async (req, res) => {
         if (from) dateFilter.$gte = new Date(from);
         if (to) dateFilter.$lte = new Date(to);
 
+        const todayStart = new Date();
+        todayStart.setHours(0, 0, 0, 0);
+
         const [
             totalOrders,
             pendingOrders,
@@ -174,6 +177,7 @@ exports.getStats = async (req, res) => {
             deliveredOrders,
             cancelledOrders,
             totalRevenue,
+            todayRevenue,
         ] = await Promise.all([
             Order.countDocuments(from || to ? { createdAt: dateFilter } : {}),
             Order.countDocuments({ status: 'pending', ...(from || to ? { createdAt: dateFilter } : {}) }),
@@ -189,6 +193,15 @@ exports.getStats = async (req, res) => {
                 },
                 { $group: { _id: null, total: { $sum: '$total' } } },
             ]),
+            Order.aggregate([
+                {
+                    $match: {
+                        status: 'delivered',
+                        createdAt: { $gte: todayStart },
+                    },
+                },
+                { $group: { _id: null, total: { $sum: '$total' } } },
+            ]),
         ]);
 
         res.json({
@@ -198,6 +211,7 @@ exports.getStats = async (req, res) => {
             deliveredOrders,
             cancelledOrders,
             totalRevenue: totalRevenue[0]?.total || 0,
+            todayRevenue: todayRevenue[0]?.total || 0,
         });
     } catch (error) {
         logger.error('Get order stats error:', error);
