@@ -53,7 +53,7 @@ class CartService {
     /**
      * Update item quantity
      */
-    async updateQuantity(userId, productId, quantity) {
+    async updateQuantity(userId, productId, quantity, size = undefined) {
         try {
             const cart = await Cart.getOrCreate(userId);
 
@@ -67,7 +67,7 @@ class CartService {
                 }
             }
 
-            await cart.updateItemQuantity(productId, quantity);
+            await cart.updateItemQuantity(productId, quantity, size);
             await cart.populate('items.product');
 
             logger.info(`Updated quantity for product ${productId} in cart for user ${userId}`);
@@ -82,10 +82,10 @@ class CartService {
     /**
      * Remove item from cart
      */
-    async removeFromCart(userId, productId) {
+    async removeFromCart(userId, productId, size = undefined) {
         try {
             const cart = await Cart.getOrCreate(userId);
-            await cart.removeItem(productId);
+            await cart.removeItem(productId, size);
             await cart.populate('items.product');
 
             logger.info(`Removed product ${productId} from cart for user ${userId}`);

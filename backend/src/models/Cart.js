@@ -85,12 +85,13 @@ cartSchema.methods.addItem = async function (productId, quantity, price, discoun
     await this.save();
 };
 
-// Method to update item quantity
-cartSchema.methods.updateItemQuantity = async function (productId, quantity) {
+// Method to update item quantity (size aware)
+cartSchema.methods.updateItemQuantity = async function (productId, quantity, size = undefined) {
     const item = this.items.find(
         (item) => {
             const itemProdId = item.product?._id || item.product;
-            return itemProdId && itemProdId.toString() === productId.toString();
+            const matchId = itemProdId && itemProdId.toString() === productId.toString();
+            return size !== undefined ? (matchId && item.size === size) : matchId;
         }
     );
 
@@ -99,7 +100,9 @@ cartSchema.methods.updateItemQuantity = async function (productId, quantity) {
             this.items = this.items.filter(
                 (item) => {
                     const itemProdId = item.product?._id || item.product;
-                    return itemProdId && itemProdId.toString() !== productId.toString();
+                    const matchId = itemProdId && itemProdId.toString() === productId.toString();
+                    const matchSize = size !== undefined ? item.size === size : true;
+                    return !(matchId && matchSize);
                 }
             );
         } else {
@@ -110,12 +113,14 @@ cartSchema.methods.updateItemQuantity = async function (productId, quantity) {
     }
 };
 
-// Method to remove item
-cartSchema.methods.removeItem = async function (productId) {
+// Method to remove item (size aware)
+cartSchema.methods.removeItem = async function (productId, size = undefined) {
     this.items = this.items.filter(
         (item) => {
             const itemProdId = item.product?._id || item.product;
-            return itemProdId && itemProdId.toString() !== productId.toString();
+            const matchId = itemProdId && itemProdId.toString() === productId.toString();
+            const matchSize = size !== undefined ? item.size === size : true;
+            return !(matchId && matchSize);
         }
     );
     await this.calculateTotals();

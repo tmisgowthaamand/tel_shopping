@@ -265,7 +265,13 @@ class BotService {
         this.bot.action(/^select_size_(.+)_(.+)$/, async (ctx) => {
             const productId = ctx.match[1];
             const size = ctx.match[2];
-            await this.addToCart(ctx, productId, size);
+            const user = ctx.user;
+
+            user.sessionData.pendingSize = size;
+            user.markModified('sessionData');
+            await user.save();
+
+            await this.showQuantitySelector(ctx, productId, size);
         });
 
         this.bot.action(/^buy_now_(.+)$/, async (ctx) => {
@@ -286,20 +292,23 @@ class BotService {
             await this.handleQuantitySelection(ctx, productId, quantity);
         });
 
-        // Cart actions
-        this.bot.action(/^cart_add_(.+)$/, async (ctx) => {
+        // Cart actions (size aware)
+        this.bot.action(/^cart_add_(.+?)(?:_(.*))?$/, async (ctx) => {
             const productId = ctx.match[1];
-            await this.updateCartQuantity(ctx, productId, 1);
+            const size = ctx.match[2] || null;
+            await this.updateCartQuantity(ctx, productId, 1, size);
         });
 
-        this.bot.action(/^cart_sub_(.+)$/, async (ctx) => {
+        this.bot.action(/^cart_sub_(.+?)(?:_(.*))?$/, async (ctx) => {
             const productId = ctx.match[1];
-            await this.updateCartQuantity(ctx, productId, -1);
+            const size = ctx.match[2] || null;
+            await this.updateCartQuantity(ctx, productId, -1, size);
         });
 
-        this.bot.action(/^cart_remove_(.+)$/, async (ctx) => {
+        this.bot.action(/^cart_remove_(.+?)(?:_(.*))?$/, async (ctx) => {
             const productId = ctx.match[1];
-            await this.removeFromCart(ctx, productId);
+            const size = ctx.match[2] || null;
+            await this.removeFromCart(ctx, productId, size);
         });
 
         this.bot.action('clear_cart', async (ctx) => {
@@ -842,10 +851,15 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
                 return this.showSizeSelection(ctx, product, 'cart');
             }
 
-            await cartService.addToCart(user._id, productId, 1, size);
+            // Store context
+            user.sessionData.pendingSize = size;
+            user.sessionData.lastProductId = productId;
+            user.sessionData.lastSize = size;
+            user.markModified('sessionData');
+            await user.save();
 
-            // Automatically show the cart items as requested
-            await this.showCart(ctx);
+            // Ask for quantity instead of defaulting to 1
+            await this.showQuantitySelector(ctx, productId, size);
         } catch (error) {
             logger.error('Error adding to cart:', error);
             ctx.reply(`❌ Sorry, I couldn't add that to your cart: ${error.message}`);
@@ -869,10 +883,42 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
         rows.push([Markup.button.callback('❌ Cancel', `product_${product._id}`)]);
 
         const keyboard = Markup.inlineKeyboard(rows);
-        await ctx.reply(`Please select a size for *${product.name}*:`, {
-            parse_mode: 'Markdown',
+        await ctx.reply(`Please select a size for <b>${product.name}</b>:`, {
+            parse_mode: 'HTML',
             ...keyboard
         });
+    }
+
+    /**
+     * Show quantity selector
+     */
+    async showQuantitySelector(ctx, productId, size = null) {
+        try {
+            const product = await productService.getProduct(productId);
+            if (!product) return;
+
+            const keyboard = Markup.inlineKeyboard([
+                [
+                    Markup.button.callback('1', `qty_${productId}_1`),
+                    Markup.button.callback('2', `qty_${productId}_2`),
+                    Markup.button.callback('3', `qty_${productId}_3`),
+                ],
+                [
+                    Markup.button.callback('4', `qty_${productId}_4`),
+                    Markup.button.callback('5', `qty_${productId}_5`),
+                    Markup.button.callback('6', `qty_${productId}_6`),
+                ],
+                [Markup.button.callback('❌ Cancel', `product_${productId}`)],
+            ]);
+
+            const sizeText = size ? ` (Size: ${size})` : '';
+            await ctx.reply(`How many <b>${product.name}</b>${sizeText} would you like to add?`, {
+                parse_mode: 'HTML',
+                ...keyboard
+            });
+        } catch (error) {
+            logger.error('Error showing quantity selector:', error);
+        }
     }
 
     /**
@@ -905,24 +951,7 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
             };
             await user.save();
 
-            const keyboard = Markup.inlineKeyboard([
-                [
-                    Markup.button.callback('1', `qty_${productId}_1`),
-                    Markup.button.callback('2', `qty_${productId}_2`),
-                    Markup.button.callback('3', `qty_${productId}_3`),
-                ],
-                [
-                    Markup.button.callback('4', `qty_${productId}_4`),
-                    Markup.button.callback('5', `qty_${productId}_5`),
-                    Markup.button.callback('6', `qty_${productId}_6`),
-                ],
-                [Markup.button.callback('❌ Cancel', 'back_to_menu')],
-            ]);
-
-            await ctx.replyWithMarkdown(
-                `*${product.name}*\n💰 ₹${product.finalPrice.toFixed(0)}\n\nSelect quantity:`,
-                keyboard
-            );
+            await this.showQuantitySelector(ctx, productId, size);
         } catch (error) {
             logger.error('Error in buy now:', error);
             ctx.reply(`❌ Sorry, I couldn't process your request: ${error.message}`);
@@ -1009,10 +1038,10 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
         }
         cartText += `*Total: ₹${cartSummary.total.toFixed(0)}*`;
 
-        const itemButtons = validItems.slice(0, 3).map((item) => [
-            Markup.button.callback('➖', `cart_sub_${item.productId}`),
-            Markup.button.callback(`${item.name.slice(0, 15)}...`, `product_${item.productId}`),
-            Markup.button.callback('➕', `cart_add_${item.productId}`),
+        const itemButtons = validItems.slice(0, 10).map((item) => [
+            Markup.button.callback('➖', `cart_sub_${item.productId}_${item.size || ''}`),
+            Markup.button.callback(`${item.name.slice(0, 12)}${item.size ? ` [${item.size}]` : ''}`, `product_${item.productId}`),
+            Markup.button.callback('➕', `cart_add_${item.productId}_${item.size || ''}`),
         ]);
 
         const actionButtons = [
@@ -1085,7 +1114,7 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
     /**
      * Update cart quantity
      */
-    async updateCartQuantity(ctx, productId, change) {
+    async updateCartQuantity(ctx, productId, change, size = null) {
         try {
             const action = change > 0 ? 'Increasing' : 'Decreasing';
             if (ctx.callbackQuery) await ctx.answerCbQuery(`${action} quantity...`).catch(() => { });
@@ -1097,18 +1126,21 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
             const item = cart.items.find((i) => {
                 const itemProdId = i.product?._id || i.product;
                 if (!itemProdId) return false;
-                return itemProdId.toString() === productId.toString();
+                const matchId = itemProdId.toString() === productId.toString();
+                const matchSize = (i.size || null) === (size || null);
+                return matchId && matchSize;
             });
 
             if (item) {
                 const newQty = item.quantity + change;
-                await cartService.updateQuantity(user._id, productId, newQty);
+                await cartService.updateQuantity(user._id, productId, newQty, size);
             } else if (change > 0) {
-                await cartService.addToCart(user._id, productId, 1);
+                await cartService.addToCart(user._id, productId, 1, size);
             }
 
             // Update context
             user.sessionData.lastProductId = productId;
+            user.sessionData.lastSize = size;
             user.markModified('sessionData');
             await user.save();
 
@@ -1123,12 +1155,12 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
     /**
      * Remove from cart
      */
-    async removeFromCart(ctx, productId) {
+    async removeFromCart(ctx, productId, size = null) {
         try {
             if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
 
             const user = ctx.user;
-            await cartService.removeFromCart(user._id, productId);
+            await cartService.removeFromCart(user._id, productId, size);
             await this.showCart(ctx);
         } catch (error) {
             logger.error('Error removing from cart:', error);
@@ -1364,33 +1396,44 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
                 break;
 
             default:
-                // Check for Quick Cart Update Patterns (e.g., "add 3", "remove 1", "5 more")
+                // Check for Quick Cart Update Patterns (FASHION READY)
+                // Examples: "4 in s size add to cart", "1 in l to cart", "3 xl add", "2 s remove"
                 const lowerText = text.toLowerCase().trim();
-                const addMatch = lowerText.match(/^add\s+(\d+)(?:\s+to\s+cart)?$/i) || lowerText.match(/^(\d+)\s+(?:more|add(?:\s+to\s+cart)?)$/i);
-                const removeMatch = lowerText.match(/^remove\s+(\d+)(?:\s+from\s+cart)?$/i) || lowerText.match(/^(\d+)\s+remove(?:\s+from\s+cart)?$/i);
 
-                if ((addMatch || removeMatch) && user.sessionData?.lastProductId) {
+                // Define supported sizes for fashion
+                const sizeMatch = lowerText.match(/\b(s|m|l|xl|xxl|3xl)\b/i);
+                const quantityMatch = lowerText.match(/\b(\d+)\b/);
+                const isAdd = /\b(add|more|plus)\b/i.test(lowerText);
+                const isRemove = /\b(remove|less|minus)\b/i.test(lowerText);
+
+                if ((isAdd || isRemove) && quantityMatch && user.sessionData?.lastProductId) {
                     const productId = user.sessionData.lastProductId;
-                    const amount = parseInt(addMatch ? addMatch.find(m => /^\d+$/.test(m)) : removeMatch.find(m => /^\d+$/.test(m)));
+                    const amount = parseInt(quantityMatch[1]);
+                    let matchedSize = (sizeMatch ? sizeMatch[1] : user.sessionData.lastSize) || null;
+                    if (matchedSize) matchedSize = matchedSize.trim().toUpperCase();
 
                     if (!isNaN(amount)) {
                         try {
-                            if (addMatch) {
-                                await cartService.addToCart(user._id, productId, amount);
-                                await ctx.reply(`✅ Added ${amount} more to your cart.`);
+                            if (isAdd) {
+                                await cartService.addToCart(user._id, productId, amount, matchedSize);
+                                await ctx.reply(`✅ Added ${amount} [${matchedSize || 'default'}] to your cart.`);
                             } else {
                                 const cart = await cartService.getCart(user._id);
-                                const item = cart.items.find(i => (i.product?._id || i.product).toString() === productId);
+                                const item = cart.items.find(i =>
+                                    (i.product?._id || i.product).toString() === productId &&
+                                    (i.size || null) === (matchedSize || null)
+                                );
                                 if (item) {
                                     const newQty = Math.max(0, item.quantity - amount);
-                                    await cartService.updateQuantity(user._id, productId, newQty);
-                                    await ctx.reply(`✅ Removed ${amount} from your cart.`);
+                                    await cartService.updateQuantity(user._id, productId, newQty, matchedSize);
+                                    await ctx.reply(`✅ Removed ${amount} [${matchedSize || 'default'}] from your cart.`);
+                                } else {
+                                    await ctx.reply(`⚠️ I couldn't find ${matchedSize || ''} variant in your cart.`);
                                 }
                             }
                             return this.showCart(ctx);
                         } catch (err) {
                             logger.error('Quick cart update failed:', err);
-                            // Fallback to AI if quick update fails (e.g. stock issue)
                         }
                     }
                 }
