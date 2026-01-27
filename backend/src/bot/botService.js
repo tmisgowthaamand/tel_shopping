@@ -92,19 +92,24 @@ class BotService {
      * Register middleware
      */
     registerMiddleware() {
-        // User session middleware
         this.bot.use(async (ctx, next) => {
             try {
                 if (ctx.from) {
                     const user = await User.findOrCreateByTelegramId(ctx.from);
                     ctx.user = user;
+
+                    if (!user) {
+                        logger.warn(`Middleware: User.findOrCreateByTelegramId returned null for ${ctx.from.id}`);
+                    }
                 }
                 return next();
             } catch (error) {
-                logger.error('Middleware error:', error);
+                const tgId = ctx.from ? ctx.from.id : 'unknown';
+                logger.error(`Middleware error for user ${tgId}:`, error);
+
                 // Try to send a message to the user if we can't load their profile
                 if (ctx.chat) {
-                    await ctx.reply('⚠️ Sorry, there was an issue loading your profile. Please try /start again in a moment.');
+                    await ctx.reply('⚠️ Sorry, there was an issue loading your profile. Please try /start again in a moment.').catch(() => { });
                 }
                 // Do not call next() if user load failed to avoid crashes in handlers
             }
@@ -418,9 +423,21 @@ class BotService {
      * Handle /start command
      */
     async handleStart(ctx) {
-        const user = ctx.user;
+        let user = ctx.user;
+
+        // Recovery path: if middleware failed to load user, try one last time here
+        if (!user && ctx.from) {
+            try {
+                logger.info(`Recovery: Attempting to load user ${ctx.from.id} in handleStart`);
+                user = await User.findOrCreateByTelegramId(ctx.from);
+                ctx.user = user;
+            } catch (e) {
+                logger.error(`Recovery failed for user ${ctx.from.id}:`, e.message);
+            }
+        }
 
         if (!user) {
+            logger.error(`CRITICAL: User is null in handleStart even after recovery attempt. From: ${JSON.stringify(ctx.from)}`);
             return ctx.reply('⚠️ Issue loading your profile. Please try /start again.');
         }
 
