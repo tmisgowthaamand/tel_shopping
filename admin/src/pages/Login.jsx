@@ -51,7 +51,7 @@ const Login = () => {
                                 type="email"
                                 className="form-input"
                                 style={{ paddingLeft: '3rem' }}
-                                placeholder="admin@atzstore.com"
+                                placeholder="Enter your admin email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required

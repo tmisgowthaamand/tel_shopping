@@ -392,7 +392,11 @@ tbody tr:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--gray-800), var(--gray-900));
+  background: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)), 
+              url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2000');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .login-card {
