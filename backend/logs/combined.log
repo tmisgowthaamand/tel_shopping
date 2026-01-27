@@ -5031,3 +5031,20 @@
 {"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-27 15:09:32"}
 {"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-27 15:09:32"}
 {"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-27 15:09:32"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-27 15:18:24"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-00.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-27 15:18:25"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-27 15:18:25"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-27 15:18:25"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-27 15:18:25"}
+{"level":"info","message":"🤖 Initializing Telegram bot...","service":"atz-store","timestamp":"2026-01-27 15:18:25"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-27 15:18:26"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-27 15:18:27"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-27 15:18:27"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-27 15:18:27"}
+{"level":"info","message":"🔄 Starting bot in Polling mode (Dev/Local)...","service":"atz-store","timestamp":"2026-01-27 15:18:27"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-27 15:18:27"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-27 15:18:27"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-27 15:18:27"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-27 15:18:27"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-27 15:18:27"}
+{"level":"info","message":"Telegram bot started in polling mode","service":"atz-store","timestamp":"2026-01-27 15:18:27"}

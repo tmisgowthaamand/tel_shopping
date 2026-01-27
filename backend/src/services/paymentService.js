@@ -13,14 +13,18 @@ class PaymentService {
     }
 
     /**
-     * Sanitize strings for Razorpay to avoid collation/character set errors
-     * Removes emojis and non-BMP characters
+     * Aggressively sanitize strings for Razorpay to avoid ANY collation/character set errors.
+     * Normalizes to ASCII and removes all non-ASCII characters (including emojis and special symbols).
      */
     sanitizeString(str) {
         if (!str) return '';
-        // Remove any character that is not in the Basic Multilingual Plane (BMP)
-        // This effectively removes most emojis which are 4-byte characters
-        return str.replace(/[^\u0000-\uFFFF]/g, '').trim();
+        return str
+            .toString()
+            .normalize('NFD') // Decompose combined characters (like accents)
+            .replace(/[\u0300-\u036f]/g, '') // Remove the accent marks
+            .replace(/[^\x20-\x7E]/g, '') // Keep only printable ASCII characters (hex 20 to 7E)
+            .replace(/\s+/g, ' ') // Collapse multiple spaces
+            .trim();
     }
 
     /**
@@ -64,8 +68,8 @@ class PaymentService {
                 accept_partial: false,
                 description: this.sanitizeString(`Order ${order.orderId}`),
                 customer: {
-                    name: this.sanitizeString(user.getFullName()),
-                    contact: user.phone || '',
+                    name: this.sanitizeString(user.getFullName()) || 'Customer',
+                    contact: (user.phone || '').replace(/[^\d+]/g, '') || '',
                 },
                 notify: {
                     sms: false,
