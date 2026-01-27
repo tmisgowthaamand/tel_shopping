@@ -196,7 +196,7 @@ const Orders = () => {
                                                     {order.paymentStatus}
                                                 </div>
                                             </td>
-                                            <td style={{ fontSize: '0.875rem' }}>{new Date(order.createdAt).toLocaleString()}</td>
+                                            <td style={{ fontSize: '0.875rem' }}>{new Date(order.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</td>
                                             <td>
                                                 <div style={{ display: 'flex', gap: '0.5rem' }}>
                                                     <button

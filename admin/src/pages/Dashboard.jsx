@@ -58,8 +58,8 @@ const Dashboard = () => {
     }
 
     const statCards = [
-        { label: 'Total Revenue', value: `₹${Number(stats.orders.totalRevenue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, icon: DollarSign, color: 'success', sub: 'Gross earnings' },
-        { label: "Today's Revenue", value: `₹${Number(stats.orders.todayRevenue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, icon: TrendingUp, color: 'info', sub: 'Last 24 hours' },
+        { label: 'Total Revenue', value: `₹${Number(stats.orders.totalRevenue).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, icon: DollarSign, color: 'success', sub: 'Gross earnings' },
+        { label: "Today's Revenue", value: `₹${Number(stats.orders.todayRevenue).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, icon: TrendingUp, color: 'info', sub: 'Last 24 hours' },
         { label: 'Total Orders', value: stats.orders.totalOrders, icon: ShoppingCart, color: 'primary', sub: 'Orders placed' },
         { label: 'Total Users', value: stats.users.total, icon: Users, color: 'info', sub: 'Registered customers' },
         { label: 'Unique SKUs', value: stats.products.totalProducts, icon: Package, color: 'warning', sub: 'Product variety' },
@@ -78,7 +78,7 @@ const Dashboard = () => {
                         <div>
                             <p style={{ fontSize: '0.875rem', opacity: 0.9, fontWeight: 600 }}>TOTAL REVENUE</p>
                             <h2 style={{ fontSize: '2.5rem', margin: '0.5rem 0', fontWeight: 800 }}>
-                                ₹{Number(stats.orders.totalRevenue).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                                ₹{Number(stats.orders.totalRevenue).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                             </h2>
                             <p style={{ fontSize: '0.75rem', opacity: 0.8 }}>Lifetime completed sales</p>
                         </div>
@@ -97,7 +97,7 @@ const Dashboard = () => {
                         <div>
                             <p style={{ fontSize: '0.875rem', opacity: 0.9, fontWeight: 600 }}>TODAY'S REVENUE</p>
                             <h2 style={{ fontSize: '2.5rem', margin: '0.5rem 0', fontWeight: 800 }}>
-                                ₹{Number(stats.orders.todayRevenue).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                                ₹{Number(stats.orders.todayRevenue).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                             </h2>
                             <p style={{ fontSize: '0.75rem', opacity: 0.8 }}>Sales since midnight</p>
                         </div>
@@ -173,7 +173,7 @@ const Dashboard = () => {
                                                 {order.status}
                                             </span>
                                         </td>
-                                        <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                                        <td>{new Date(order.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}</td>
                                     </tr>
                                 ))}
                             </tbody>

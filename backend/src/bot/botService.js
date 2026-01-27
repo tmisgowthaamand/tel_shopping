@@ -1524,7 +1524,7 @@ We'll notify you when a delivery partner is assigned.
             orderText += `*${order.orderId}*\n`;
             orderText += `${statusEmoji} ${order.status.toUpperCase()}\n`;
             orderText += `💰 ₹${order.total.toFixed(2)} | ${order.items.length} items\n`;
-            orderText += `📅 ${new Date(order.createdAt).toLocaleDateString()}\n\n`;
+            orderText += `📅 ${new Date(order.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}\n\n`;
         }
 
         const orderButtons = orders.slice(0, 3).map((order) => [
@@ -1562,7 +1562,7 @@ ${progress}
 ${text}
 
 💳 Payment: ${order.paymentStatus}
-📅 Created: ${new Date(order.createdAt).toLocaleString()}
+📅 Created: ${new Date(order.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
 
 *Items:*
     `.trim();
@@ -1586,7 +1586,7 @@ ${text}
         }
 
         if (order.estimatedDeliveryTime) {
-            orderText += `\n\n⏱️ *ETA:* ${new Date(order.estimatedDeliveryTime).toLocaleTimeString()}`;
+            orderText += `\n\n⏱️ *ETA:* ${new Date(order.estimatedDeliveryTime).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' })}`;
         }
 
         const buttons = [];
@@ -1623,7 +1623,7 @@ ${text}
             const updatedOrder = await orderService.retryPayment(orderId);
 
             await ctx.replyWithMarkdown(
-                `✅ *New Payment Link Generated!*\n\n💰 Amount: ₹${updatedOrder.total.toFixed(2)}\n⏱️ Expiry: ${new Date(updatedOrder.expiresAt).toLocaleTimeString()}\n\nClick below to pay:`,
+                `✅ *New Payment Link Generated!*\n\n💰 Amount: ₹${updatedOrder.total.toFixed(2)}\n⏱️ Expiry: ${new Date(updatedOrder.expiresAt).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' })}\n\nClick below to pay:`,
                 Markup.inlineKeyboard([
                     [Markup.button.url('💳 Pay Now', updatedOrder.paymentLink)],
                     [Markup.button.callback('📦 View Order', `order_${updatedOrder._id}`)]
@@ -1684,11 +1684,11 @@ ${text}
 
         const findTime = (status) => {
             const entry = order.statusHistory.find(h => h.status === status);
-            return entry ? new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : null;
+            return entry ? new Date(entry.timestamp).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }) : null;
         };
 
         if (order.status === 'pending') {
-            const expiry = order.expiresAt ? `\n⏳ *Expires at:* ${new Date(order.expiresAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : '';
+            const expiry = order.expiresAt ? `\n⏳ *Expires at:* ${new Date(order.expiresAt).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' })}` : '';
             return { text: `⏳ *Awaiting Payment Confirmation*${expiry}`, progress: '🕒' };
         }
         if (order.status === 'cancelled') return { text: `❌ *Status: CANCELLED*\n📅 ${findTime('cancelled') || ''}`, progress: '🛑' };
@@ -1764,7 +1764,7 @@ ${statusEmoji} *Zepto Speed Update*
 
 Order: \`${order.orderId}\`
 ${text}
-${order.estimatedDeliveryTime ? `⏱️ *Arriving by:* ${new Date(order.estimatedDeliveryTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : '⏱️ *Arrival:* Under 10 mins'}
+${order.estimatedDeliveryTime ? `⏱️ *Arriving by:* ${new Date(order.estimatedDeliveryTime).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' })}` : '⏱️ *Arrival:* Under 10 mins'}
     `.trim();
 
         await this.sendNotification(

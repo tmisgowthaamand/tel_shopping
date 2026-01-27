@@ -312,7 +312,7 @@ const Products = () => {
                             fontWeight: 600,
                             border: '1px solid rgba(245, 158, 11, 0.2)'
                         }}>
-                            Inventory Value: ₹{stats.totalValue?.toLocaleString()}
+                            Inventory Value: ₹{stats.totalValue?.toLocaleString('en-IN')}
                         </span>
                         <span style={{
                             fontSize: '0.875rem',
