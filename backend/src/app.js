@@ -21,6 +21,7 @@ const {
     categoryRoutes,
     orderRoutes,
     partnerRoutes,
+    partnerPortalRoutes,
     userRoutes,
     webhookRoutes,
 } = require('./routes');
@@ -74,6 +75,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/partners', partnerRoutes);
+app.use('/api/partner-portal', partnerPortalRoutes);
 app.use('/api/users', userRoutes);
 
 // Webhook Routes (separate from API)

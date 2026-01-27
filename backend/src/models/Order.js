@@ -184,6 +184,11 @@ const orderSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        verifiedPaymentType: {
+            type: String,
+            enum: ['cash', 'upi', 'online'],
+            default: null,
+        },
     },
     {
         timestamps: true,

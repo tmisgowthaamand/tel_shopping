@@ -211,3 +211,103 @@ exports.processPayout = async (req, res) => {
         res.status(500).json({ error: 'Failed to process payout' });
     }
 };
+/**
+ * Partner Login
+ */
+exports.login = async (req, res) => {
+    try {
+        const { phone, password } = req.body;
+        const config = require('../config');
+        const jwt = require('jsonwebtoken');
+
+        if (!phone || !password) {
+            return res.status(400).json({ error: 'Phone and password required' });
+        }
+
+        const partner = await DeliveryPartner.findOne({ phone });
+
+        if (!partner) {
+            return res.status(401).json({ error: 'Invalid phone or password' });
+        }
+
+        const isMatch = await partner.comparePassword(password);
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid phone or password' });
+        }
+
+        if (!partner.isActive) {
+            return res.status(401).json({ error: 'Partner account is not active' });
+        }
+
+        const token = jwt.sign({ id: partner._id, role: 'partner' }, config.jwt.secret, {
+            expiresIn: '7d',
+        });
+
+        res.json({
+            token,
+            partner: {
+                id: partner._id,
+                name: partner.name,
+                phone: partner.phone,
+                vehicleType: partner.vehicleType,
+            },
+        });
+    } catch (error) {
+        logger.error('Partner login error:', error);
+        res.status(500).json({ error: 'Login failed' });
+    }
+};
+
+/**
+ * Get orders assigned to partner
+ */
+exports.getAssignedOrders = async (req, res) => {
+    try {
+        const { Order } = require('../models');
+        const orders = await Order.find({
+            deliveryPartner: req.partner.id,
+            status: { $in: ['confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery'] }
+        }).populate('user').sort({ createdAt: -1 });
+
+        res.json(orders);
+    } catch (error) {
+        logger.error('Get assigned orders error:', error);
+        res.status(500).json({ error: 'Failed to get assigned orders' });
+    }
+};
+
+/**
+ * Partner order status update
+ */
+exports.updateOrderFromPortal = async (req, res) => {
+    try {
+        const { Order } = require('../models');
+        const { orderId, status, paymentType } = req.body;
+        const partnerId = req.partner.id;
+
+        const order = await Order.findOne({ _id: orderId, deliveryPartner: partnerId });
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found or not assigned to you' });
+        }
+
+        if (status === 'delivered') {
+            if (order.paymentMethod === 'cod') {
+                order.paymentStatus = 'completed';
+                order.verifiedPaymentType = paymentType || 'cash';
+            }
+            await order.updateStatus('delivered', `Delivered by ${req.partner.name}`, 'partner');
+
+            // Handle partner completion
+            const partner = await DeliveryPartner.findById(partnerId);
+            const earnings = deliveryService.calculateDeliveryEarnings(0);
+            await partner.completeDelivery(order._id, earnings);
+        } else {
+            await order.updateStatus(status, `Updated by ${req.partner.name}`, 'partner');
+        }
+
+        res.json(order);
+    } catch (error) {
+        logger.error('Portal order update error:', error);
+        res.status(500).json({ error: 'Failed to update order' });
+    }
+};

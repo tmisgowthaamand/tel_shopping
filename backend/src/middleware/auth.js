@@ -81,8 +81,41 @@ const verifyRazorpayWebhook = (req, res, next) => {
     next();
 };
 
+/**
+ * Authenticate delivery partner JWT token
+ */
+const authenticatePartner = async (req, res, next) => {
+    try {
+        const { DeliveryPartner } = require('../models');
+        const authHeader = req.headers.authorization;
+
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'No token provided' });
+        }
+
+        const token = authHeader.split(' ')[1];
+        const decoded = jwt.verify(token, config.jwt.secret);
+
+        const partner = await DeliveryPartner.findById(decoded.id);
+
+        if (!partner || !partner.isActive) {
+            return res.status(401).json({ error: 'Invalid or inactive partner account' });
+        }
+
+        req.partner = partner;
+        next();
+    } catch (error) {
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ error: 'Token expired' });
+        }
+        logger.error('Partner auth error:', error);
+        res.status(401).json({ error: 'Authentication failed' });
+    }
+};
+
 module.exports = {
     authenticateAdmin,
+    authenticatePartner,
     checkPermission,
     verifyRazorpayWebhook,
 };

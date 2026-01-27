@@ -7,12 +7,23 @@ import Orders from './pages/Orders';
 import Products from './pages/Products';
 import Users from './pages/Users';
 import Partners from './pages/Partners';
+import PartnerLogin from './pages/PartnerLogin';
+import PartnerDashboard from './pages/PartnerDashboard';
 
-// Auth Guard
+// Auth Guard for Admin
 const ProtectedRoute = ({ children }) => {
     const token = localStorage.getItem('atz_admin_token');
     if (!token) {
         return <Navigate to="/login" replace />;
+    }
+    return children;
+};
+
+// Auth Guard for Delivery Partners
+const PartnerProtectedRoute = ({ children }) => {
+    const token = localStorage.getItem('atz_partner_token');
+    if (!token) {
+        return <Navigate to="/partner/login" replace />;
     }
     return children;
 };
@@ -22,6 +33,16 @@ const App = () => {
         <Router>
             <Routes>
                 <Route path="/login" element={<Login />} />
+                <Route path="/partner/login" element={<PartnerLogin />} />
+
+                <Route
+                    path="/partner/dashboard"
+                    element={
+                        <PartnerProtectedRoute>
+                            <PartnerDashboard />
+                        </PartnerProtectedRoute>
+                    }
+                />
 
                 <Route
                     path="/"

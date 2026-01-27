@@ -84,10 +84,17 @@ class DeliveryBotHandler {
             await this.showNavigation(ctx, orderId);
         });
 
-        // COD Paid and Delivered
+        // COD Paid and Delivered - Ask for type
         this.bot.action(/^delivery_paid_delivered_(.+)$/, async (ctx) => {
             const orderId = ctx.match[1];
-            await this.handleCODPaymentAndDelivery(ctx, orderId);
+            await this.promptCODPaymentType(ctx, orderId);
+        });
+
+        // Handle specific payment type
+        this.bot.action(/^set_payment_type_(.+)_(.+)$/, async (ctx) => {
+            const orderId = ctx.match[1];
+            const type = ctx.match[2];
+            await this.handleCODPaymentAndDelivery(ctx, orderId, type);
         });
     }
 
@@ -378,11 +385,32 @@ Use /my_delivery to view details and navigate.
     }
 
     /**
+     * Prompt for COD payment type
+     */
+    async promptCODPaymentType(ctx, orderId) {
+        if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
+
+        await ctx.reply(
+            '❔ *How did the customer pay?*',
+            {
+                parse_mode: 'Markdown',
+                ...Markup.inlineKeyboard([
+                    [
+                        Markup.button.callback('💵 Cash', `set_payment_type_${orderId}_cash`),
+                        Markup.button.callback('📱 UPI / QR Scan', `set_payment_type_${orderId}_upi`),
+                    ],
+                    [Markup.button.callback('❌ Back', `order_details_${orderId}`)]
+                ])
+            }
+        );
+    }
+
+    /**
      * Handle COD Paid and Delivered
      */
-    async handleCODPaymentAndDelivery(ctx, orderId) {
+    async handleCODPaymentAndDelivery(ctx, orderId, paymentType = 'cash') {
         try {
-            if (ctx.callbackQuery) await ctx.answerCbQuery('Processing COD Delivery...').catch(() => { });
+            if (ctx.callbackQuery) await ctx.answerCbQuery('Completing delivery...').catch(() => { });
 
             const partner = await this.getPartner(ctx);
             if (!partner) return;
@@ -390,14 +418,16 @@ Use /my_delivery to view details and navigate.
             const order = await Order.findById(orderId);
             if (!order) throw new Error('Order not found');
 
-            // 1. Mark Payment as Completed
+            // 1. Mark Payment as Completed and record type
             order.paymentStatus = 'completed';
+            order.verifiedPaymentType = paymentType;
             await order.save();
 
             // 2. Mark Delivery as Completed
             await deliveryService.updateDeliveryStatus(partner._id, orderId, 'delivered');
 
-            await ctx.reply('✅ Payment confirmed and order delivered successfully!');
+            const typeLabel = paymentType === 'upi' ? 'UPI/QR' : 'Cash';
+            await ctx.reply(`✅ Payment confirmed via *${typeLabel}* and order delivered!`, { parse_mode: 'Markdown' });
 
             // Notify customer
             const user = await User.findById(order.user);
@@ -413,7 +443,7 @@ Use /my_delivery to view details and navigate.
 
             await this.showPartnerStatus(ctx);
 
-            logger.info(`Partner ${partner.name} completed COD order ${order.orderId}`);
+            logger.info(`Partner ${partner.name} completed COD order ${order.orderId} via ${paymentType}`);
         } catch (error) {
             logger.error('Error in handleCODPaymentAndDelivery:', error);
             ctx.reply(`❌ ${error.message}`);

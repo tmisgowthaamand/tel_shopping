@@ -12,6 +12,7 @@ module.exports = {
     categoryRoutes,
     orderRoutes,
     partnerRoutes,
+    partnerPortalRoutes: require('./partnerPortalRoutes'),
     userRoutes,
     webhookRoutes,
 };

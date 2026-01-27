@@ -109,11 +109,29 @@ const deliveryPartnerSchema = new mongoose.Schema(
                 createdAt: { type: Date, default: Date.now },
             },
         ],
+        password: {
+            type: String,
+            default: null,
+        },
     },
     {
         timestamps: true,
     }
 );
+
+// Hash password before saving
+deliveryPartnerSchema.pre('save', async function (next) {
+    if (!this.isModified('password') || !this.password) return next();
+    const bcrypt = require('bcryptjs');
+    this.password = await bcrypt.hash(this.password, 10);
+});
+
+// Compare password method
+deliveryPartnerSchema.methods.comparePassword = async function (candidatePassword) {
+    if (!this.password) return false;
+    const bcrypt = require('bcryptjs');
+    return bcrypt.compare(candidatePassword, this.password);
+};
 
 // Geospatial index for location-based queries
 deliveryPartnerSchema.index({ currentLocation: '2dsphere' });

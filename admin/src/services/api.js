@@ -9,7 +9,12 @@ const api = axios.create({
 
 // Add token to requests
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('atz_admin_token');
+    // Determine which token to use
+    const isAdminRoute = !config.url.startsWith('/partner-portal');
+    const token = isAdminRoute
+        ? localStorage.getItem('atz_admin_token')
+        : localStorage.getItem('atz_partner_token');
+
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
@@ -21,8 +26,14 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            localStorage.removeItem('atz_admin_token');
-            window.location.href = '/login';
+            const isPartnerPortal = error.config.url.includes('/partner-portal');
+            if (isPartnerPortal) {
+                localStorage.removeItem('atz_partner_token');
+                window.location.href = '/partner/login';
+            } else {
+                localStorage.removeItem('atz_admin_token');
+                window.location.href = '/login';
+            }
         }
         return Promise.reject(error);
     }
@@ -31,6 +42,13 @@ api.interceptors.response.use(
 export const authApi = {
     login: (credentials) => api.post('/auth/login', credentials),
     getMe: () => api.get('/auth/me'),
+};
+
+export const partnerPortalApi = {
+    login: (credentials) => api.post('/partner-portal/login', credentials),
+    getAssignedOrders: () => api.get('/partner-portal/orders'),
+    updateOrderStatus: (data) => api.post('/partner-portal/orders/update', data),
+    getMe: () => api.get('/partner-portal/me'),
 };
 
 export const productApi = {

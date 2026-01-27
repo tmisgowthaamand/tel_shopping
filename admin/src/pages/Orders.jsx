@@ -298,6 +298,11 @@ const Orders = () => {
                                         <span>Total</span>
                                         <span>₹{Number(selectedOrder.total).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                                     </div>
+                                    {selectedOrder.verifiedPaymentType && (
+                                        <div style={{ marginTop: '0.5rem', textAlign: 'right' }}>
+                                            <span className="badge badge-info" style={{ fontSize: '0.75rem' }}>Verified: {selectedOrder.verifiedPaymentType.toUpperCase()}</span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
