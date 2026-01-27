@@ -119,13 +119,13 @@ exports.getStats = async (req, res) => {
  */
 exports.broadcastNotification = async (req, res) => {
     try {
-        const { message, imageUrl } = req.body;
+        const { message, imageUrl, productId } = req.body;
 
         if (!message) {
             return res.status(400).json({ error: 'Message is required' });
         }
 
-        const stats = await botService.broadcastMessage(message, { imageUrl });
+        const stats = await botService.broadcastMessage(message, { imageUrl, productId });
 
         res.json({
             message: 'Broadcast completed',

@@ -22,7 +22,7 @@ const Users = () => {
     const [page, setPage] = useState(1);
     const [stats, setStats] = useState({ total: 0, blacklisted: 0, active30Days: 0 });
     const [showNotifyModal, setShowNotifyModal] = useState(false);
-    const [notification, setNotification] = useState({ message: '', imageUrl: '' });
+    const [notification, setNotification] = useState({ message: '', imageUrl: '', productId: '' });
     const [sending, setSending] = useState(false);
     const [productSearch, setProductSearch] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -78,7 +78,8 @@ const Users = () => {
 
         setNotification({
             message: offerMessage,
-            imageUrl: prod.images.find(i => i.isPrimary)?.url || prod.images[0]?.url || ''
+            imageUrl: prod.images.find(i => i.isPrimary)?.url || prod.images[0]?.url || '',
+            productId: prod._id
         });
         setSearchResults([]);
         setProductSearch('');
@@ -94,7 +95,7 @@ const Users = () => {
                 const response = await userApi.broadcast(notification);
                 alert(`Broadcast completed!\nSuccess: ${response.data.stats.success}\nFailed: ${response.data.stats.failed}`);
                 setShowNotifyModal(false);
-                setNotification({ message: '', imageUrl: '' });
+                setNotification({ message: '', imageUrl: '', productId: '' });
             } catch (error) {
                 alert('Broadcast failed: ' + (error.response?.data?.error || error.message));
             } finally {

@@ -53,14 +53,26 @@ class BotService {
 
         for (const user of users) {
             try {
+                let keyboard = null;
+                if (options.productId) {
+                    keyboard = Markup.inlineKeyboard([
+                        [
+                            Markup.button.callback('🛒 Add to Cart', `add_to_cart_${options.productId}`),
+                            Markup.button.callback('🛍️ Shop Now', `product_${options.productId}`)
+                        ]
+                    ]);
+                }
+
                 if (options.imageUrl) {
                     await this.bot.telegram.sendPhoto(user.telegramId, options.imageUrl, {
                         caption: message,
-                        parse_mode: 'HTML'
+                        parse_mode: 'HTML',
+                        ...(keyboard ? keyboard : {})
                     });
                 } else {
                     await this.bot.telegram.sendMessage(user.telegramId, message, {
-                        parse_mode: 'HTML'
+                        parse_mode: 'HTML',
+                        ...(keyboard ? keyboard : {})
                     });
                 }
                 results.success++;
