@@ -94,24 +94,22 @@ class BotService {
     registerMiddleware() {
         this.bot.use(async (ctx, next) => {
             try {
-                if (ctx.from) {
+                if (ctx.from && !ctx.from.is_bot) {
                     const user = await User.findOrCreateByTelegramId(ctx.from);
                     ctx.user = user;
 
                     if (!user) {
-                        logger.warn(`Middleware: User.findOrCreateByTelegramId returned null for ${ctx.from.id}`);
+                        logger.error(`MIDDLEWARE FAILURE: User.findOrCreateByTelegramId returned ${typeof user} for ID ${ctx.from.id}`);
                     }
                 }
                 return next();
             } catch (error) {
                 const tgId = ctx.from ? ctx.from.id : 'unknown';
-                logger.error(`Middleware error for user ${tgId}:`, error);
+                logger.error(`CRITICAL MIDDLEWARE ERROR for user ${tgId}:`, error);
 
-                // Try to send a message to the user if we can't load their profile
                 if (ctx.chat) {
-                    await ctx.reply('⚠️ Sorry, there was an issue loading your profile. Please try /start again in a moment.').catch(() => { });
+                    await ctx.reply('⚠️ Issue loading your profile. Please try /start again.').catch(() => { });
                 }
-                // Do not call next() if user load failed to avoid crashes in handlers
             }
         });
 
@@ -425,20 +423,20 @@ class BotService {
     async handleStart(ctx) {
         let user = ctx.user;
 
-        // Recovery path: if middleware failed to load user, try one last time here
+        // Forced recovery if user is still missing
         if (!user && ctx.from) {
             try {
-                logger.info(`Recovery: Attempting to load user ${ctx.from.id} in handleStart`);
+                logger.info(`START RECOVERY: Explicit call for ${ctx.from.id}`);
                 user = await User.findOrCreateByTelegramId(ctx.from);
                 ctx.user = user;
             } catch (e) {
-                logger.error(`Recovery failed for user ${ctx.from.id}:`, e.message);
+                logger.error(`START RECOVERY FAILED: ${e.message}`);
             }
         }
 
         if (!user) {
-            logger.error(`CRITICAL: User is null in handleStart even after recovery attempt. From: ${JSON.stringify(ctx.from)}`);
-            return ctx.reply('⚠️ Issue loading your profile. Please try /start again.');
+            logger.error(`HALT: No user object even after recovery. From: ${JSON.stringify(ctx.from)}`);
+            return ctx.reply('⚠️ Failed to load account. Please ensure you have a Telegram username set in your profile and try /start again.');
         }
 
         const welcomeMessage = `
