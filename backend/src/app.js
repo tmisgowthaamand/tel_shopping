@@ -43,12 +43,31 @@ app.use('/api', apiLimiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// Root route (Project status)
+app.get('/', (req, res) => {
+    res.json({
+        name: 'ATZ Store API',
+        version: '1.0.0',
+        status: 'Operational',
+        timestamp: new Date().toISOString(),
+        endpoints: {
+            health: '/health',
+            api: '/api',
+            webhooks: '/webhook'
+        }
+    });
+});
+
 // Health check
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // API Routes
+app.get('/api', (req, res) => {
+    res.json({ message: 'ATZ Store API is operational', version: '1.0.0' });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
