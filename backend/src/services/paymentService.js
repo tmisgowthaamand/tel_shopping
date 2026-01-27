@@ -67,7 +67,8 @@ class PaymentService {
                 },
                 callback_url: `${config.telegram.webhookUrl.replace(/\/telegram$/, '')}/payment/success`,
                 callback_method: 'get',
-                expire_by: Math.floor(Date.now() / 1000) + 20 * 60, // 20 minutes to be safe (min 15 required)
+                expire_by: Math.floor(Date.now() / 1000) + 10 * 60, // 10 minutes (updated to match bot timing)
+                upi_link: true, // Force UPI apps only
             });
 
             order.paymentLink = paymentLink.short_url;
