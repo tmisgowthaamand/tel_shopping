@@ -1135,7 +1135,19 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
         try {
             if (ctx.callbackQuery) await ctx.answerCbQuery().catch(() => { });
 
-            const user = ctx.user;
+            let user = ctx.user;
+
+            // Safety check for user profile
+            if (!user && ctx.from) {
+                logger.info(`CHECKOUT RECOVERY: Explicit call for ${ctx.from.id}`);
+                user = await User.findOrCreateByTelegramId(ctx.from);
+                ctx.user = user;
+            }
+
+            if (!user) {
+                throw new Error('User profile could not be loaded. Please type /start to refresh.');
+            }
+
             const cartSummary = await cartService.getCartSummary(user._id);
 
             if (cartSummary.isEmpty || cartSummary.items.length === 0) {
@@ -1163,23 +1175,23 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
             if (user.addresses && user.addresses.length > 0) {
                 const defaultAddr = user.getDefaultAddress();
 
-                // Use a safe message format to avoid Markdown parsing errors if address has special chars
-                const addressMsg = `📍 *Delivery Address*\n\nUse your saved address?\n\n*${defaultAddr.label}*: ${defaultAddr.address}`;
+                // Use HTML to avoid Markdown parsing errors if address has special chars
+                const addressMsg = `📍 <b>Delivery Address</b>\n\nUse your saved address?\n\n<b>${defaultAddr.label}</b>: ${defaultAddr.address}`;
 
-                await ctx.replyWithMarkdown(
-                    addressMsg,
-                    Markup.inlineKeyboard([
+                await ctx.reply(addressMsg, {
+                    parse_mode: 'HTML',
+                    ...Markup.inlineKeyboard([
                         [Markup.button.callback('✅ Use This Address', 'use_saved_address')],
                         [Markup.button.callback('📝 Enter New Address', 'enter_new_address')],
                         [Markup.button.callback('🏠 Back to Menu', 'back_to_menu')],
                     ])
-                );
+                });
             } else {
                 await this.promptNewAddress(ctx);
             }
         } catch (error) {
-            logger.error('Error in startCheckout:', error);
-            ctx.reply('❌ Sorry, I encountered an error while starting the checkout. Please try again or contact support if this persists.');
+            logger.error(`Error in startCheckout for user ${ctx.from?.id}:`, error);
+            ctx.reply(`❌ ${error.message.includes('profile') ? error.message : 'Sorry, I encountered an error while starting the checkout. Please try again or contact support if this persists.'}`);
         }
     }
 
