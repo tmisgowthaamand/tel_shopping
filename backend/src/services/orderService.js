@@ -317,7 +317,7 @@ class OrderService {
                 const user = await User.findById(order.user);
                 if (user) {
                     user.orderStats.completedOrders += 1;
-                    user.orderStats.totalSpent += order.total;
+                    user.orderStats.totalSpent = Math.round((user.orderStats.totalSpent + order.total) * 100) / 100;
                     await user.save();
                 }
 

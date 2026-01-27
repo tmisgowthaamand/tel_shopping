@@ -196,7 +196,7 @@ const Users = () => {
                                             <td style={{ fontSize: '0.875rem' }}>{user.telegramId}</td>
                                             <td style={{ fontSize: '0.875rem' }}>{new Date(user.createdAt).toLocaleDateString()}</td>
                                             <td>{user.orderStats?.totalOrders || 0}</td>
-                                            <td style={{ fontWeight: 600 }}>₹{user.orderStats?.totalSpent || 0}</td>
+                                            <td style={{ fontWeight: 600 }}>₹{Number(user.orderStats?.totalSpent || 0).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
                                             <td>
                                                 <span className={`badge ${user.orderStats?.totalOrders > 5 ? 'badge-info' : 'badge-secondary'}`}>
                                                     {user.orderStats?.totalOrders > 10 ? 'VIP' : user.orderStats?.totalOrders > 5 ? 'Silver' : 'New'}
