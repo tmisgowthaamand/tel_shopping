@@ -725,9 +725,11 @@ ${product.shortDescription || product.description.slice(0, 100) + '...'}
 ${product.availableStock > 0 ? '✅ In Stock' : '❌ Out of Stock'}
     `.trim();
 
+        const cartLabel = (product.sizes && product.sizes.length > 0) ? '🛒 Select Size' : '🛒 Add to Cart';
+
         const keyboard = Markup.inlineKeyboard([
             [
-                Markup.button.callback('🛒 Add to Cart', `add_to_cart_${product._id}`),
+                Markup.button.callback(cartLabel, `add_to_cart_${product._id}`),
                 Markup.button.callback('⚡ Buy Now', `buy_now_${product._id}`),
             ],
             [Markup.button.callback('📋 Details', `product_${product._id}`)],
@@ -1420,6 +1422,23 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
                         ]));
                     }
                     return this.startCheckout(ctx);
+                }
+
+                // Fast Search Trigger: If user just types a product category or item (e.g. "shirt", "pant", "i need watch")
+                const searchKeywords = /\b(shirts?|pants?|trousers?|watches?|shoes?|tshirts?|jeans|clothes|fashion|grocery|food|snacks|drinks|jackets?|kurtas?|perfumes?|belts?|socks|t-shirt)\b/i;
+                const needMatch = lowerText.match(/^(?:i\s+need|show\s+me|find|get)\s+(.+)$/i);
+
+                if (searchKeywords.test(lowerText) || needMatch) {
+                    const searchBuffer = needMatch ? needMatch[1].trim() : lowerText;
+                    // Proactively search and display related items
+                    const products = await productService.searchProducts(searchBuffer, 10);
+                    if (products.length > 0) {
+                        await ctx.reply(`🔍 Here are the best ${searchBuffer} I found for you:`);
+                        for (const product of products) {
+                            await this.sendProductCard(ctx, product);
+                        }
+                        return;
+                    }
                 }
 
                 if ((isAdd || isRemove) && quantityMatch && user.sessionData?.lastProductId) {
@@ -2157,7 +2176,8 @@ ${order.estimatedDeliveryTime ? `⏱️ ETA: ${new Date(order.estimatedDeliveryT
                     if (aiResult.data?.product) {
                         const products = await productService.searchProducts(aiResult.data.product);
                         if (products.length > 0) {
-                            for (const product of products.slice(0, 3)) {
+                            await ctx.reply(`🔍 I found these results for "${aiResult.data.product}":`);
+                            for (const product of products.slice(0, 10)) {
                                 await this.sendProductCard(ctx, product);
                             }
                         } else {
@@ -2225,11 +2245,13 @@ ${order.estimatedDeliveryTime ? `⏱️ ETA: ${new Date(order.estimatedDeliveryT
                     await this.showOrders(ctx);
                     break;
                 default:
-                    // If a product was mentioned in general chat, show its card
+                    // If a product was mentioned in general chat, show related cards
                     if (aiResult.data?.product) {
-                        const products = await productService.searchProducts(aiResult.data.product, 1);
+                        const products = await productService.searchProducts(aiResult.data.product, 3);
                         if (products.length > 0) {
-                            await this.sendProductCard(ctx, products[0]);
+                            for (const product of products) {
+                                await this.sendProductCard(ctx, product);
+                            }
                         }
                     }
                     break;
