@@ -243,6 +243,9 @@ Use /go_offline to stop receiving requests.
 🚴 *Active Delivery*
 
 📦 Order: \`${order.orderId}\`
+💰 *Payment:* ${order.paymentMethod.toUpperCase()}
+${order.paymentStatus === 'completed' ? '✅ *PAID ONLINE - DO NOT COLLECT CASH*' : '⚠️ *COLLECT ₹' + order.total.toFixed(2) + ' (CASH/UPI)*'}
+
 📍 *Address:*
 ${order.deliveryAddress.address}
 
@@ -252,8 +255,6 @@ ${customer.phone || 'Phone not available'}
 
 📋 *Items:*
 ${order.items.map((i) => `• ${i.productName} × ${i.quantity}`).join('\n')}
-
-💰 *Order Total:* ₹${order.total.toFixed(0)}
     `.trim();
 
         const [longitude, latitude] = order.deliveryAddress.location.coordinates;
@@ -584,7 +585,8 @@ ${availabilityEmoji} Available: ${partner.isAvailable ? 'Yes' : 'No'}
 📋 *Items:*
 ${order.items.map((i) => `• ${i.productName} × ${i.quantity}`).join('\n')}
 
-💰 *Order Value:* ₹${order.total.toFixed(0)}
+💰 *Payment:* ${order.paymentMethod.toUpperCase()}
+${order.paymentStatus === 'completed' ? '✅ *PAID ONLINE*' : '⚠️ *COLLECT ₹' + order.total.toFixed(2) + ' (COD)*'}
 
 📍 *Deliver to:*
 ${order.deliveryAddress.address}

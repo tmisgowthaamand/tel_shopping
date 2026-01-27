@@ -139,17 +139,46 @@ const PartnerDashboard = () => {
                                     </div>
                                 </div>
 
-                                <div style={{ display: 'flex', gap: '0.75rem' }}>
-                                    <Banknote size={20} color="var(--info)" style={{ flexShrink: 0 }} />
-                                    <div>
-                                        <p style={{ fontWeight: 600, fontSize: '0.875rem' }}>Payment Status</p>
-                                        <p style={{ fontSize: '0.875rem', color: 'var(--gray-600)' }}>
-                                            {order.paymentMethod.toUpperCase()} | ₹{order.total.toLocaleString('en-IN')}
-                                            <span style={{ marginLeft: '0.5rem' }} className={`badge badge-${order.paymentStatus === 'completed' ? 'success' : 'secondary'}`}>
-                                                {order.paymentStatus}
-                                            </span>
-                                        </p>
+                                <div style={{
+                                    padding: '1rem',
+                                    borderRadius: '0.75rem',
+                                    background: order.paymentStatus === 'completed' ? '#f0fdf4' : '#fff7ed',
+                                    border: `1px solid ${order.paymentStatus === 'completed' ? '#bbf7d0' : '#fed7aa'}`,
+                                    marginTop: '0.5rem'
+                                }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                                            <Banknote size={24} color={order.paymentStatus === 'completed' ? 'var(--success)' : 'var(--warning)'} />
+                                            <div>
+                                                <p style={{ fontWeight: 700, fontSize: '1rem', color: order.paymentStatus === 'completed' ? '#166534' : '#9a3412' }}>
+                                                    {order.paymentStatus === 'completed' ? 'ALREADY PAID ONLINE' : 'COLLECT PAYMENT (COD)'}
+                                                </p>
+                                                <p style={{ fontSize: '0.875rem', fontWeight: 600 }}>
+                                                    Amount: ₹{order.total.toLocaleString('en-IN')}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <span style={{
+                                            padding: '0.25rem 0.75rem',
+                                            borderRadius: '2rem',
+                                            background: 'white',
+                                            fontSize: '0.75rem',
+                                            fontWeight: 700,
+                                            border: '1px solid currentColor',
+                                            color: order.paymentStatus === 'completed' ? 'var(--success)' : 'var(--warning)'
+                                        }}>
+                                            {order.paymentMethod.toUpperCase()}
+                                        </span>
                                     </div>
+                                    {order.paymentStatus === 'completed' ? (
+                                        <p style={{ fontSize: '0.75rem', marginTop: '0.5rem', color: '#15803d', fontWeight: 600 }}>
+                                            ✅ Verification: Razorpay/Online. Just deliver the items.
+                                        </p>
+                                    ) : (
+                                        <p style={{ fontSize: '0.75rem', marginTop: '0.5rem', color: '#c2410c', fontWeight: 600 }}>
+                                            ⚠️ Collect cash or ask for UPI scan before handing over.
+                                        </p>
+                                    )}
                                 </div>
                             </div>
 

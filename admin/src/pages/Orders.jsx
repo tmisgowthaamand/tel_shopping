@@ -191,9 +191,15 @@ const Orders = () => {
                                                 )}
                                             </td>
                                             <td>
-                                                <span style={{ fontSize: '0.875rem' }}>{order.paymentMethod.toUpperCase()}</span>
-                                                <div className={`badge badge-${order.paymentStatus === 'completed' ? 'success' : 'warning'}`} style={{ scale: '0.8', marginLeft: '0.5rem' }}>
-                                                    {order.paymentStatus}
+                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                                                    <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>
+                                                        {order.verifiedPaymentType
+                                                            ? `${order.paymentMethod.toUpperCase()} (${order.verifiedPaymentType.toUpperCase()})`
+                                                            : order.paymentMethod.toUpperCase()}
+                                                    </span>
+                                                    <span className={`badge badge-${order.paymentStatus === 'completed' ? 'success' : 'warning'}`} style={{ fontSize: '0.7rem', width: 'fit-content' }}>
+                                                        {order.paymentStatus.toUpperCase()}
+                                                    </span>
                                                 </div>
                                             </td>
                                             <td style={{ fontSize: '0.875rem' }}>{new Date(order.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</td>
