@@ -142,9 +142,9 @@ cartSchema.methods.calculateTotals = async function () {
     // Final safeguard: filter out any items with missing products that survived
     this.items = this.items.filter(item => item.product);
 
-    this.subtotal = subtotal;
-    this.discount = discount;
-    this.total = Math.max(0, subtotal - discount);
+    this.subtotal = Math.round(subtotal * 100) / 100;
+    this.discount = Math.round(discount * 100) / 100;
+    this.total = Math.round(Math.max(0, subtotal - discount) * 100) / 100;
     this.lastUpdated = new Date();
 };
 

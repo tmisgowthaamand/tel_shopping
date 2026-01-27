@@ -58,7 +58,7 @@ const Dashboard = () => {
     }
 
     const statCards = [
-        { label: 'Total Revenue', value: `₹${stats.orders.totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'success', sub: 'Gross earnings' },
+        { label: 'Total Revenue', value: `₹${Number(stats.orders.totalRevenue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, icon: DollarSign, color: 'success', sub: 'Gross earnings' },
         { label: 'Total Orders', value: stats.orders.totalOrders, icon: ShoppingCart, color: 'primary', sub: 'Orders placed' },
         { label: 'Total Users', value: stats.users.total, icon: Users, color: 'info', sub: 'Registered customers' },
         { label: 'Unique SKUs', value: stats.products.totalProducts, icon: Package, color: 'warning', sub: 'Product variety' },
@@ -124,7 +124,7 @@ const Dashboard = () => {
                                                 <span style={{ color: 'var(--gray-400)', fontSize: '0.875rem' }}>None</span>
                                             )}
                                         </td>
-                                        <td>₹{order.total}</td>
+                                        <td>₹{Number(order.total).toFixed(2)}</td>
                                         <td>
                                             <span className={`badge badge-${getStatusColor(order.status)}`}>
                                                 {order.status}

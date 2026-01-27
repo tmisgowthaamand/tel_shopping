@@ -37,7 +37,7 @@ class OrderService {
                 price: item.product.price,
                 discount: item.product.discount,
                 finalPrice: item.product.finalPrice,
-                total: (item.product.finalPrice || item.product.price) * item.quantity,
+                total: Math.round(((item.product.finalPrice || item.product.price) * item.quantity) * 100) / 100,
             }));
 
             // Calculate delivery fee based on location
@@ -47,10 +47,10 @@ class OrderService {
             const order = await Order.create({
                 user: userId,
                 items: orderItems,
-                subtotal: cart.subtotal,
-                discount: cart.discount,
-                deliveryFee,
-                total: cart.total + deliveryFee,
+                subtotal: Math.round(cart.subtotal * 100) / 100,
+                discount: Math.round(cart.discount * 100) / 100,
+                deliveryFee: Math.round(deliveryFee * 100) / 100,
+                total: Math.round((cart.total + deliveryFee) * 100) / 100,
                 paymentMethod,
                 deliveryAddress: {
                     address: deliveryAddress.address,

@@ -1380,10 +1380,10 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
 💳 *Select Payment Method*
 
 📦 Items: ${cartSummary.itemCount}
-💰 Total: ₹${cartSummary.total.toFixed(0)}
+💰 Total: ₹${cartSummary.total.toFixed(2)}
 🚚 Delivery: ₹40
 
-*Grand Total: ₹${grandTotal.toFixed(0)}*
+*Grand Total: ₹${grandTotal.toFixed(2)}*
 `.trim();
 
             const buttons = [];
@@ -1450,7 +1450,7 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
 🛍️ *Order Created!*
 
 📦 Order ID: \`${order.orderId}\`
-💰 Amount: ₹${order.total.toFixed(0)}
+💰 Amount: ₹${order.total.toFixed(2)}
 
 ⏱️ *Please complete payment within 15 minutes*
 
@@ -1467,7 +1467,7 @@ Click below to pay:
 ✅ *Order Confirmed!*
 
 📦 Order ID: \`${order.orderId}\`
-💰 Total: ₹${order.total.toFixed(0)} (COD)
+💰 Total: ₹${order.total.toFixed(2)} (COD)
 
 Your order is being prepared!
 We'll notify you when a delivery partner is assigned.
@@ -1518,7 +1518,7 @@ We'll notify you when a delivery partner is assigned.
             const statusEmoji = this.getStatusEmoji(order.status);
             orderText += `*${order.orderId}*\n`;
             orderText += `${statusEmoji} ${order.status.toUpperCase()}\n`;
-            orderText += `💰 ₹${order.total.toFixed(0)} | ${order.items.length} items\n`;
+            orderText += `💰 ₹${order.total.toFixed(2)} | ${order.items.length} items\n`;
             orderText += `📅 ${new Date(order.createdAt).toLocaleDateString()}\n\n`;
         }
 
@@ -1563,16 +1563,16 @@ ${text}
     `.trim();
 
         for (const item of order.items) {
-            orderText += `\n• ${item.productName} × ${item.quantity} = ₹${item.total.toFixed(0)}`;
+            orderText += `\n• ${item.productName} × ${item.quantity} = ₹${item.total.toFixed(2)}`;
         }
 
         orderText += `\n\n───────────────`;
-        orderText += `\nSubtotal: ₹${order.subtotal.toFixed(0)}`;
+        orderText += `\nSubtotal: ₹${order.subtotal.toFixed(2)}`;
         if (order.discount > 0) {
-            orderText += `\nDiscount: -₹${order.discount.toFixed(0)}`;
+            orderText += `\nDiscount: -₹${order.discount.toFixed(2)}`;
         }
         orderText += `\nDelivery: ₹${order.deliveryFee}`;
-        orderText += `\n*Total: ₹${order.total.toFixed(0)}*`;
+        orderText += `\n*Total: ₹${order.total.toFixed(2)}*`;
 
         orderText += `\n\n📍 *Delivery Address:*\n${order.deliveryAddress.address}`;
 
@@ -1751,7 +1751,7 @@ ${order.estimatedDeliveryTime ? `⏱️ *Arriving by:* ${new Date(order.estimate
 ────────────────────
 ${itemsTotal}
 
-💰 *Total: ₹${order.total.toFixed(0)}* (COD)
+💰 *Total: ₹${order.total.toFixed(2)}* (COD)
 📍 *Delivery to:* ${order.deliveryAddress.address}
 
 🚀 *Zepto Promise:*
@@ -1780,7 +1780,7 @@ Your items are being packed. Expect delivery in *10 minutes*!
 ────────────────────
 🆔 ID: \`${order.orderId}\`
 👤 User: ${user.getFullName()} (@${user.username || 'n/a'})
-💰 Total: ₹${order.total.toFixed(0)} (${order.paymentMethod.toUpperCase()})
+💰 Total: ₹${order.total.toFixed(2)} (${order.paymentMethod.toUpperCase()})
 📍 Address: ${order.deliveryAddress.address}
 
 🛒 *Items:*

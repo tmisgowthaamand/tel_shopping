@@ -154,7 +154,7 @@ const Orders = () => {
                                                 <div style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>{order.user?.phone}</div>
                                             </td>
                                             <td>{order.items.length} items</td>
-                                            <td style={{ fontWeight: 600 }}>₹{order.total}</td>
+                                            <td style={{ fontWeight: 600 }}>₹{Number(order.total).toFixed(2)}</td>
                                             <td>
                                                 <span className={`badge badge-${getStatusColor(order.status)}`}>
                                                     {order.status}
@@ -257,10 +257,10 @@ const Orders = () => {
                                                 <div style={{ width: '40px', height: '40px', background: 'var(--gray-200)', borderRadius: '0.5rem' }}></div>
                                                 <div>
                                                     <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{item.productName}</div>
-                                                    <div style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>Qty: {item.quantity} × ₹{item.price}</div>
+                                                    <div style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>Qty: {item.quantity} × ₹{Number(item.price).toFixed(2)}</div>
                                                 </div>
                                             </div>
-                                            <div style={{ fontWeight: 600 }}>₹{item.total}</div>
+                                            <div style={{ fontWeight: 600 }}>₹{Number(item.total).toFixed(2)}</div>
                                         </div>
                                     ))}
                                 </div>
@@ -268,15 +268,15 @@ const Orders = () => {
                                 <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '2px dashed var(--gray-200)' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                                         <span>Subtotal</span>
-                                        <span>₹{selectedOrder.subtotal}</span>
+                                        <span>₹{Number(selectedOrder.subtotal).toFixed(2)}</span>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                                         <span>Delivery Fee</span>
-                                        <span>₹{selectedOrder.deliveryFee}</span>
+                                        <span>₹{Number(selectedOrder.deliveryFee).toFixed(2)}</span>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, fontSize: '1.125rem', color: 'var(--primary)', marginTop: '0.5rem' }}>
                                         <span>Total</span>
-                                        <span>₹{selectedOrder.total}</span>
+                                        <span>₹{Number(selectedOrder.total).toFixed(2)}</span>
                                     </div>
                                 </div>
                             </div>
