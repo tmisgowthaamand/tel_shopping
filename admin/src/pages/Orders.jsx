@@ -10,7 +10,8 @@ import {
     Clock,
     ChevronLeft,
     ChevronRight,
-    ExternalLink
+    ExternalLink,
+    AlertTriangle
 } from 'lucide-react';
 import { orderApi, partnerApi } from '../services/api';
 
@@ -23,6 +24,9 @@ const Orders = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [showDetailModal, setShowDetailModal] = useState(false);
     const [partners, setPartners] = useState([]);
+    const [showCancelModal, setShowCancelModal] = useState(false);
+    const [cancelReason, setCancelReason] = useState('');
+    const [cancellingOrderId, setCancellingOrderId] = useState(null);
 
     useEffect(() => {
         fetchOrders();
@@ -65,6 +69,22 @@ const Orders = () => {
             }
         } catch (error) {
             alert('Failed to update status: ' + error.message);
+        }
+    };
+
+    const handleCancelOrder = async () => {
+        if (!cancelReason.trim()) return;
+        try {
+            await orderApi.cancelOrder(cancellingOrderId, cancelReason);
+            setShowCancelModal(false);
+            setCancelReason('');
+            fetchOrders();
+            if (selectedOrder && selectedOrder._id === cancellingOrderId) {
+                const updated = await orderApi.getOrder(cancellingOrderId);
+                setSelectedOrder(updated.data);
+            }
+        } catch (error) {
+            alert('Failed to cancel order: ' + error.message);
         }
     };
 
@@ -344,14 +364,67 @@ const Orders = () => {
                                         className="btn btn-danger"
                                         style={{ width: '100%', marginTop: '0.5rem' }}
                                         onClick={() => {
-                                            const reason = prompt('Cancellation Reason?');
-                                            if (reason) handleUpdateStatus(selectedOrder._id, 'cancelled');
+                                            setCancellingOrderId(selectedOrder._id);
+                                            setShowCancelModal(true);
                                         }}
                                     >
                                         Cancel Order
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modern Cancellation Modal */}
+            {showCancelModal && (
+                <div className="modal-overlay" style={{ zIndex: 1100 }}>
+                    <div className="modal" style={{ maxWidth: '400px', animation: 'slideIn 0.3s ease-out' }}>
+                        <div className="modal-header">
+                            <h3 className="modal-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--danger)' }}>
+                                <AlertTriangle size={20} /> Cancel Order
+                            </h3>
+                            <button className="modal-close" onClick={() => setShowCancelModal(false)}>
+                                <X size={24} />
+                            </button>
+                        </div>
+
+                        <div style={{ padding: '0.5rem 0' }}>
+                            <p style={{ fontSize: '0.875rem', color: 'var(--gray-600)', marginBottom: '1rem' }}>
+                                Please provide a reason for cancelling this order. This will be sent to the customer.
+                            </p>
+
+                            <div className="form-group">
+                                <label className="form-label">Cancellation Reason</label>
+                                <textarea
+                                    className="form-input"
+                                    placeholder="e.g., Item out of stock, Store closed, etc."
+                                    rows="3"
+                                    value={cancelReason}
+                                    onChange={(e) => setCancelReason(e.target.value)}
+                                    autoFocus
+                                    style={{ borderColor: cancelReason.trim() ? 'var(--gray-300)' : 'rgba(239, 68, 68, 0.3)' }}
+                                ></textarea>
+                            </div>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+                            <button
+                                className="btn btn-secondary"
+                                style={{ flex: 1 }}
+                                onClick={() => setShowCancelModal(false)}
+                            >
+                                Not Now
+                            </button>
+                            <button
+                                className="btn btn-danger"
+                                style={{ flex: 2 }}
+                                disabled={!cancelReason.trim()}
+                                onClick={handleCancelOrder}
+                            >
+                                Confirm Cancellation
+                            </button>
                         </div>
                     </div>
                 </div>
