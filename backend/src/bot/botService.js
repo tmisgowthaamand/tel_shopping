@@ -18,6 +18,7 @@ class BotService {
      */
     async initialize() {
         this.bot = new Telegraf(config.telegram.botToken);
+        logger.info(`Bot instance created [PID: ${process.pid}]`);
 
         // Fetch bot info (username etc)
         try {
@@ -104,9 +105,9 @@ class BotService {
      * Schedule a message for deletion
      * @param {number|string} chatId 
      * @param {number} messageId 
-     * @param {number} delayMs default 2 minutes (120000ms)
+     * @param {number} delayMs default 24 hours (86400000ms)
      */
-    scheduleDeletion(chatId, messageId, delayMs = 120000) {
+    scheduleDeletion(chatId, messageId, delayMs = 86400000) {
         if (!chatId || !messageId) return;
         setTimeout(async () => {
             try {
@@ -423,36 +424,48 @@ class BotService {
     optimizeImageUrl(url, options = { width: 500, quality: 'eco' }) {
         if (!url) return null;
         try {
+            // 0. Safety: If it's already a relative path or local, it likely won't work in TG anyway
+            // but we ensure it's a valid string
+            if (typeof url !== 'string') return null;
+
             // 1. Cloudinary Optimization
             if (url.includes('cloudinary.com')) {
-                const parts = url.split('/upload/');
-                if (parts.length === 2) {
-                    return `${parts[0]}/upload/f_auto,q_auto:${options.quality},w_${options.width}/${parts[1]}`;
+                // If it already has transformations, don't mess with it too much unless it's just /upload/
+                if (url.includes('/upload/')) {
+                    const parts = url.split('/upload/');
+                    if (parts.length === 2) {
+                        // Check if it already has transformations (e.g. /upload/w_500/...)
+                        if (parts[1].match(/^[a-z]_[a-z0-9,]+ \//)) {
+                            return url;
+                        }
+                        return `${parts[0]}/upload/f_auto,q_auto:${options.quality},w_${options.width}/${parts[1]}`;
+                    }
                 }
             }
 
-            // 2. Unsplash Optimization (Very common in our catalog)
+            // 2. Unsplash Optimization
             if (url.includes('images.unsplash.com')) {
                 const baseUrl = url.split('?')[0];
-                return `${baseUrl}?w=${options.width}&q=70&auto=format&fit=crop`;
+                return `${baseUrl}?w=${options.width}&q=80&auto=format&fit=crop`;
             }
 
             // 3. Shopify Optimization
             if (url.includes('cdn.shopify.com')) {
-                return url.split('?')[0].replace(/(_\d+x\d+)?\.(jpg|png|webp)/, `_${options.width}x.$2`);
+                const cleanUrl = url.split('?')[0];
+                return cleanUrl.replace(/(_\d+x\d+)?\.(jpg|png|webp)/, `_${options.width}x.$2`);
             }
 
-            // 4. Generic URL Optimization (append parameters if it's a known service or just clean it)
-            if (url.includes('?')) {
-                const [base, query] = url.split('?');
-                // If it already has sizing params, try to override them
-                if (query.includes('width=') || query.includes('w=')) {
-                    return `${base}?w=${options.width}&q=60`;
-                }
+            // 4. Global Placeholder / Image Service 
+            if (url.includes('via.placeholder.com') || url.includes('placehold.co')) {
+                return url;
             }
+
+            // 5. Google Drive or other common but non-optimizable
+            if (url.includes('drive.google.com')) return url;
 
             return url;
         } catch (e) {
+            logger.warn('Error optimizing image URL:', e.message);
             return url;
         }
     }
@@ -480,7 +493,7 @@ class BotService {
         }
 
         const welcomeMessage = `
-� *ATZ Store Commands:*
+ *ATZ Store Commands:*
 /start - Start shopping
 /menu - Show main menu
 /browse - Browse categories
@@ -735,10 +748,14 @@ What would you like to do?
             ? `<strike>₹${product.price}</strike> <b>₹${(product.finalPrice || 0).toFixed(0)}</b> (${product.discount}% OFF)`
             : `<b>₹${product.price}</b>`;
 
+        const sizesText = (product.sizes && product.sizes.length > 0)
+            ? `\n📏 <b>Sizes:</b> ${product.sizes.join(', ')}`
+            : '';
+
         const caption = `
 <b>${product.name}</b>
 
-💰 ${priceText}
+💰 ${priceText}${sizesText}
 ${product.shortDescription || product.description.slice(0, 100) + '...'}
 
 ${product.availableStock > 0 ? '✅ In Stock' : '❌ Out of Stock'}
@@ -813,11 +830,15 @@ ${product.availableStock > 0 ? '✅ In Stock' : '❌ Out of Stock'}
             });
         }
 
+        const sizesText = (product.sizes && product.sizes.length > 0)
+            ? `\n📏 <b>Available Sizes:</b> ${product.sizes.join(', ')}`
+            : '';
+
         const message = `
 <b>${product.name}</b>
 
 📦 <b>Category:</b> ${product.category?.name || 'N/A'}
-💰 <b>Price:</b> ${priceText}
+💰 <b>Price:</b> ${priceText}${sizesText}
 ⭐ <b>Rating:</b> ${(product.ratings?.average || 0).toFixed(1)}/5 (${product.ratings?.count || 0} reviews)
 📊 <b>Stock:</b> ${product.availableStock > 0 ? `${product.availableStock} available` : 'Out of Stock'}
 
@@ -839,19 +860,24 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
                 [Markup.button.callback('🏠 Back to Menu', 'back_to_menu')],
             ]);
 
+        let sentMsg = null;
         if (imageUrl) {
             try {
-                await ctx.replyWithPhoto({ url: imageUrl }, {
+                sentMsg = await ctx.replyWithPhoto({ url: imageUrl }, {
                     caption: message,
                     parse_mode: 'HTML',
                     ...keyboard,
                 });
             } catch (err) {
                 logger.warn(`Failed to send photo for details: ${err.message}`);
-                await ctx.replyWithHTML(message, keyboard);
+                sentMsg = await ctx.replyWithHTML(message, keyboard);
             }
         } else {
-            await ctx.replyWithHTML(message, keyboard);
+            sentMsg = await ctx.replyWithHTML(message, keyboard);
+        }
+
+        if (sentMsg) {
+            this.scheduleDeletion(ctx.chat.id, sentMsg.message_id);
         }
     }
 
@@ -1009,8 +1035,32 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
                 return this.startCheckout(ctx);
             }
 
-            // After selecting quantity, show the cart
-            await this.showCart(ctx);
+            // SHOW CONFIRMATION (instead of just jumping to cart)
+            const product = await productService.getProduct(productId);
+            const sizeText = size ? ` [${size}]` : '';
+            const total = (product.finalPrice || product.price) * quantity;
+
+            const confirmationMsg = `
+✅ <b>Added to Cart!</b>
+
+🛍️ <b>${product.name}</b>${sizeText}
+🔢 <b>Quantity:</b> ${quantity}
+💰 <b>Total:</b> ₹${total.toFixed(0)}
+
+What would you like to do next?
+            `.trim();
+
+            await ctx.replyWithHTML(confirmationMsg, Markup.inlineKeyboard([
+                [Markup.button.callback('🛍️ View My Cart', 'show_cart')],
+                [Markup.button.callback('🛒 Continue Shopping', 'show_categories')],
+                [Markup.button.callback('🏠 Back to Menu', 'back_to_menu')],
+            ]));
+
+            // Update state
+            user.currentState = 'idle';
+            user.sessionData.pendingSize = null;
+            user.markModified('sessionData');
+            await user.save();
         } catch (error) {
             logger.error('Error handling quantity selection:', error);
             ctx.reply(`❌ Error: ${error.message}`);
@@ -1048,24 +1098,25 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
             return ctx.replyWithMarkdown(emptyMsg, emptyKb);
         }
 
-        let cartText = '*🛍️ Your Cart*\n\n';
+        let cartText = '<b>🛍️ Your Cart</b>\n\n';
 
         for (const item of validItems) {
-            const priceText = item.discount > 0
-                ? `~₹${item.price}~ ₹${(item.finalPrice || 0).toFixed(0)}`
-                : `₹${item.price}`;
+            const hasDiscount = item.discount > 0;
+            const priceText = hasDiscount
+                ? `<strike>₹${item.price}</strike> <b>₹${(item.finalPrice || 0).toFixed(0)}</b>`
+                : `<b>₹${item.price}</b>`;
 
             const sizeText = item.size ? ` [${item.size}]` : '';
-            cartText += `*${item.name}${sizeText}*\n`;
-            cartText += `${priceText} × ${item.quantity} = ₹${item.itemTotal.toFixed(0)}\n\n`;
+            cartText += `<b>${item.name}${sizeText}</b>\n`;
+            cartText += `${priceText} × ${item.quantity} = <b>₹${item.itemTotal.toFixed(0)}</b>\n\n`;
         }
 
-        cartText += '───────────────\n';
+        cartText += '────────────────────\n';
         if (cartSummary.discount > 0) {
             cartText += `Subtotal: ₹${cartSummary.subtotal.toFixed(0)}\n`;
             cartText += `Discount: -₹${cartSummary.discount.toFixed(0)}\n`;
         }
-        cartText += `*Total: ₹${cartSummary.total.toFixed(0)}*`;
+        cartText += `<b>Total: ₹${cartSummary.total.toFixed(0)}</b>`;
 
         const itemButtons = validItems.slice(0, 10).map((item) => [
             Markup.button.callback('➖', `cart_sub_${item.productId}_${item.size || ''}`),
@@ -1083,56 +1134,87 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
 
         const keyboard = Markup.inlineKeyboard([...itemButtons, ...actionButtons]);
 
-        // Show all item images in a media group (limit to 3 as requested by user)
+        // Show all item images (limit to 10 as per Telegram limit)
         const cartImages = validItems
             .filter(item => item.image)
-            .slice(0, 3);
+            .slice(0, 10);
 
         const isActuallyCallback = !!ctx.callbackQuery;
 
+        let sentMsgs = [];
+
         if (cartImages.length > 0) {
             try {
-                // If we have images, we prefer a single photo with caption to avoid message flooding
-                // and to allow easy EDITING which is faster.
-                const primaryImageUrl = this.optimizeImageUrl(cartImages[0].image, { width: 800 });
+                if (cartImages.length === 1) {
+                    // Single image: use sendPhoto or editMessageMedia
+                    const primaryImageUrl = this.optimizeImageUrl(cartImages[0].image, { width: 800 });
 
-                if (isActuallyCallback && ctx.callbackQuery.message.photo) {
-                    // Update existing photo message
-                    await ctx.editMessageMedia({
-                        type: 'photo',
-                        media: { url: primaryImageUrl },
-                        caption: cartText,
-                        parse_mode: 'Markdown'
-                    }, keyboard);
+                    if (isActuallyCallback && ctx.callbackQuery.message.photo) {
+                        const msg = await ctx.editMessageMedia({
+                            type: 'photo',
+                            media: { url: primaryImageUrl },
+                            caption: cartText,
+                            parse_mode: 'HTML'
+                        }, keyboard);
+                        if (msg) sentMsgs.push(msg);
+                    } else {
+                        if (isActuallyCallback) await ctx.deleteMessage().catch(() => { });
+                        const msg = await ctx.replyWithPhoto({ url: primaryImageUrl }, {
+                            caption: cartText,
+                            parse_mode: 'HTML',
+                            ...keyboard
+                        });
+                        if (msg) sentMsgs.push(msg);
+                    }
                 } else {
-                    // If callback but no photo (e.g. from text menu), delete and send new
+                    // Multiple images: send as MediaGroup
+                    const mediaItems = cartImages.map((item, index) => ({
+                        type: 'photo',
+                        media: { url: this.optimizeImageUrl(item.image, { width: 800 }) },
+                        caption: index === 0 ? cartText : '',
+                        parse_mode: 'HTML'
+                    }));
+
                     if (isActuallyCallback) await ctx.deleteMessage().catch(() => { });
 
-                    await ctx.replyWithPhoto({ url: primaryImageUrl }, {
-                        caption: cartText,
-                        parse_mode: 'Markdown',
+                    const groupMsgs = await ctx.replyWithMediaGroup(mediaItems);
+                    if (groupMsgs) sentMsgs.push(...groupMsgs);
+
+                    const ctrlMsg = await ctx.reply('🛒 <b>Control your cart:</b>', {
+                        parse_mode: 'HTML',
                         ...keyboard
                     });
+                    if (ctrlMsg) sentMsgs.push(ctrlMsg);
                 }
             } catch (err) {
-                logger.warn('Failed to send/edit cart image, falling back to text:', err.message);
-                // Fallback: try to edit text if possible, else reply
+                logger.warn('Failed to send cart media, falling back to text:', err.message);
                 if (isActuallyCallback) {
-                    await ctx.editMessageText(cartText, { parse_mode: 'Markdown', ...keyboard }).catch(async () => {
-                        await ctx.replyWithMarkdown(cartText, keyboard);
+                    const msg = await ctx.editMessageText(cartText, { parse_mode: 'HTML', ...keyboard }).catch(async () => {
+                        return await ctx.replyWithHTML(cartText, keyboard);
                     });
+                    if (msg) sentMsgs.push(msg);
                 } else {
-                    await ctx.replyWithMarkdown(cartText, keyboard);
+                    const msg = await ctx.replyWithHTML(cartText, keyboard);
+                    if (msg) sentMsgs.push(msg);
                 }
             }
         } else {
             // No images in cart
             if (isActuallyCallback) {
-                await ctx.editMessageText(cartText, { parse_mode: 'Markdown', ...keyboard }).catch(async () => {
-                    await ctx.replyWithMarkdown(cartText, keyboard);
+                const msg = await ctx.editMessageText(cartText, { parse_mode: 'HTML', ...keyboard }).catch(async () => {
+                    return await ctx.replyWithHTML(cartText, keyboard);
                 });
+                if (msg) sentMsgs.push(msg);
             } else {
-                await ctx.replyWithMarkdown(cartText, keyboard);
+                const msg = await ctx.replyWithHTML(cartText, keyboard);
+                if (msg) sentMsgs.push(msg);
+            }
+        }
+
+        // Schedule all cart messages for deletion after 24 hours
+        for (const msg of sentMsgs) {
+            if (msg && msg.message_id) {
+                this.scheduleDeletion(ctx.chat.id, msg.message_id);
             }
         }
 
@@ -1459,28 +1541,35 @@ ${product.tags.length ? `🏷️ <b>Tags:</b> ${product.tags.join(', ')}` : ''}$
                     const searchBuffer = needMatch ? needMatch[1].trim() : lowerText;
                     // Proactively search and display related items
                     let products = await productService.searchProducts(searchBuffer, 10);
-                    
+
                     if (products.length > 0) {
                         // Strict category filtering for shirts vs pants to ensure accuracy
+                        // We use word boundaries to avoid matching "elephant" for "pant"
                         const isShirtQuery = /\b(shirts?|t-?shirts?)\b/i.test(lowerText);
                         const isPantQuery = /\b(pants?|trousers?|jeans)\b/i.test(lowerText);
-                        
+
                         if (isShirtQuery && !isPantQuery) {
-                            products = products.filter(p => 
-                                p.name.toLowerCase().includes('shirt') || 
-                                (p.category && p.category.name.toLowerCase().includes('shirt'))
+                            products = products.filter(p =>
+                                /\bshirt/i.test(p.name) ||
+                                (p.category && /\bshirt/i.test(p.category.name))
                             );
                         } else if (isPantQuery && !isShirtQuery) {
-                            products = products.filter(p => 
-                                (p.name.toLowerCase().includes('pant') || p.name.toLowerCase().includes('trouser') || p.name.toLowerCase().includes('jean')) ||
-                                (p.category && (p.category.name.toLowerCase().includes('pant') || p.category.name.toLowerCase().includes('trouser') || p.category.name.toLowerCase().includes('jean')))
+                            products = products.filter(p =>
+                                /\b(pant|trouser|jean)/i.test(p.name) ||
+                                (p.category && /\b(pant|trouser|jean)/i.test(p.category.name))
                             );
+                        }
+
+                        if (products.length === 0) {
+                            await ctx.reply(`🔍 I couldn't find any specific matches for your request. Try browsing our categories!`,
+                                Markup.inlineKeyboard([[Markup.button.callback('📂 Browse Categories', 'show_categories')]]));
+                            return;
                         }
 
                         const infoMsg = await ctx.reply(`🔍 Here are the best ${searchBuffer} I found for you:`);
                         this.scheduleDeletion(ctx.chat.id, infoMsg.message_id);
 
-                        for (const product of products) {
+                        for (const product of products.slice(0, 5)) {
                             // SHOW IMAGES: User specifically requested product images to be shown during chat
                             await this.sendProductCard(ctx, product, { includeImage: true, autoDelete: true });
                         }
@@ -1819,7 +1908,55 @@ ${text}
         ]);
         buttons.push([Markup.button.callback('🏠 Menu', 'back_to_menu')]);
 
-        await ctx.replyWithMarkdown(orderText, Markup.inlineKeyboard(buttons));
+        const keyboard = Markup.inlineKeyboard(buttons);
+
+        // Show item images (limit to 10)
+        const orderImages = order.items
+            .filter(item => item.productImage)
+            .slice(0, 10);
+
+        let sentMsgs = [];
+        if (orderImages.length > 0) {
+            try {
+                if (orderImages.length === 1) {
+                    const primaryImageUrl = this.optimizeImageUrl(orderImages[0].productImage, { width: 800 });
+                    const msg = await ctx.replyWithPhoto({ url: primaryImageUrl }, {
+                        caption: orderText,
+                        parse_mode: 'Markdown',
+                        ...keyboard
+                    });
+                    if (msg) sentMsgs.push(msg);
+                } else {
+                    const mediaItems = orderImages.map((item, index) => ({
+                        type: 'photo',
+                        media: { url: this.optimizeImageUrl(item.productImage, { width: 800 }) },
+                        caption: index === 0 ? orderText : '',
+                        parse_mode: 'Markdown'
+                    }));
+
+                    const groupMsgs = await ctx.replyWithMediaGroup(mediaItems);
+                    if (groupMsgs) sentMsgs.push(...groupMsgs);
+
+                    const statusMsg = await ctx.reply(`📦 *Status:* ${statusEmoji} ${order.status.toUpperCase()}`, {
+                        parse_mode: 'Markdown',
+                        ...keyboard
+                    });
+                    if (statusMsg) sentMsgs.push(statusMsg);
+                }
+            } catch (err) {
+                logger.warn('Failed to send order media, falling back to text:', err.message);
+                const msg = await ctx.replyWithMarkdown(orderText, keyboard);
+                if (msg) sentMsgs.push(msg);
+            }
+        } else {
+            const msg = await ctx.replyWithMarkdown(orderText, keyboard);
+            if (msg) sentMsgs.push(msg);
+        }
+
+        // Schedule for deletion
+        for (const m of sentMsgs) {
+            if (m && m.message_id) this.scheduleDeletion(ctx.chat.id, m.message_id);
+        }
     }
 
     /**
@@ -2006,14 +2143,46 @@ ${itemsTotal}
 Your items are being packed. Expect delivery in *10 minutes*!
     `.trim();
 
-        await this.sendNotification(
-            user.telegramId,
-            message,
-            Markup.inlineKeyboard([
-                [Markup.button.callback('📦 Track My Order', `order_${order._id}`)],
-                [Markup.button.callback('🏠 Main Menu', 'back_to_menu')],
-            ])
-        );
+        const keyboard = Markup.inlineKeyboard([
+            [Markup.button.callback('📦 Track My Order', `order_${order._id}`)],
+            [Markup.button.callback('🏠 Main Menu', 'back_to_menu')],
+        ]);
+
+        // Show item images (limit to 10)
+        const orderImages = order.items
+            .filter(item => item.productImage)
+            .slice(0, 10);
+
+        if (orderImages.length > 0) {
+            try {
+                if (orderImages.length === 1) {
+                    const primaryImageUrl = this.optimizeImageUrl(orderImages[0].productImage, { width: 800 });
+                    await this.bot.telegram.sendPhoto(user.telegramId, { url: primaryImageUrl }, {
+                        caption: message,
+                        parse_mode: 'Markdown',
+                        ...keyboard
+                    });
+                } else {
+                    const mediaItems = orderImages.map((item, index) => ({
+                        type: 'photo',
+                        media: { url: this.optimizeImageUrl(item.productImage, { width: 800 }) },
+                        caption: index === 0 ? message : '',
+                        parse_mode: 'Markdown'
+                    }));
+
+                    await this.bot.telegram.sendMediaGroup(user.telegramId, mediaItems);
+                    await this.bot.telegram.sendMessage(user.telegramId, '� Your order is on its way!', {
+                        parse_mode: 'Markdown',
+                        ...keyboard
+                    });
+                }
+            } catch (err) {
+                logger.warn('Failed to send success media, falling back to text:', err.message);
+                await this.sendNotification(user.telegramId, message, keyboard);
+            }
+        } else {
+            await this.sendNotification(user.telegramId, message, keyboard);
+        }
     }
 
     /**
@@ -2221,22 +2390,26 @@ ${order.estimatedDeliveryTime ? `⏱️ ETA: ${new Date(order.estimatedDeliveryT
                     break;
                 case 'search':
                     if (aiResult.data?.product) {
-                        const products = await productService.searchProducts(aiResult.data.product);
+                        const searchTerm = aiResult.data.product.toLowerCase();
+                        let products = await productService.searchProducts(aiResult.data.product);
+
+                        // Stricter filtering for AI results
+                        products = products.filter(p =>
+                            p.name.toLowerCase().includes(searchTerm) ||
+                            p.category?.name?.toLowerCase().includes(searchTerm) ||
+                            p.tags.some(t => t.toLowerCase().includes(searchTerm))
+                        );
+
                         if (products.length > 0) {
                             const resMsg = await ctx.reply(`🔍 I found these results for "${aiResult.data.product}":`);
                             this.scheduleDeletion(ctx.chat.id, resMsg.message_id);
-                            for (const product of products.slice(0, 10)) {
-                                // Performance: Use text-only cards for large searches, user can click Details for image
-                                await this.sendProductCard(ctx, product, { includeImage: false, autoDelete: true });
-                            }
-                        } else {
-                            const resMsg = await ctx.reply(`I couldn't find any products matching "${aiResult.data.product}". Here are some featured items you might like instead:`);
-                            this.scheduleDeletion(ctx.chat.id, resMsg.message_id);
-                            const featured = await productService.getFeaturedProducts(3);
-                            for (const product of featured) {
-                                // Keep images for featured items since they are few (3)
+                            for (const product of products.slice(0, 5)) {
+                                // Strictly show only what matches, and include images
                                 await this.sendProductCard(ctx, product, { includeImage: true, autoDelete: true });
                             }
+                        } else {
+                            const resMsg = await ctx.reply(`I couldn't find any products matching "${aiResult.data.product}".`);
+                            this.scheduleDeletion(ctx.chat.id, resMsg.message_id);
                         }
                     }
                     break;
@@ -2326,20 +2499,12 @@ ${order.estimatedDeliveryTime ? `⏱️ ETA: ${new Date(order.estimatedDeliveryT
             if (query && query.trim().length > 0) {
                 // Search for products
                 products = await productService.searchProducts(query, 20);
-
-                // If results are thin, add some featured products as suggestions
-                if (products.length < 5) {
-                    const featured = await productService.getFeaturedProducts(10);
-                    const existingIds = new Set(products.map(p => p._id.toString()));
-                    for (const f of featured) {
-                        if (!existingIds.has(f._id.toString()) && products.length < 20) {
-                            products.push(f);
-                        }
-                    }
-                }
             } else {
-                // Show featured products if no query
-                products = await productService.getFeaturedProducts(20);
+                // If no query, return empty results or a prompt
+                return await ctx.answerInlineQuery([], {
+                    switch_pm_text: 'Type a product name to search.',
+                    switch_pm_parameter: 'start',
+                });
             }
 
             const results = products.map((product) => {
@@ -2414,18 +2579,58 @@ ${product.availableStock > 0 ? '✅ <i>In Stock</i>' : '❌ <i>Out of Stock</i>'
     /**
      * Start bot (polling) - for development
      */
-    async startPolling() {
-        // Delete webhook first
-        await this.bot.telegram.deleteWebhook();
+    /**
+     * Start bot (polling) - for development
+     */
+    async startPolling(retries = 5) {
+        if (this._isPolling) {
+            logger.warn('Bot is already polling. Skipping startPolling.');
+            return;
+        }
 
-        // Start polling
-        this.bot.launch();
+        try {
+            // small delay to let previous processes die on fast nodemon restarts
+            await new Promise(resolve => setTimeout(resolve, 2000));
 
-        logger.info('Telegram bot started in polling mode');
+            // Delete webhook first to ensure polling works, and drop any pending updates to clear conflicts
+            await this.bot.telegram.deleteWebhook({ drop_pending_updates: true }).catch(() => { });
 
-        // Graceful shutdown
-        process.once('SIGINT', () => this.bot.stop('SIGINT'));
-        process.once('SIGTERM', () => this.bot.stop('SIGTERM'));
+            this._isPolling = true;
+
+            // Start polling with error handling
+            await this.bot.launch().catch(async (err) => {
+                this._isPolling = false;
+                if (err.response && err.response.error_code === 409) {
+                    logger.warn(`Bot Conflict (409): Another instance is already polling. Retries left: ${retries}`);
+                    if (retries > 0) {
+                        logger.info('Retrying polling in 5 seconds...');
+                        await new Promise(resolve => setTimeout(resolve, 5000));
+                        return this.startPolling(retries - 1);
+                    } else {
+                        logger.error('Bot Poll Conflict: Could not acquire lock after multiple retries.');
+                    }
+                } else {
+                    logger.error('Failed to launch bot:', err);
+                }
+            });
+
+            if (this._isPolling) {
+                logger.info('Telegram bot started in polling mode');
+            }
+
+            // Graceful shutdown handled in app.js, but keeping these as secondary fallback
+            process.once('SIGINT', () => {
+                this._isPolling = false;
+                if (this.bot) this.bot.stop('SIGINT');
+            });
+            process.once('SIGTERM', () => {
+                this._isPolling = false;
+                if (this.bot) this.bot.stop('SIGTERM');
+            });
+        } catch (error) {
+            this._isPolling = false;
+            logger.error('Error in startPolling:', error);
+        }
     }
 }
 

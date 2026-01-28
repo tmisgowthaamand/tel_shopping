@@ -151,15 +151,21 @@ async function initialize() {
 }
 
 // Graceful shutdown
-process.on('SIGINT', async () => {
-    logger.info('Shutting down gracefully...');
+const gracefulShutdown = async (signal) => {
+    logger.info(`${signal} received. Shutting down gracefully...`);
+    try {
+        if (botService && botService.getBot()) {
+            await botService.getBot().stop(signal);
+            logger.info('Telegram bot stopped');
+        }
+    } catch (err) {
+        logger.error('Error stopping bot:', err.message);
+    }
     process.exit(0);
-});
+};
 
-process.on('SIGTERM', async () => {
-    logger.info('Shutting down gracefully...');
-    process.exit(0);
-});
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 
 // Start application
 initialize();

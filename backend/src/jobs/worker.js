@@ -2,6 +2,7 @@ require('dotenv').config();
 const connectDB = require('../config/database');
 const { connectRedis } = require('../config/redis');
 const { initRedis, initSchedulers, initWorkers, scheduleRecurringJobs } = require('./queues');
+const { botService } = require('../bot');
 const logger = require('../utils/logger');
 
 /**
@@ -17,6 +18,10 @@ const startWorker = async () => {
 
         // Connect to Redis
         await connectRedis();
+
+
+        // Initialize Bot Service (for notifications)
+        await botService.initialize();
 
         // Initialize schedulers and workers
         await initRedis();

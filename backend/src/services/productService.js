@@ -108,16 +108,22 @@ class ProductService {
 
             // If no results or very few, try regex matching for better "fuzzy" feel
             if (products.length < 3) {
-                const searchTerms = query.split(/\s+/).filter(t => t.length > 2);
+                const searchTerms = query.split(/\s+/).filter(t => t.length >= 2);
 
                 // Create a regex that matches any of the terms or the whole string
-                const regexPatterns = searchTerms.map(t => new RegExp(t, 'i'));
+                // Use word boundaries for better precision on short terms
+                const regexPatterns = searchTerms.map(t => {
+                    if (t.length <= 5) {
+                        return new RegExp(`\\b${t}`, 'i'); // Matches "pant" in "pants" but not "elephant"
+                    }
+                    return new RegExp(t, 'i');
+                });
 
                 const regexProducts = await Product.find({
                     _id: { $nin: products.map(p => p._id) }, // Don't duplicate
                     isActive: true,
                     $or: [
-                        { name: { $regex: query, $options: 'i' } },
+                        { name: { $regex: `\\b${query}`, $options: 'i' } },
                         { name: { $in: regexPatterns } },
                         { tags: { $in: regexPatterns } }
                     ]
