@@ -529,17 +529,33 @@ Hello ${user.getFullName()}! I'm your personal shopping assistant.
 What would you like to do today?
     `.trim();
 
-        await ctx.replyWithMarkdown(
-            welcomeMessage,
-            Markup.inlineKeyboard([
-                [Markup.button.callback('📚 Help & Assistance', 'show_help')],
-                [Markup.button.callback('🛒 Browse Categories', 'show_categories')],
-                [Markup.button.callback('⭐ Featured Products', 'show_featured')],
-                [Markup.button.callback('🛍️ My Cart', 'show_cart')],
-                [Markup.button.callback('📦 My Orders', 'show_orders')],
-                [Markup.button.callback('📍 Track Active Order', 'show_active_order')],
-            ])
-        );
+        // Welcome banner image URL
+        const welcomeBannerUrl = 'https://res.cloudinary.com/dwbvflilh/image/upload/v1769592067/atz-store/welcome_banner.jpg';
+
+        const keyboard = Markup.inlineKeyboard([
+            [Markup.button.callback('📚 Help & Assistance', 'show_help')],
+            [Markup.button.callback('🛒 Browse Categories', 'show_categories')],
+            [Markup.button.callback('⭐ Featured Products', 'show_featured')],
+            [Markup.button.callback('🛍️ My Cart', 'show_cart')],
+            [Markup.button.callback('📦 My Orders', 'show_orders')],
+            [Markup.button.callback('📍 Track Active Order', 'show_active_order')],
+        ]);
+
+        // Send welcome banner with message
+        try {
+            await ctx.replyWithPhoto(
+                { url: welcomeBannerUrl },
+                {
+                    caption: welcomeMessage,
+                    parse_mode: 'Markdown',
+                    ...keyboard,
+                }
+            );
+        } catch (photoError) {
+            // Fallback to text-only if image fails
+            logger.warn('Failed to send welcome banner:', photoError.message);
+            await ctx.replyWithMarkdown(welcomeMessage, keyboard);
+        }
 
         // Update user state
         user.currentState = 'idle';
