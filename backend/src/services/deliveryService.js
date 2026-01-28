@@ -101,6 +101,8 @@ class DeliveryService {
     async broadcastToPartner(partner, order, distance) {
         try {
             const eta = Math.ceil(distance * 3); // Rough ETA in minutes (20 km/h)
+            const etaTime = new Date(Date.now() + eta * 60 * 1000);
+            const etaFormatted = etaTime.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
             const earnings = this.calculateDeliveryEarnings(distance);
 
             const message = `
@@ -108,7 +110,7 @@ class DeliveryService {
 
 📦 Order: ${order.orderId}
 📍 Distance: ${distance.toFixed(2)} km
-⏱ ETA: ~${eta} mins
+⏱ ETA: ${etaFormatted}
 💵 Earnings: ₹${earnings}
 
 📋 *Items:*

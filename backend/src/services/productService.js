@@ -85,6 +85,12 @@ class ProductService {
      */
     async getProduct(productId) {
         try {
+            // Validate if productId is a valid MongoDB ObjectId
+            const mongoose = require('mongoose');
+            if (!mongoose.Types.ObjectId.isValid(productId)) {
+                logger.warn(`Invalid product ID format: ${productId}`);
+                return null;
+            }
             return Product.findById(productId).populate('category');
         } catch (error) {
             logger.error('Error getting product:', error);

@@ -283,23 +283,42 @@ class BotService {
         // Product actions
         this.bot.action(/^product_(.+)$/, async (ctx) => {
             const productId = ctx.match[1];
+            // Validate MongoDB ObjectId format (24 hex characters)
+            if (!/^[0-9a-fA-F]{24}$/.test(productId)) {
+                if (ctx.callbackQuery) await ctx.answerCbQuery('Invalid product').catch(() => { });
+                return;
+            }
             await this.showProduct(ctx, productId);
         });
 
         // Add view command handler for media groups
         this.bot.hears(/^\/view_(.+)$/, async (ctx) => {
             const productId = ctx.match[1];
+            // Validate MongoDB ObjectId format
+            if (!/^[0-9a-fA-F]{24}$/.test(productId)) {
+                return ctx.reply('Invalid product ID.');
+            }
             await this.showProduct(ctx, productId);
         });
 
         this.bot.action(/^add_to_cart_(.+)$/, async (ctx) => {
             const productId = ctx.match[1];
+            // Validate MongoDB ObjectId format
+            if (!/^[0-9a-fA-F]{24}$/.test(productId)) {
+                if (ctx.callbackQuery) await ctx.answerCbQuery('Invalid product').catch(() => { });
+                return;
+            }
             await this.addToCart(ctx, productId);
         });
 
         this.bot.action(/^select_size_(.+)_(.+)$/, async (ctx) => {
             const productId = ctx.match[1];
             const size = ctx.match[2];
+            // Validate MongoDB ObjectId format
+            if (!/^[0-9a-fA-F]{24}$/.test(productId)) {
+                if (ctx.callbackQuery) await ctx.answerCbQuery('Invalid product').catch(() => { });
+                return;
+            }
             const user = ctx.user;
 
             user.sessionData.pendingSize = size;
@@ -311,12 +330,22 @@ class BotService {
 
         this.bot.action(/^buy_now_(.+)$/, async (ctx) => {
             const productId = ctx.match[1];
+            // Validate MongoDB ObjectId format
+            if (!/^[0-9a-fA-F]{24}$/.test(productId)) {
+                if (ctx.callbackQuery) await ctx.answerCbQuery('Invalid product').catch(() => { });
+                return;
+            }
             await this.buyNow(ctx, productId);
         });
 
         this.bot.action(/^buy_now_size_(.+)_(.+)$/, async (ctx) => {
             const productId = ctx.match[1];
             const size = ctx.match[2];
+            // Validate MongoDB ObjectId format
+            if (!/^[0-9a-fA-F]{24}$/.test(productId)) {
+                if (ctx.callbackQuery) await ctx.answerCbQuery('Invalid product').catch(() => { });
+                return;
+            }
             await this.buyNow(ctx, productId, size);
         });
 
@@ -324,6 +353,11 @@ class BotService {
         this.bot.action(/^qty_(.+)_(\d+)$/, async (ctx) => {
             const productId = ctx.match[1];
             const quantity = parseInt(ctx.match[2]);
+            // Validate MongoDB ObjectId format
+            if (!/^[0-9a-fA-F]{24}$/.test(productId)) {
+                if (ctx.callbackQuery) await ctx.answerCbQuery('Invalid product').catch(() => { });
+                return;
+            }
             await this.handleQuantitySelection(ctx, productId, quantity);
         });
 
@@ -512,7 +546,7 @@ class BotService {
 
 Hello ${user.getFullName()}! I'm your personal shopping assistant.
 
-🕘 *Shopping Hours:* 9:00 AM - 9:00 PM
+🕘 *Delivery Hours:* 9:00 AM - 6:00 PM
 
  *ATZ Store Commands:*
 /start - Start shopping
@@ -1917,7 +1951,7 @@ ${text}
         }
 
         if (order.estimatedDeliveryTime) {
-            orderText += `\n\n⏱️ *ETA:* ${new Date(order.estimatedDeliveryTime).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' })}`;
+            orderText += `\n\n⏱️ *ETA:* ${new Date(order.estimatedDeliveryTime).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}`;
         }
 
         const buttons = [];

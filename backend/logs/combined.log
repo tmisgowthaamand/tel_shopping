@@ -6600,3 +6600,134 @@
 {"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-28 15:57:02"}
 {"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-28 15:57:02"}
 {"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-28 15:57:02"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-28 15:57:10"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-28 15:57:11"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-28 15:57:11"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-28 15:57:11"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-28 15:57:11"}
+{"level":"info","message":"🤖 Initializing Telegram bot...","service":"atz-store","timestamp":"2026-01-28 15:57:11"}
+{"level":"info","message":"Bot instance created [PID: 10516]","service":"atz-store","timestamp":"2026-01-28 15:57:11"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-28 15:57:12"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-28 15:57:12"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-28 15:57:12"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-28 15:57:12"}
+{"level":"info","message":"🔄 Starting bot in Polling mode (Dev/Local)...","service":"atz-store","timestamp":"2026-01-28 15:57:12"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-28 15:57:12"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-28 15:57:12"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-28 15:57:12"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-28 15:57:12"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-28 15:57:12"}
+{"level":"warn","message":"Bot Conflict (409): Another instance is already polling. Retries left: 5","service":"atz-store","timestamp":"2026-01-28 16:05:13"}
+{"level":"info","message":"Retrying polling in 5 seconds...","service":"atz-store","timestamp":"2026-01-28 16:05:13"}
+{"level":"warn","message":"Bot Conflict (409): Another instance is already polling. Retries left: 4","service":"atz-store","timestamp":"2026-01-28 16:05:28"}
+{"level":"info","message":"Retrying polling in 5 seconds...","service":"atz-store","timestamp":"2026-01-28 16:05:28"}
+{"level":"warn","message":"Bot Conflict (409): Another instance is already polling. Retries left: 3","service":"atz-store","timestamp":"2026-01-28 16:05:43"}
+{"level":"info","message":"Retrying polling in 5 seconds...","service":"atz-store","timestamp":"2026-01-28 16:05:43"}
+{"level":"warn","message":"Bot Conflict (409): Another instance is already polling. Retries left: 2","service":"atz-store","timestamp":"2026-01-28 16:05:58"}
+{"level":"info","message":"Retrying polling in 5 seconds...","service":"atz-store","timestamp":"2026-01-28 16:05:58"}
+{"level":"warn","message":"Bot Conflict (409): Another instance is already polling. Retries left: 1","service":"atz-store","timestamp":"2026-01-28 16:06:13"}
+{"level":"info","message":"Retrying polling in 5 seconds...","service":"atz-store","timestamp":"2026-01-28 16:06:13"}
+{"level":"warn","message":"Bot Conflict (409): Another instance is already polling. Retries left: 0","service":"atz-store","timestamp":"2026-01-28 16:06:28"}
+{"level":"error","message":"Bot Poll Conflict: Could not acquire lock after multiple retries.","service":"atz-store","timestamp":"2026-01-28 16:06:28"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-28 16:17:14"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-00.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-28 16:17:15"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-28 16:17:15"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-28 16:17:15"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-28 16:17:15"}
+{"level":"info","message":"🤖 Initializing Telegram bot...","service":"atz-store","timestamp":"2026-01-28 16:17:15"}
+{"level":"info","message":"Bot instance created [PID: 16364]","service":"atz-store","timestamp":"2026-01-28 16:17:15"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-28 16:17:16"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-28 16:17:16"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-28 16:17:16"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-28 16:17:16"}
+{"level":"info","message":"🔄 Starting bot in Polling mode (Dev/Local)...","service":"atz-store","timestamp":"2026-01-28 16:17:16"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-28 16:17:16"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-28 16:17:16"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-28 16:17:16"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-28 16:17:16"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-28 16:17:16"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-28 16:18:02"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-02.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-28 16:18:03"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-28 16:18:03"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-28 16:18:03"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-28 16:18:03"}
+{"level":"info","message":"🤖 Initializing Telegram bot...","service":"atz-store","timestamp":"2026-01-28 16:18:03"}
+{"level":"info","message":"Bot instance created [PID: 2080]","service":"atz-store","timestamp":"2026-01-28 16:18:03"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-28 16:18:04"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-28 16:18:04"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-28 16:18:04"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-28 16:18:04"}
+{"level":"info","message":"🔄 Starting bot in Polling mode (Dev/Local)...","service":"atz-store","timestamp":"2026-01-28 16:18:04"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-28 16:18:04"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-28 16:18:04"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-28 16:18:05"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-28 16:18:05"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-28 16:18:05"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-28 16:19:25"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-28 16:19:25"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-28 16:19:25"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-28 16:19:25"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-28 16:19:25"}
+{"level":"info","message":"🤖 Initializing Telegram bot...","service":"atz-store","timestamp":"2026-01-28 16:19:25"}
+{"level":"info","message":"Bot instance created [PID: 1556]","service":"atz-store","timestamp":"2026-01-28 16:19:25"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-28 16:19:26"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-28 16:19:27"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-28 16:19:27"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-28 16:19:27"}
+{"level":"info","message":"🔄 Starting bot in Polling mode (Dev/Local)...","service":"atz-store","timestamp":"2026-01-28 16:19:27"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-28 16:19:27"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-28 16:19:27"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-28 16:19:27"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-28 16:19:27"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-28 16:19:27"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-28 16:20:53"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-28 16:20:54"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-28 16:20:54"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-28 16:20:54"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-28 16:20:54"}
+{"level":"info","message":"🤖 Initializing Telegram bot...","service":"atz-store","timestamp":"2026-01-28 16:20:54"}
+{"level":"info","message":"Bot instance created [PID: 12104]","service":"atz-store","timestamp":"2026-01-28 16:20:54"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-28 16:20:55"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-28 16:20:55"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-28 16:20:55"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-28 16:20:55"}
+{"level":"info","message":"🔄 Starting bot in Polling mode (Dev/Local)...","service":"atz-store","timestamp":"2026-01-28 16:20:55"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-28 16:20:55"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-28 16:20:55"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-28 16:20:55"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-28 16:20:55"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-28 16:20:55"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-28 16:21:15"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-00.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-28 16:21:15"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-28 16:21:15"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-28 16:21:15"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-28 16:21:16"}
+{"level":"info","message":"🤖 Initializing Telegram bot...","service":"atz-store","timestamp":"2026-01-28 16:21:16"}
+{"level":"info","message":"Bot instance created [PID: 11608]","service":"atz-store","timestamp":"2026-01-28 16:21:16"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-28 16:21:16"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-28 16:21:17"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-28 16:21:17"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-28 16:21:17"}
+{"level":"info","message":"🔄 Starting bot in Polling mode (Dev/Local)...","service":"atz-store","timestamp":"2026-01-28 16:21:17"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-28 16:21:17"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-28 16:21:17"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-28 16:21:17"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-28 16:21:17"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-28 16:21:17"}
+{"level":"info","message":"Connecting to MongoDB: mongodb+srv://dbuser:****@telegram-store-backend.hbjue5r.mongodb.net/?appName=telegram-store-backend","service":"atz-store","timestamp":"2026-01-28 16:21:41"}
+{"level":"info","message":"MongoDB Connected: ac-w2yis5i-shard-00-01.hbjue5r.mongodb.net","service":"atz-store","timestamp":"2026-01-28 16:21:41"}
+{"level":"info","message":"Database connected","service":"atz-store","timestamp":"2026-01-28 16:21:41"}
+{"level":"info","message":"Redis not found on localhost, using Mock Redis","service":"atz-store","timestamp":"2026-01-28 16:21:41"}
+{"level":"info","message":"Default admin ensured","service":"atz-store","timestamp":"2026-01-28 16:21:42"}
+{"level":"info","message":"🤖 Initializing Telegram bot...","service":"atz-store","timestamp":"2026-01-28 16:21:42"}
+{"level":"info","message":"Bot instance created [PID: 10608]","service":"atz-store","timestamp":"2026-01-28 16:21:42"}
+{"level":"info","message":"Bot initialized as @EcommerceShoppingBot","service":"atz-store","timestamp":"2026-01-28 16:21:43"}
+{"level":"info","message":"Telegram bot command menu updated","service":"atz-store","timestamp":"2026-01-28 16:21:43"}
+{"level":"info","message":"Telegram bot initialized","service":"atz-store","timestamp":"2026-01-28 16:21:43"}
+{"level":"info","message":"Delivery bot handlers initialized","service":"atz-store","timestamp":"2026-01-28 16:21:43"}
+{"level":"info","message":"🔄 Starting bot in Polling mode (Dev/Local)...","service":"atz-store","timestamp":"2026-01-28 16:21:43"}
+{"level":"info","message":"Local Redis not found, using Mock Redis for development","service":"atz-store","timestamp":"2026-01-28 16:21:43"}
+{"level":"info","message":"Workers initialized","service":"atz-store","timestamp":"2026-01-28 16:21:43"}
+{"level":"info","message":"Cron jobs initialized","service":"atz-store","timestamp":"2026-01-28 16:21:43"}
+{"level":"info","message":"Server running on port 3000","service":"atz-store","timestamp":"2026-01-28 16:21:43"}
+{"level":"info","message":"Environment: development","service":"atz-store","timestamp":"2026-01-28 16:21:43"}

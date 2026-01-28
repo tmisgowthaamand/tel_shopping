@@ -572,6 +572,8 @@ ${availabilityEmoji} Available: ${partner.isAvailable ? 'Yes' : 'No'}
         );
 
         const eta = Math.ceil(distance * 3);
+        const etaTime = new Date(Date.now() + eta * 60 * 1000);
+        const etaFormatted = etaTime.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
         const earnings = deliveryService.calculateDeliveryEarnings(distance);
 
         const message = `
@@ -579,7 +581,7 @@ ${availabilityEmoji} Available: ${partner.isAvailable ? 'Yes' : 'No'}
 
 📦 Order: \`${order.orderId}\`
 📍 Distance: ${distance.toFixed(2)} km
-⏱ ETA: ~${eta} mins
+⏱ ETA: ${etaFormatted}
 💵 Earn: ₹${earnings}
 
 📋 *Items:*
