@@ -12,7 +12,9 @@ router.get('/stats', userController.getStats);
 router.get('/:id', userController.getUser);
 router.post('/:id/blacklist', userController.blacklistUser);
 router.post('/:id/unblacklist', userController.unblacklistUser);
+router.post('/:id/message', userController.sendMessageToUser);
 
 router.post('/broadcast', userController.broadcastNotification);
 
 module.exports = router;
+

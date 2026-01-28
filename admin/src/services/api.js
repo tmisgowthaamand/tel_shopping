@@ -99,11 +99,23 @@ export const userApi = {
     unblacklist: (id) => api.post(`/users/${id}/unblacklist`),
     getStats: () => api.get('/users/stats'),
     broadcast: (data) => api.post('/users/broadcast', data),
+    sendMessage: (id, data) => api.post(`/users/${id}/message`, data),
 };
 
 export const settingsApi = {
     getMaintenance: () => api.get('/settings/maintenance'),
     updateMaintenance: (enabled) => api.post('/settings/maintenance', { enabled }),
+};
+
+export const notificationApi = {
+    getNotifications: (params) => api.get('/notifications', { params }),
+    getStats: () => api.get('/notifications/stats'),
+    createNotification: (data) => api.post('/notifications', data),
+    deleteNotification: (id) => api.delete(`/notifications/${id}`),
+    markAsRead: (id) => api.post(`/notifications/${id}/read`),
+    markAllAsRead: () => api.post('/notifications/mark-all-read'),
+    seedNotifications: () => api.post('/notifications/seed'),
+    bulkDelete: (ids) => api.post('/notifications/bulk-delete', { ids }),
 };
 
 export default api;

@@ -14,16 +14,18 @@ import {
     PauseCircle,
     PlayCircle
 } from 'lucide-react';
-import { settingsApi } from '../services/api';
+import { settingsApi, notificationApi } from '../services/api';
 
 const Layout = ({ children }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
     const [isMaintenance, setIsMaintenance] = React.useState(false);
+    const [notificationCount, setNotificationCount] = React.useState(0);
 
     React.useEffect(() => {
         fetchSettings();
+        fetchNotificationCount();
     }, []);
 
     const fetchSettings = async () => {
@@ -47,12 +49,22 @@ const Layout = ({ children }) => {
         }
     };
 
+    const fetchNotificationCount = async () => {
+        try {
+            const { data } = await notificationApi.getStats();
+            setNotificationCount(data.data?.unread || 0);
+        } catch (e) {
+            console.error('Failed to fetch notification count:', e);
+        }
+    };
+
     const navItems = [
         { name: 'Dashboard', path: '/', icon: LayoutDashboard },
         { name: 'Orders', path: '/orders', icon: ShoppingCart },
         { name: 'Products', path: '/products', icon: Package },
         { name: 'Users', path: '/users', icon: Users },
         { name: 'Delivery Partners', path: '/partners', icon: Bike },
+        { name: 'Notifications', path: '/notifications', icon: Bell },
         { name: 'Settings', path: '/settings', icon: Settings },
     ];
 
@@ -110,8 +122,17 @@ const Layout = ({ children }) => {
                         </h2>
                     </div>
                     <div className="header-right" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                        <button className="btn btn-secondary" style={{ padding: '0.5rem', borderRadius: '50%' }}>
+                        <button
+                            className="btn btn-secondary notification-bell"
+                            style={{ padding: '0.5rem', borderRadius: '50%', position: 'relative' }}
+                            onClick={() => navigate('/notifications')}
+                        >
                             <Bell size={20} />
+                            {notificationCount > 0 && (
+                                <span className="notification-badge">
+                                    {notificationCount > 99 ? '99+' : notificationCount}
+                                </span>
+                            )}
                         </button>
 
                         <button

@@ -113,9 +113,36 @@ const authenticatePartner = async (req, res, next) => {
     }
 };
 
+/**
+ * Optional auth - doesn't require token but attaches user if present
+ */
+const optionalAuth = async (req, res, next) => {
+    try {
+        const authHeader = req.headers.authorization;
+
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            const token = authHeader.split(' ')[1];
+            const decoded = jwt.verify(token, config.jwt.secret);
+            const admin = await Admin.findById(decoded.id);
+            if (admin && admin.isActive) {
+                req.admin = admin;
+                req.user = admin;
+            }
+        }
+        next();
+    } catch (error) {
+        // Token is invalid but we continue without auth
+        next();
+    }
+};
+
 module.exports = {
     authenticateAdmin,
     authenticatePartner,
     checkPermission,
     verifyRazorpayWebhook,
+    optionalAuth,
+    // Convenient aliases
+    adminAuth: authenticateAdmin,
+    partnerAuth: authenticatePartner,
 };

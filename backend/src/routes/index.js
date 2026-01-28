@@ -5,6 +5,7 @@ const orderRoutes = require('./orderRoutes');
 const partnerRoutes = require('./partnerRoutes');
 const userRoutes = require('./userRoutes');
 const webhookRoutes = require('./webhookRoutes');
+const notificationRoutes = require('./notificationRoutes');
 
 module.exports = {
     authRoutes,
@@ -16,4 +17,5 @@ module.exports = {
     userRoutes,
     webhookRoutes,
     settingsRoutes: require('./settingsRoutes'),
+    notificationRoutes,
 };

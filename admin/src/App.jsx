@@ -9,6 +9,7 @@ import Users from './pages/Users';
 import Partners from './pages/Partners';
 import PartnerLogin from './pages/PartnerLogin';
 import PartnerDashboard from './pages/PartnerDashboard';
+import Notifications from './pages/Notifications';
 
 // Auth Guard for Admin
 const ProtectedRoute = ({ children }) => {
@@ -111,6 +112,17 @@ const App = () => {
                                         This module is currently under development.
                                     </p>
                                 </div>
+                            </Layout>
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/notifications"
+                    element={
+                        <ProtectedRoute>
+                            <Layout>
+                                <Notifications />
                             </Layout>
                         </ProtectedRoute>
                     }
