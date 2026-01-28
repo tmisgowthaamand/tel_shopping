@@ -508,6 +508,12 @@ class BotService {
         }
 
         const welcomeMessage = `
+🛍️ *Welcome to ATZ Store!* 👋
+
+Hello ${user.getFullName()}! I'm your personal shopping assistant.
+
+🕘 *Shopping Hours:* 9:00 AM - 9:00 PM
+
  *ATZ Store Commands:*
 /start - Start shopping
 /menu - Show main menu
@@ -519,10 +525,6 @@ class BotService {
 /search - Search for products
 /exit - Close assistant
 /help - Show this help
-
-🛍️ *Welcome to ATZ Store!* 👋
-
-Hello ${user.getFullName()}! I'm your personal shopping assistant.
 
 What would you like to do today?
     `.trim();
