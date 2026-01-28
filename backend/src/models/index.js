@@ -14,4 +14,5 @@ module.exports = {
     Order,
     DeliveryPartner,
     Admin,
+    Settings: require('./Settings'),
 };

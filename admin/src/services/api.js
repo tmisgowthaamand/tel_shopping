@@ -101,4 +101,9 @@ export const userApi = {
     broadcast: (data) => api.post('/users/broadcast', data),
 };
 
+export const settingsApi = {
+    getMaintenance: () => api.get('/settings/maintenance'),
+    updateMaintenance: (enabled) => api.post('/settings/maintenance', { enabled }),
+};
+
 export default api;

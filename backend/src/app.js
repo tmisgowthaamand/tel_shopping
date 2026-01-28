@@ -24,6 +24,7 @@ const {
     partnerPortalRoutes,
     userRoutes,
     webhookRoutes,
+    settingsRoutes,
 } = require('./routes');
 
 const app = express();
@@ -77,6 +78,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/partners', partnerRoutes);
 app.use('/api/partner-portal', partnerPortalRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // Webhook Routes (separate from API)
 app.use('/webhook', webhookRoutes);

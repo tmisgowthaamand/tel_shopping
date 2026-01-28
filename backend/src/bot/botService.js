@@ -4,7 +4,7 @@ const path = require('path');
 const axios = require('axios');
 const config = require('../config');
 const logger = require('../utils/logger');
-const { User, Order, DeliveryPartner } = require('../models');
+const { User, Order, DeliveryPartner, Settings } = require('../models');
 const { productService, cartService, orderService, mapsService, aiService } = require('../services');
 
 class BotService {
@@ -126,6 +126,21 @@ class BotService {
     registerMiddleware() {
         this.bot.use(async (ctx, next) => {
             try {
+                // Check Maintenance Mode
+                try {
+                    const maintenance = await Settings.findOne({ key: 'maintenance_mode' });
+                    if (maintenance && maintenance.value === true) {
+                        try {
+                            await ctx.reply('⚠️ The store is currently paused for maintenance. Please try again later.').catch(() => { });
+                        } catch (e) {
+                            // Ignore reply error
+                        }
+                        return; // Stop processing
+                    }
+                } catch (err) {
+                    logger.error('Error checking maintenance mode:', err);
+                }
+
                 if (ctx.from && !ctx.from.is_bot) {
                     const user = await User.findOrCreateByTelegramId(ctx.from);
                     ctx.user = user;

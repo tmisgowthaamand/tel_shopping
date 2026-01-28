@@ -10,13 +10,42 @@ import {
     LogOut,
     Bell,
     Menu,
-    X
+    X,
+    PauseCircle,
+    PlayCircle
 } from 'lucide-react';
+import { settingsApi } from '../services/api';
 
 const Layout = ({ children }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+    const [isMaintenance, setIsMaintenance] = React.useState(false);
+
+    React.useEffect(() => {
+        fetchSettings();
+    }, []);
+
+    const fetchSettings = async () => {
+        try {
+            const { data } = await settingsApi.getMaintenance();
+            setIsMaintenance(data.enabled);
+        } catch (e) {
+            console.error('Failed to fetch settings:', e);
+        }
+    };
+
+    const toggleMaintenance = async () => {
+        try {
+            const newState = !isMaintenance;
+            setIsMaintenance(newState); // Optimistic UI update
+            await settingsApi.updateMaintenance(newState);
+        } catch (e) {
+            console.error('Failed to update maintenance mode:', e);
+            setIsMaintenance(!isMaintenance); // Revert on error
+            alert('Failed to update bot status');
+        }
+    };
 
     const navItems = [
         { name: 'Dashboard', path: '/', icon: LayoutDashboard },
@@ -84,6 +113,27 @@ const Layout = ({ children }) => {
                         <button className="btn btn-secondary" style={{ padding: '0.5rem', borderRadius: '50%' }}>
                             <Bell size={20} />
                         </button>
+
+                        <button
+                            onClick={toggleMaintenance}
+                            className="btn"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                backgroundColor: isMaintenance ? '#ef4444' : '#22c55e',
+                                color: 'white',
+                                border: 'none',
+                                padding: '0.5rem 1rem',
+                                borderRadius: '0.5rem',
+                                cursor: 'pointer',
+                                fontWeight: 500
+                            }}
+                        >
+                            {isMaintenance ? <PlayCircle size={18} /> : <PauseCircle size={18} />}
+                            <span>{isMaintenance ? 'Resume Bot' : 'Pause Bot'}</span>
+                        </button>
+
                         <div className="admin-profile" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                             <div style={{ textAlign: 'right' }}>
                                 <p style={{ fontSize: '0.875rem', fontWeight: 600 }}>Super Admin</p>

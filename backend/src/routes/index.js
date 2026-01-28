@@ -15,4 +15,5 @@ module.exports = {
     partnerPortalRoutes: require('./partnerPortalRoutes'),
     userRoutes,
     webhookRoutes,
+    settingsRoutes: require('./settingsRoutes'),
 };
